@@ -1,0 +1,281 @@
+<section class="panel on" id="p-start">
+  <h2>How to use this</h2>
+  <p class="lede">Read the reference tabs once, then live in the <b>Simulator</b>, <b>Drills</b> and <b>Scenarios</b>.</p>
+  <div class="key">
+    <b>The idea underneath all of it:</b> every mic and DI on stage is one signal that has to land on one numbered input. <b>The input list is the law.</b> Your job is to put the right mic in the right place, run its XLR to the right channel on the drum sub, label it, and fix it fast when line check finds a dead one. Gain, EQ and phantom switching belong to FOH &mdash; but you have to know which channels need phantom so you can tell them.
+  </div>
+
+  <h3>Where your job ends</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Backline hand</h4><p>Set the gear, place mics where the drum tech or A1 asks, run and label XLR, patch the drum sub to the input list, swap bad cables at line check.</p></div>
+    <div class="card L video"><h4>Audio department</h4><p>Console, gain, EQ, phantom, polarity flips, monitor mixes, system tuning. You tell them what is where; they decide what it sounds like.</p></div>
+  </div>
+
+  <h3>Signal path</h3>
+  <div class="chain">
+    <span class="node">Mic or DI</span><span class="arrow a-audio">→</span>
+    <span class="node">XLR</span><span class="arrow a-audio">→</span>
+    <span class="node">Drum sub (Veam box)</span><span class="arrow a-audio">→</span>
+    <span class="node">Multipin / snake</span><span class="arrow a-audio">→</span>
+    <span class="node">Stage rack / FOH</span>
+  </div>
+
+  <h3>Color code</h3>
+  <div class="legend">
+    <span class="pill p-audio">Dynamic mic · no phantom</span>
+    <span class="pill p-video">Condenser · needs 48 V</span>
+    <span class="pill p-rf">DI box · line from instrument</span>
+    <span class="pill p-power">Instrument power</span>
+  </div>
+
+  <h3>What's in here</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Drum Kit</h4><p>Tap-a-drum map, the standard 10-channel order, mic placement for every piece.</p></div>
+    <div class="card L data"><h4>Drum Sub</h4><p>What a Veam box is, inputs vs returns, how to cable and label it.</p></div>
+    <div class="card L rf"><h4>Instruments &amp; DI</h4><p>Bass, guitar, keys, acoustic. Passive vs active DI, ground lift, a full band input list.</p></div>
+    <div class="card L video"><h4>XLR Runs</h4><p>Pinout, phantom, cable discipline, over-under coiling, fast troubleshooting.</p></div>
+    <div class="card L power"><h4>Simulator</h4><p>Patch the drum sub to a real input list against the clock — then tell FOH which channels need phantom.</p></div>
+  </div>
+  <div class="key" style="border-color:rgba(63,185,80,.3);background:rgba(63,185,80,.06)">
+    <b style="color:var(--audio)">Save this to your phone.</b> Share → Add to Home Screen. Opens like an app and works with no signal.
+  </div>
+</section>
+
+<section class="panel" id="p-kit">
+  <h2>The Drum Kit</h2>
+  <p class="lede">Tap any piece to see what it is, what mic usually goes on it, where the mic goes, and its usual channel.</p>
+
+  <div class="sim">
+    <div class="rigwrap">
+      <svg id="kitSvg" viewBox="0 0 640 330" role="img" aria-label="Top-down drum kit map, tap a piece for its mic details"></svg>
+    </div>
+    <div id="kitInfo" class="verdict" style="margin-top:12px"><b>Tap a drum or cymbal</b>Kick, snare, hi-hat, three toms, two cymbals and both overheads are on the map.</div>
+  </div>
+
+  <h2>Standard drum input order</h2>
+  <p class="lede">The common touring starting point. Kick on 1 is the near-universal convention, and everything works outward from there.</p>
+  <table class="tbl">
+    <tr><th>Ch</th><th>Source</th><th>Mic type</th><th>Common mics</th><th>48 V</th></tr>
+    <tr><td>1</td><td>Kick In</td><td>Boundary condenser</td><td>Shure Beta 91A</td><td><b style="color:var(--video)">Yes</b></td></tr>
+    <tr><td>2</td><td>Kick Out</td><td>Large dynamic</td><td>Beta 52A · AKG D112 · Audix D6</td><td>No</td></tr>
+    <tr><td>3</td><td>Snare Top</td><td>Dynamic</td><td>SM57 · e905</td><td>No</td></tr>
+    <tr><td>4</td><td>Snare Bottom</td><td>Dynamic</td><td>SM57 · e604</td><td>No</td></tr>
+    <tr><td>5</td><td>Hi-Hat</td><td>Small condenser</td><td>AKG C451 · SM81 · e614</td><td><b style="color:var(--video)">Yes</b></td></tr>
+    <tr><td>6</td><td>Rack Tom 1</td><td>Clip-on dynamic</td><td>e604 · e904 · Audix D2</td><td>No</td></tr>
+    <tr><td>7</td><td>Rack Tom 2</td><td>Clip-on dynamic</td><td>e604 · e904 · Audix D4</td><td>No</td></tr>
+    <tr><td>8</td><td>Floor Tom</td><td>Dynamic</td><td>e604 · MD421 · Audix D4</td><td>No</td></tr>
+    <tr><td>9</td><td>Overhead L</td><td>Condenser</td><td>C451 · SM81 · C414</td><td><b style="color:var(--video)">Yes</b></td></tr>
+    <tr><td>10</td><td>Overhead R</td><td>Condenser</td><td>C451 · SM81 · C414</td><td><b style="color:var(--video)">Yes</b></td></tr>
+  </table>
+  <div class="key">
+    <b>Reality check.</b> This is where most lists start, not where they all end. Some shows skip hi-hat or kick in, some add ride, a second floor tom, room mics or a talkback. <b>Whatever the tour's input list says beats this table every time.</b>
+  </div>
+
+  <h2>Mic types</h2>
+  <div class="grid">
+    <div class="card L audio"><h4>Dynamic <span class="pill p-audio">no phantom</span></h4><p>A tiny speaker in reverse. Takes enormous level without distorting. Kick out, snare, toms, guitar and bass amps. SM57, Beta 52A, e604, D112.</p></div>
+    <div class="card L video"><h4>Condenser <span class="pill p-video">48 V</span></h4><p>More sensitive, more detail, and it needs phantom power from the console to work at all. Hi-hat, overheads, ride, acoustic. C451, SM81, C414.</p></div>
+    <div class="card L video"><h4>Boundary <span class="pill p-video">48 V</span></h4><p>Lies flat on a surface. Inside the kick on a pillow or the shell. The <b>Beta 91A is a condenser</b> &mdash; it needs phantom, which surprises people because it lives in the kick.</p></div>
+  </div>
+
+  <h2>Placement, piece by piece</h2>
+  <ol class="steps">
+    <li><b>Kick in</b> &mdash; boundary flat inside on the pillow or shell, pointed at the beater. Closer to the beater = more click.</li>
+    <li><b>Kick out</b> &mdash; at the port in the front head, angled toward the beater impact. In the port = more attack, further out = more boom.</li>
+    <li><b>Snare top</b> &mdash; about 1&ndash;2&Prime; above the head, 2&Prime; in from the rim, about 45&deg;. Aim the back of the mic at the hi-hat to reject it.</li>
+    <li><b>Snare bottom</b> &mdash; under the drum aimed up at the wires. Faces the opposite way to the top mic, so FOH flips its polarity.</li>
+    <li><b>Hi-hat</b> &mdash; about 4&Prime; above the top cymbal, between bell and edge, angled away from the snare. Keep the stand clear of the drummer's left foot and the hat clutch.</li>
+    <li><b>Rack toms</b> &mdash; clip to the rim, 1&ndash;2&Prime; above the head, aimed toward the centre. Keep the capsule out of the stick path.</li>
+    <li><b>Floor tom</b> &mdash; clip or short boom from the side, 1&ndash;2&Prime; up, aimed at the centre. Watch the drummer's right hand.</li>
+    <li><b>Overheads</b> &mdash; a matched pair, roughly 3&ndash;4 ft above the kit, <b>both the same distance from the snare</b>. Measure it with a tape or a mic cable. Unequal distance = a thin, phasey snare.</li>
+  </ol>
+  <div class="key">
+    <b>Ask before you guess.</b> Drum techs and A1s have strong opinions about placement. Set to the standard, then ask "where do you want them?" before you lock anything down.
+  </div>
+</section>
+
+<section class="panel" id="p-sub">
+  <h2>The Drum Sub (Veam Box)</h2>
+  <p class="lede">A Veam box &mdash; also called a stage box, drop, sub-snake or drum sub &mdash; is a box of numbered XLR inputs that lives on or beside the riser. Every drum mic lands in it, and a single multipin carries the lot to the stage rack or FOH. Ten-plus XLRs become one cable.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 640 170" role="img" aria-label="Drum sub with ten numbered XLR inputs and two returns">
+      <rect class="sf" x="20" y="30" width="600" height="96" rx="10"/>
+      <text class="lbl" x="34" y="22" style="font-size:9.5px;font-weight:800;fill:#8b98a5">DRUM SUB · 10 INPUTS · 2 RETURNS · MULTIPIN OUT</text>
+      <g id="vsInputs"></g>
+      <text class="lbl" x="36" y="116" style="font-size:9px;fill:#8b98a5">INPUTS (female XLR) &mdash; mics and DIs plug in here</text>
+      <circle cx="540" cy="66" r="13" fill="#0d1117" stroke="#f0883e" stroke-width="2.5"/>
+      <circle cx="580" cy="66" r="13" fill="#0d1117" stroke="#f0883e" stroke-width="2.5"/>
+      <text class="lbl" x="540" y="70" text-anchor="middle" style="font-size:9px;font-weight:800;fill:#f0883e">A</text>
+      <text class="lbl" x="580" y="70" text-anchor="middle" style="font-size:9px;font-weight:800;fill:#f0883e">B</text>
+      <text class="lbl" x="560" y="98" text-anchor="middle" style="font-size:8.5px;fill:#f0883e">RETURNS (male)</text>
+      <path class="s" style="stroke:#3fb950;stroke-width:5" d="M320 126 V150 H600"/>
+      <text class="lbl" x="330" y="164" style="font-size:9px;fill:#3fb950">multipin to stage rack / FOH</text>
+    </svg>
+    <div class="figcap"><b>Inputs are female, returns are male.</b> A mic's male XLR plugs into the box. Returns send signal back <i>out</i> &mdash; to a drum-fill wedge or an in-ear pack &mdash; so they have the opposite gender.</div>
+  </div>
+
+  <h2>How to cable a drum sub</h2>
+  <ol class="steps">
+    <li><b>Get the input list.</b> From the touring A1 or the house audio lead. Do not start without it.</li>
+    <li><b>Find the box position.</b> Usually on the riser, upstage of the drummer or at a riser corner, away from foot traffic.</li>
+    <li><b>Place mics and DIs first.</b> Confirm positions with the drum tech, then run cable &mdash; not the other way round.</li>
+    <li><b>Run each XLR from the mic to the box.</b> Excess coiled at the <i>mic</i> end, not in the middle of the run.</li>
+    <li><b>Patch to the list.</b> Channel number on the box = channel number on the list. Read it twice.</li>
+    <li><b>Label the box end.</b> Gaff and a Sharpie: <b>1 K-IN</b>, <b>2 K-OUT</b>, <b>3 SN-T</b>. Label the mic end too if the run is long.</li>
+    <li><b>Tell FOH which channels need phantom</b> &mdash; every condenser and active DI. Then call ready for line check.</li>
+    <li><b>Line check:</b> scratch or tap each mic in order while FOH watches the meters. Dead channel? Seat both ends, swap the cable, then ask about phantom.</li>
+    <li><b>Dress it.</b> Tape runs flat to the riser, keep them away from the drummer's feet and pedals, keep the kit able to move if it needs to roll.</li>
+  </ol>
+  <div class="key">
+    <b>Labels win line check.</b> When FOH says "nothing on 6" you want to be able to point at the cable on 6 in under a second &mdash; not trace it back through a nest of identical black XLR.
+  </div>
+</section>
+
+<section class="panel" id="p-inst">
+  <h2>Instruments &amp; DI</h2>
+  <p class="lede">The gear behind the kit. For each one you need to know how its signal gets to the console &mdash; a mic, a DI, or both &mdash; and which channels it uses.</p>
+
+  <h3>What a DI does</h3>
+  <div class="card L rf">
+    <h4>Direct Injection box</h4>
+    <p>An instrument puts out an <b>unbalanced, high-impedance</b> signal on a &frac14;&Prime; cable. That cannot travel far without hum and loss. A DI turns it into a <b>balanced, low-impedance, mic-level</b> signal on XLR that runs a hundred feet to the console cleanly.</p>
+  </div>
+  <div class="chain">
+    <span class="node">Bass / keys</span><span class="arrow a-rf">→ &frac14;&Prime; →</span>
+    <span class="node">DI IN</span><span class="arrow a-rf">→</span>
+    <span class="node">THRU &rarr; amp (player still hears their rig)</span>
+  </div>
+  <div class="chain">
+    <span class="node">DI</span><span class="arrow a-audio">→ XLR OUT →</span>
+    <span class="node">Drum sub / stage box</span><span class="arrow a-audio">→</span>
+    <span class="node">Console</span>
+  </div>
+  <div class="grid">
+    <div class="card L rf"><h4>Passive DI</h4><p>A transformer, no power needed. Rugged and simple. Great on bass and hot keyboard outputs. Radial JDI, ProDI.</p></div>
+    <div class="card L video"><h4>Active DI <span class="pill p-video">48 V</span></h4><p>Electronics inside, powered by phantom or a battery. Better for weak or very high-impedance sources like piezo acoustic pickups. Radial J48, BSS AR-133.</p></div>
+    <div class="card L power"><h4>Ground lift</h4><p>A switch on the DI that breaks pin 1 at the XLR side. The first move on a hum. <b>It never means lifting the safety ground on an amp's power cord</b> &mdash; that one stays connected, always.</p></div>
+  </div>
+
+  <h3>The instruments</h3>
+  <div class="grid">
+    <div class="card L rf"><h4>Bass guitar</h4><p><b>DI first</b>, often an amp mic as well. The DI sits between the bass and the amp, using THRU to feed the amp. Bass rig is usually stage left of the kit.</p></div>
+    <div class="card L audio"><h4>Electric guitar</h4><p><b>SM57 on the cab.</b> 1&ndash;2&Prime; off the grille, aimed at the cone: centre is brighter, toward the edge is warmer. Modelers and direct outs get a DI instead.</p></div>
+    <div class="card L rf"><h4>Keys &amp; synths</h4><p><b>Stereo &mdash; two DIs, two channels, always adjacent</b> (L then R). Two keyboards = four channels. Patch only one side and half the instrument disappears.</p></div>
+    <div class="card L rf"><h4>Acoustic guitar</h4><p>Pickup into a DI (after the player's pedals), or a small condenser about 6&ndash;8&Prime; off the 12th fret. The input list says which.</p></div>
+  </div>
+
+  <h2>A typical 4-piece input list</h2>
+  <table class="tbl">
+    <tr><th>Ch</th><th>Source</th><th>Mic / DI</th><th>Notes</th></tr>
+    <tr><td>1&ndash;10</td><td>Drums</td><td>see Drum Kit</td><td>Kick in through OH R on the drum sub</td></tr>
+    <tr><td>11</td><td>Bass DI</td><td>Passive DI</td><td>THRU to the bass amp</td></tr>
+    <tr><td>12</td><td>Bass mic</td><td>Dynamic</td><td>On the cab, slightly off centre</td></tr>
+    <tr><td>13</td><td>Gtr 1</td><td>SM57</td><td>On the grille, aimed at the cone</td></tr>
+    <tr><td>14</td><td>Gtr 2</td><td>SM57</td><td>Second amp or second position</td></tr>
+    <tr><td>15</td><td>Keys L</td><td>Active DI</td><td>Stereo pair &mdash; adjacent channels</td></tr>
+    <tr><td>16</td><td>Keys R</td><td>Active DI</td><td>Stereo pair &mdash; adjacent channels</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-xlr">
+  <h2>XLR Runs</h2>
+  <p class="lede">Running cable cleanly is the core physical skill of backline. A bad run is noise, hum, a dead channel, or a trip hazard.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 150" role="img" aria-label="XLR pinout">
+      <circle cx="110" cy="72" r="52" fill="#0d1117" stroke="#8b98a5" stroke-width="2.5"/>
+      <circle cx="88" cy="56" r="8" class="met"/><circle cx="132" cy="56" r="8" class="met"/><circle cx="110" cy="98" r="8" class="met"/>
+      <text class="cap" x="88" y="44" text-anchor="middle">1</text>
+      <text class="cap" x="132" y="44" text-anchor="middle">2</text>
+      <text class="cap" x="110" y="122" text-anchor="middle">3</text>
+      <text class="lbl" x="200" y="50" style="font-size:12px"><tspan style="fill:#e6edf3;font-weight:800">Pin 1</tspan> shield / ground</text>
+      <text class="lbl f-audio" x="200" y="76" style="font-size:12px;font-weight:700">Pin 2 hot (+)</text>
+      <text class="lbl f-power" x="200" y="102" style="font-size:12px;font-weight:700">Pin 3 cold (&minus;)</text>
+    </svg>
+    <div class="figcap"><b>Balanced:</b> the same signal on pins 2 and 3 in opposite polarity. Noise picked up along the run lands on both equally, and the console takes the difference &mdash; the noise cancels. Phantom rides on pins 2 and 3 together.</div>
+  </div>
+
+  <h3>Phantom power, 48 V</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Needs it</h4><p>Condensers (hi-hat, overheads, Beta 91A, room mics), active DIs without a battery.</p></div>
+    <div class="card L audio"><h4>Doesn't care</h4><p>Dynamics &mdash; SM57, Beta 52A, e604. Phantom on or off, they work the same.</p></div>
+    <div class="card L power"><h4>Careful</h4><p>Ribbon mics, especially vintage ones, can be damaged by phantom if a cable is miswired or shorted. Flag every ribbon to FOH and let them decide.</p></div>
+  </div>
+  <div class="key"><b>Your role:</b> you do not switch phantom &mdash; FOH does. But you know which channels need it, and you say so before line check, not after a condenser comes up dead.</div>
+
+  <h3>Cable discipline</h3>
+  <ul class="chk">
+    <li><b>Coil over-under.</b> Alternating loops lie flat and throw out straight. Coiling one way twists the cable and kills it over a season.</li>
+    <li><b>Excess at the mic end</b>, never a loop in the middle of a walkway.</li>
+    <li><b>Lock the latch</b> at the mic. A bump or a tug should not pull it out mid-show.</li>
+    <li><b>Seat both ends fully</b> before you call ready. 80% in will pass line check and drop out in the second song.</li>
+    <li><b>Keep audio away from power</b> &mdash; cross at 90&deg; if you must, never run parallel to feeder, Soca or stingers.</li>
+    <li><b>No kinks, no tight bends.</b> Gentle curves only.</li>
+    <li><b>Tape flat, ramp across traffic,</b> and label both ends of long runs.</li>
+  </ul>
+
+  <h3>Troubleshoot fast</h3>
+  <div class="grid">
+    <div class="card L power"><h4>Dead channel</h4><p>Seat both ends &rarr; swap to a known-good cable &rarr; condenser? ask about phantom &rarr; DI? check the &frac14;&Prime; and the instrument's volume &rarr; move it to a spare channel to split mic/cable/input.</p></div>
+    <div class="card L power"><h4>Cuts in and out</h4><p>Wiggle each connector while FOH listens. If the fault follows the cable, bin the cable and tag it. If it stays on the channel, it's the input.</p></div>
+    <div class="card L power"><h4>Hum or buzz</h4><p>Ground lift on the DI first. Then get the cable away from power. Then put the amp on the same power as the audio system. <b>Never</b> lift the safety ground on a power cord.</p></div>
+    <div class="card L power"><h4>Wrong source on a channel</h4><p>A mis-patch. Trace it back, compare to the list, swap it. This is why both ends get labels.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-sim">
+  <h2>Patch the Drum Sub</h2>
+  <p class="lede">You get a real input list. Tap a mic, then the channel it belongs on. When it's patched, tell FOH which channels need phantom. Every show's list is different &mdash; read it, don't assume.</p>
+  <div class="sim" id="patchSim">
+    <div class="ldbrief" id="psBrief"></div>
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="psStatus"></span>
+      <button class="btn" id="psNext" style="margin-left:auto">Next show</button>
+    </div>
+    <div id="psList"></div>
+    <p class="banklab">Mics on the riser</p>
+    <div class="camrow" id="psMics"></div>
+    <p class="banklab" style="margin-top:14px">Drum sub inputs</p>
+    <div class="camrow" id="psChans"></div>
+    <div id="psCallRow"></div>
+    <div id="psFeed"></div>
+  </div>
+  <div class="key">
+    <b>What it's drilling.</b> Reading the list instead of patching from memory, kick-on-1 as a convention not a rule, and knowing which mics are condensers before FOH has to ask.
+  </div>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly — "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer — including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Signal Chain Builder</h2>
+  <p class="lede">Tap the pieces in the correct order. Wrong piece and it tells you immediately.</p>
+  <div id="chainHost"></div>
+</section>
+
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>

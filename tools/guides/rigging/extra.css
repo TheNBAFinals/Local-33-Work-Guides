@@ -1,0 +1,7 @@
+ol.steps{display:block}
+.fb.warn{border-left-color:var(--warn)} .fb.warn b.h{color:var(--warn)}
+.rgopts{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:10px 0}
+.rgq{font-size:14px;margin:14px 0 4px;font-weight:600}
+.tagcard{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:12px 0}
+.tagcard .tgear{font:700 11px/1 var(--f);letter-spacing:.06em;text-transform:uppercase;color:var(--sdi)}
+.tagcard .tfind{font-size:15px;margin:8px 0 0}

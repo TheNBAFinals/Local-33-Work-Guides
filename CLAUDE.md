@@ -17,7 +17,12 @@ Clone the repo INTO this folder (keep this CLAUDE.md and inbox/), log in with `g
 - ledwall/index.html    LED Wall
 - lighting/index.html   Lighting
 - electric/index.html   Electric (distro, feeder, Socapex, trainers)
-- (to add) backline/, rigging/, carpentry/, sfx/
+- backline/index.html    Backline (drum sub patch trainer)
+- rigging/index.html     Rigging (bridle trainer, tag-it-out inspection drill)
+- (to add) carpentry/, sfx/
+- tools/build.py         Generator: `python3 tools/build.py <dept>` builds <dept>/index.html from
+                         tools/guides/<dept>/ (meta.json, body.html, data.js, sims.js, extra.css)
+                         using electric/index.html as the shared template. Edit sources there, then rebuild.
 - README.md             Guide table — keep it in sync with the hub
 
 ## Rules

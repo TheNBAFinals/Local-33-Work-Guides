@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rigging Field Guide</title>
+<meta name="description" content="Rigging for live events: shackles, steel and round slings, arena points and chain motors, bridle math, counterweight fly systems, truss, fall protection and inspection.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1117">
+<style>
+
+:root{
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2430; --line:#2b3440;
+  --txt:#e6edf3; --dim:#8b98a5; --dimmer:#5c6773;
+  /* signal color code — used everywhere, consistently */
+  --audio:#3fb950;    /* XLR / analog audio — GREEN */
+  --rf:#f0883e;       /* RF / wireless / coax — ORANGE */
+  --video:#58a6ff;    /* HDMI / video — BLUE */
+  --sdi:#bc8cff;      /* SDI / BNC — PURPLE */
+  --power:#f85149;    /* IEC / power — RED */
+  --data:#39d0d8;     /* CAT / Dante / network — CYAN */
+  --warn:#e3b341;
+  --radius:14px;
+  font-synthesis:none;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+a{color:var(--video)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(160deg,#161b22 0%,#0d1117 100%);
+  border-bottom:1px solid var(--line);padding:28px 16px 22px;
+}
+header .inner{max-width:900px;margin:0 auto}
+h1{margin:0 0 6px;font-size:26px;letter-spacing:-.5px;line-height:1.2}
+.sub{color:var(--dim);font-size:14px;margin:0}
+.badge{display:inline-block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--rf);border:1px solid var(--rf);border-radius:99px;padding:3px 10px;margin-bottom:10px;font-weight:600}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav .navinner{display:flex;gap:4px;max-width:900px;margin:0 auto;padding:8px 12px}
+nav button{
+  flex:0 0 auto;background:transparent;border:1px solid transparent;color:var(--dim);
+  font:600 13px/1 inherit;padding:9px 13px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+nav button:hover{color:var(--txt);background:var(--bg2)}
+nav button[aria-selected="true"]{background:var(--bg3);color:var(--txt);border-color:var(--line)}
+
+/* ---------- panels ---------- */
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:30px 0 4px;letter-spacing:-.3px}
+h2:first-child{margin-top:26px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--txt)}
+.lede{color:var(--dim);margin:0 0 18px;font-size:14.5px}
+
+/* ---------- cards ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin:12px 0}
+.card h4{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card p{margin:0;color:var(--dim);font-size:14.5px}
+.card p+p{margin-top:8px}
+.card.L{border-left:3px solid var(--line)}
+.card.audio{border-left-color:var(--audio)} .card.rf{border-left-color:var(--rf)}
+.card.video{border-left-color:var(--video)} .card.sdi{border-left-color:var(--sdi)}
+.card.power{border-left-color:var(--power)} .card.data{border-left-color:var(--data)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.p-audio{background:rgba(63,185,80,.15);color:var(--audio)}
+.p-rf{background:rgba(240,136,62,.15);color:var(--rf)}
+.p-video{background:rgba(88,166,255,.15);color:var(--video)}
+.p-sdi{background:rgba(188,140,255,.15);color:var(--sdi)}
+.p-power{background:rgba(248,81,73,.15);color:var(--power)}
+.p-data{background:rgba(57,208,216,.15);color:var(--data)}
+
+/* ---------- key callout ---------- */
+.key{background:rgba(227,179,65,.08);border:1px solid rgba(227,179,65,.3);
+  border-radius:10px;padding:12px 14px;margin:14px 0;font-size:14px}
+.key b{color:var(--warn)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.legend span{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:6px}
+
+/* ---------- signal chain visual ---------- */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0}
+.node{background:var(--bg3);border:1px solid var(--line);border-radius:9px;
+  padding:8px 12px;font-size:13px;font-weight:600}
+.arrow{color:var(--dimmer);font-size:14px;font-weight:700}
+.arrow.a-audio{color:var(--audio)} .arrow.a-rf{color:var(--rf)}
+.arrow.a-video{color:var(--video)} .arrow.a-sdi{color:var(--sdi)}
+
+/* ---------- figures ---------- */
+.fig{background:#090d12;border:1px solid var(--line);border-radius:11px;
+  padding:16px 12px 12px;margin:14px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:430px;margin:0 auto}
+.figcap{font-size:12px;color:var(--dimmer);text-align:center;margin-top:10px;line-height:1.55}
+.figcap b{color:var(--dim)}
+svg .s{fill:none;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg .sf{fill:#1c2430;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round}
+svg .sd{fill:#0d1117;stroke:#5c6773;stroke-width:1.5}
+svg .met{fill:#3f4a57;stroke:#8b98a5;stroke-width:1.5}
+svg .gold{fill:#c9a227}
+svg .hl{fill:none;stroke-width:2;stroke-dasharray:5 4}
+svg .lead{stroke-width:1.4;fill:none}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+svg .lbl{font-size:11px;font-weight:600;fill:#8b98a5}
+svg .num{font-size:10px;font-weight:700;fill:#0d1117}
+svg .tag{font-size:11.5px;font-weight:800;letter-spacing:.5px}
+svg .cap{font-size:12px;font-weight:700;fill:#e6edf3}
+.c-audio{stroke:#3fb950} .f-audio{fill:#3fb950}
+.c-rf{stroke:#f0883e} .f-rf{fill:#f0883e}
+.c-video{stroke:#58a6ff} .f-video{fill:#58a6ff}
+.c-sdi{stroke:#bc8cff} .f-sdi{fill:#bc8cff}
+.c-power{stroke:#f85149} .f-power{fill:#f85149}
+.c-data{stroke:#39d0d8} .f-data{fill:#39d0d8}
+.c-warn{stroke:#e3b341} .f-warn{fill:#e3b341}
+
+/* ---------- connector ID drill ---------- */
+.idgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.idcard{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:12px;
+  cursor:pointer;text-align:center;transition:.15s}
+.idcard:hover{border-color:var(--dimmer)}
+.idcard svg{width:100%;height:auto;max-width:130px}
+.idcard .nm{font-size:12.5px;font-weight:700;margin-top:8px}
+.idcard .rv{font-size:11.5px;color:var(--dim);margin-top:5px;display:none;line-height:1.5}
+.idcard.open .rv{display:block}
+.idcard.open{border-color:var(--rf)}
+.ckitem{background:var(--bg2);border:1px solid var(--line);border-radius:11px;cursor:pointer;transition:.15s}
+.ckitem:hover{border-color:var(--dimmer)}
+
+/* ---------- ordered steps ---------- */
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 48px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14.5px}
+ol.steps li::before{content:counter(s);position:absolute;left:14px;top:11px;
+  width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);
+  color:var(--rf);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+ul.chk{list-style:none;padding:0;margin:12px 0}
+ul.chk li{padding:9px 12px 9px 32px;position:relative;font-size:14.5px;color:var(--dim);
+  border-bottom:1px solid var(--line)}
+ul.chk li:last-child{border-bottom:none}
+ul.chk li::before{content:"▸";position:absolute;left:12px;color:var(--audio);font-weight:700}
+
+/* ---------- table ---------- */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;display:block;overflow-x:auto}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{color:var(--dim);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px}
+
+/* ---------- buttons ---------- */
+.btn{background:var(--bg3);border:1px solid var(--line);color:var(--txt);
+  font:600 14px/1 inherit;padding:11px 18px;border-radius:9px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--dimmer)}
+.btn.pri{background:var(--audio);border-color:var(--audio);color:#08130b}
+.btn.pri:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+
+/* ---------- flashcards ---------- */
+.fcstage{perspective:1200px;margin:16px 0}
+.fc{position:relative;min-height:190px;cursor:pointer;transition:transform .5s;
+  transform-style:preserve-3d}
+.fc.flip{transform:rotateY(180deg)}
+.fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);border:1px solid var(--line);background:var(--bg2);
+  padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fcback{transform:rotateY(180deg);background:var(--bg3)}
+.fcq{font-size:18px;font-weight:600;line-height:1.4}
+.fca{font-size:15px;color:var(--dim);line-height:1.6}
+.fchint{position:absolute;bottom:12px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--dimmer);letter-spacing:.5px;text-transform:uppercase}
+.counter{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- quiz ---------- */
+.qbox{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:16px 0}
+.qtext{font-size:16.5px;font-weight:600;margin:0 0 16px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--line);
+  color:var(--txt);font:15px/1.45 inherit;padding:13px 15px;border-radius:10px;margin-bottom:9px;
+  cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--dimmer)}
+.opt.right{border-color:var(--audio);background:rgba(63,185,80,.12)}
+.opt.wrong{border-color:var(--power);background:rgba(248,81,73,.12)}
+.opt:disabled{cursor:default}
+.expl{font-size:14px;color:var(--dim);border-left:3px solid var(--rf);
+  padding:2px 0 2px 12px;margin:14px 0 0}
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--audio);width:0;transition:width .3s}
+.score{font-size:44px;font-weight:800;letter-spacing:-2px;margin:6px 0}
+
+/* ---------- chain builder ---------- */
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;
+  background:var(--bg2);border:1px dashed var(--line);border-radius:12px;margin:12px 0;align-items:center}
+.slots:empty::before{content:"Tap the pieces below in order…";color:var(--dimmer);font-size:13.5px}
+.tok{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 13px;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+.tok:hover{border-color:var(--dimmer)}
+.tok.used{opacity:.25;pointer-events:none}
+.tok.ok{border-color:var(--audio);color:var(--audio)}
+.tok.no{border-color:var(--power);color:var(--power)}
+
+/* ---------- scenario ---------- */
+.scn{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:var(--radius);padding:18px;margin:14px 0}
+.scn .setting{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--rf);
+  font-weight:700;margin-bottom:8px}
+.scn .q{font-size:15px;margin:0 0 12px;line-height:1.55}
+.reveal{display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;
+  font-size:14.5px;color:var(--dim);line-height:1.65}
+.reveal.on{display:block}
+.reveal b{color:var(--txt)}
+
+footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
+  color:var(--dimmer);font-size:12.5px;text-align:center;line-height:1.7}
+@media(max-width:520px){
+  h1{font-size:22px} .wrap{padding:0 13px 70px} .card{padding:14px 15px}
+  .score{font-size:38px}
+}
+
+/* ---------- simulators ---------- */
+.sim{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0}
+.simrow{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.simmeters{display:flex;gap:16px;flex:0 0 auto}
+.mtr{width:64px;text-align:center;position:relative}
+.mtrbar{position:relative;height:230px;width:34px;margin:0 auto;border-radius:5px;
+  overflow:hidden;background:#05080b;border:1px solid var(--line)}
+.mzone{position:absolute;left:0;right:0}
+.mclip{top:0;height:26%;background:rgba(248,81,73,.16)}
+.mgood{top:26%;height:52%;background:rgba(63,185,80,.12)}
+.mnoise{bottom:0;height:22%;background:rgba(92,103,115,.16)}
+.mfill{position:absolute;left:3px;right:3px;bottom:0;border-radius:3px;
+  background:linear-gradient(180deg,#3fb950,#2a7f38);transition:height .12s}
+.mfill.room{background:linear-gradient(180deg,#58a6ff,#2b6cb8)}
+.mfill.hot{background:linear-gradient(180deg,#f85149,#a4322c)}
+.mtick{position:absolute;left:0;right:0;height:1px;background:rgba(230,237,243,.45)}
+.mtick span{position:absolute;right:-24px;top:-7px;font-size:9.5px;color:var(--dim);font-weight:700}
+.mlbl{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--dim);margin-top:9px;line-height:1.5}
+.mlbl span{color:var(--txt);font-size:13px;font-variant-numeric:tabular-nums}
+.pkled{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;
+  padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--dimmer);letter-spacing:.5px}
+.pkled.on{background:var(--power);border-color:var(--power);color:#fff}
+.simctl{flex:1 1 250px;min-width:230px}
+.slab{display:block;font-size:11px;font-weight:700;letter-spacing:.7px;color:var(--dim);margin-bottom:7px}
+.slab b{float:right;color:var(--txt);font-variant-numeric:tabular-nums;letter-spacing:0}
+.simctl input[type=range]{width:100%;accent-color:var(--audio);height:26px}
+.srange{display:flex;justify-content:space-between;font-size:10px;color:var(--dimmer);margin-top:-2px}
+.srcnote{margin-top:10px;font-size:12px;color:var(--dimmer)}
+.verdict{margin-top:16px;border-left:3px solid var(--line);padding:11px 14px;
+  background:var(--bg3);border-radius:0 9px 9px 0;font-size:14px;line-height:1.6}
+.verdict b{display:block;margin-bottom:4px;font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.verdict.ok{border-left-color:var(--audio)} .verdict.ok b{color:var(--audio)}
+.verdict.warn{border-left-color:var(--warn)} .verdict.warn b{color:var(--warn)}
+.verdict.bad{border-left-color:var(--power)} .verdict.bad b{color:var(--power)}
+@media(max-width:520px){.simrow{gap:16px}.mtrbar{height:180px;width:30px}.mtr{width:56px}}
+
+/* ---------- rig builder ---------- */
+.rigwrap{background:#05080b;border:1px solid var(--line);border-radius:11px;padding:8px;overflow-x:auto}
+.rigwrap svg{width:100%;min-width:520px;height:auto;display:block}
+.fx{cursor:pointer}
+.fxbody{fill:#1c2430;stroke:#5c6773;stroke-width:2}
+.fx.sel .fxbody{stroke:#3fb950;stroke-width:2.5}
+.fx.dead .fxbody{stroke:#f85149;fill:#2a1416}
+.fx.flick .fxbody{stroke:#e3b341;stroke-dasharray:4 3}
+.fxlbl{font-size:10px;font-weight:700;fill:#8b98a5}
+.fxnum{font-size:11px;font-weight:800;fill:#e6edf3}
+.dxline{fill:none;stroke:#bc8cff;stroke-width:2.5;stroke-linecap:round}
+.dxline.bad{stroke:#f85149;stroke-dasharray:5 4}
+.uni{height:26px;border-radius:5px;background:#05080b;border:1px solid var(--line);
+  position:relative;overflow:hidden;margin-bottom:10px}
+.uni i{position:absolute;top:0;bottom:0;border-right:1px solid rgba(13,17,23,.8)}
+.addrlist{font-size:12px;color:var(--dim);line-height:1.9;font-variant-numeric:tabular-nums;
+  max-height:190px;overflow-y:auto}
+.addrlist b{color:var(--txt)}
+.addrlist .over{color:var(--power)}
+
+/* ---------- wall sim ---------- */
+.pn{cursor:pointer}
+.pnb{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.pn.on .pnb{fill:#16241a;stroke:#3fb950;stroke-width:2}
+.pn.p1 .pnb{stroke:#3fb950} .pn.p2 .pnb{stroke:#58a6ff}
+.pn.p3 .pnb{stroke:#f0883e} .pn.p4 .pnb{stroke:#bc8cff}
+.pn.dead .pnb{fill:#2a1416;stroke:#f85149}
+.pnn{font-size:10px;font-weight:700;fill:#8b98a5}
+.lwline{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.lwline.c1{stroke:#3fb950}.lwline.c2{stroke:#58a6ff}.lwline.c3{stroke:#f0883e}.lwline.c4{stroke:#bc8cff}
+.lwline.bk{stroke:#39d0d8;stroke-dasharray:5 4;stroke-width:2}
+.wallprev{background:#05080b;border:1px solid var(--line);border-radius:9px;padding:10px;
+  display:grid;gap:2px;margin-bottom:12px;min-height:110px;align-content:center}
+.wallprev span{background:#1c2430;border:1px solid #2b3440;border-radius:2px;aspect-ratio:1}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.statgrid div{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.statgrid b{display:block;font-size:10px;letter-spacing:.6px;color:var(--dimmer);text-transform:uppercase}
+.statgrid span{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ---------- patch challenge ---------- */
+.fixcard{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:11px;padding:15px 17px;margin-bottom:14px}
+.fixcard h4{margin:0 0 6px;font-size:16px;letter-spacing:-.2px}
+.fixcard p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.6}
+.fixcard .brief{margin-top:9px;font-size:12.5px;color:var(--warn);font-weight:600}
+.slots4{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:9px;margin-bottom:14px}
+.slot{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  cursor:pointer;transition:.15s}
+.slot:hover{border-color:var(--dimmer)}
+.slot.active{border-color:var(--warn);background:rgba(227,179,65,.07)}
+.slot.ok{border-color:var(--audio)} .slot.no{border-color:var(--power)}
+.slot b{display:block;font-size:9.5px;letter-spacing:.7px;color:var(--dimmer);margin-bottom:5px}
+.slot .pick{font-size:13px;font-weight:600;color:var(--dim)}
+.slot.filled .pick{color:var(--txt)}
+.banklab{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--dimmer);
+  text-transform:uppercase;margin:0 0 7px}
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.opt2{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;
+  font-size:12.5px;font-weight:600;cursor:pointer;color:var(--txt);transition:.15s}
+.opt2:hover{border-color:var(--dimmer)}
+.opt2.on{border-color:var(--warn);background:rgba(227,179,65,.12)}
+.fb{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-top:9px;font-size:13.5px;line-height:1.65}
+.fb b.h{display:block;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.fb.ok{border-left-color:var(--audio)} .fb.ok b.h{color:var(--audio)}
+.fb.no{border-left-color:var(--power)} .fb.no b.h{color:var(--power)}
+
+/* ---------- run the call ---------- */
+.callbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px;font-size:13.5px;line-height:1.65;color:var(--dim)}
+.callbrief b{color:var(--txt)}
+.callbrief table{width:100%;margin-top:10px;font-size:12.5px;border-collapse:collapse}
+.callbrief td{padding:3px 0;border-bottom:1px solid var(--line)}
+.callbrief td:last-child{text-align:right;color:var(--txt);font-variant-numeric:tabular-nums}
+.prog{height:5px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--warn);width:0;transition:width .3s}
+.cbq{font-size:16px;font-weight:600;line-height:1.5;margin:0 0 14px}
+.report{margin-top:16px}
+.rline{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-bottom:9px;font-size:13.5px;line-height:1.65}
+.rline b.h{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px}
+.rline.good{border-left-color:var(--audio)} .rline.good b.h{color:var(--audio)}
+.rline.bad{border-left-color:var(--power)} .rline.bad b.h{color:var(--power)}
+.rline.warn{border-left-color:var(--warn)} .rline.warn b.h{color:var(--warn)}
+.grade{text-align:center;padding:20px;background:var(--bg3);border:1px solid var(--line);
+  border-radius:12px;margin-bottom:16px}
+.grade .g{font-size:46px;font-weight:800;letter-spacing:-2px;line-height:1}
+.grade .gs{font-size:14px;color:var(--dim);margin-top:6px}
+
+/* ---------- fixture menu trainer ---------- */
+.fixpanel{background:#0a0d11;border:1px solid var(--line);border-radius:13px;padding:18px;
+  max-width:340px;margin:0 auto}
+.lcd{background:#0d2818;border:2px solid #1f3a2a;border-radius:6px;padding:14px 12px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#5dfba0;
+  text-shadow:0 0 8px rgba(93,251,160,.4);min-height:76px;margin-bottom:16px}
+.lcd .l1{font-size:15px;font-weight:700;letter-spacing:1px}
+.lcd .l2{font-size:20px;font-weight:700;letter-spacing:1.5px;margin-top:7px}
+.lcd .l3{font-size:11px;opacity:.6;margin-top:7px;letter-spacing:.5px}
+.lcd.saved{border-color:#3fb950;box-shadow:0 0 14px rgba(63,185,80,.25)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fkey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:8px;
+  padding:13px 4px;font:700 12px/1 inherit;cursor:pointer;transition:.1s}
+.fkey:hover{border-color:var(--dimmer)}
+.fkey:active{background:var(--warn);color:#1a1206;border-color:var(--warn)}
+.keyhint{font-size:10.5px;color:var(--dimmer);text-align:center;margin-top:11px;line-height:1.5}
+
+/* ---------- eos trainer ---------- */
+.cmdline{background:#05080b;border:1px solid var(--line);border-radius:8px;padding:13px 15px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;color:#e6edf3;
+  margin-bottom:14px;min-height:48px;letter-spacing:.5px}
+.cmdprompt{color:var(--dimmer)}
+.caret{color:var(--video);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.eokeys{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.eokey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:7px;
+  padding:11px 4px;font:700 11.5px/1 inherit;cursor:pointer;transition:.1s}
+.eokey:hover{border-color:var(--dimmer)}
+.eokey:active{background:var(--video);color:#06121f;border-color:var(--video)}
+.eokey.num{color:var(--warn)}
+.eokey.mod{color:var(--video)}
+
+/* ---------- truss trainer ---------- */
+.ldbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px}
+.ldbrief .who{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--rf);
+  font-weight:700;margin-bottom:7px}
+.ldbrief p{margin:0 0 8px;font-size:14px;line-height:1.65;color:var(--txt)}
+.ldbrief ul{margin:8px 0 0;padding-left:18px;color:var(--dim);font-size:13px;line-height:1.8}
+.ldbrief li::marker{color:var(--rf)}
+.fxt{cursor:pointer}
+.fxt .b{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.fxt.pick .b{stroke:#e3b341;stroke-width:2.5}
+.fxt.done .b{fill:#121f16;stroke:#3fb950}
+.fxt.err .b{fill:#2a1416;stroke:#f85149}
+.fxt t{pointer-events:none}
+.ckt{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:8px;margin-top:12px}
+.ck{background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;transition:.15s}
+.ck:hover{border-color:var(--dimmer)}
+.ck.sel{border-color:var(--warn);background:rgba(227,179,65,.08)}
+.ck.over{border-color:var(--power);background:rgba(248,81,73,.08)}
+.ck b{display:block;font-size:11px;letter-spacing:.6px;color:var(--dimmer)}
+.ck .amp{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:3px}
+.ck .who2{font-size:10.5px;color:var(--dim);margin-top:3px;min-height:13px}
+.legendrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:11px;color:var(--dim)}
+.legendrow span{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+
+/* eos trainer v2 */
+.lvltabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.lvltab{background:#0d1117;border:1px solid var(--line);color:#8b98a5;border-radius:6px;
+  padding:6px 13px;font:700 11.5px/1 var(--f);cursor:pointer;letter-spacing:.04em}
+.lvltab.on{background:rgba(88,166,255,.12);border-color:var(--video);color:#cfe3ff}
+.keybank{margin:10px 0 0}
+.keybank>span{display:block;font:800 9.5px/1 var(--f);letter-spacing:.13em;
+  color:#5c6773;margin:0 0 5px;text-transform:uppercase}
+.keybank .eokeys{margin:0}
+.topictag{display:inline-block;font:800 9px/1 var(--f);letter-spacing:.1em;
+  padding:3px 7px;border-radius:4px;background:#131a22;color:#8b98a5;
+  border:1px solid var(--line);margin:0 0 7px}
+
+/* electric sims */
+.camrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin:12px 0 0}
+.camb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px 8px;
+  cursor:pointer;text-align:center;font:700 11px/1.35 var(--f);color:#c9d1d9;transition:.12s}
+.camb:hover{border-color:#484f58}
+.camb.done{opacity:.4;pointer-events:none;border-color:#3fb950}
+.camb .dot{display:block;width:20px;height:20px;border-radius:50%;margin:0 auto 6px;border:3px solid}
+.camb small{display:block;color:#5c6773;font-size:9px;font-weight:600;margin-top:3px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.stepc{background:#131a22;border:1px solid var(--line);border-radius:20px;
+  padding:5px 11px;font:700 10px/1 var(--f);color:#8b98a5}
+.stepc.ok{border-color:#3fb950;color:#3fb950}
+.stepc.bad{border-color:#f85149;color:#f85149}
+.loadrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0 0}
+.lditem{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:10px}
+.lditem b{display:block;font-size:11.5px;color:#c9d1d9;margin-bottom:3px}
+.lditem .amps{font:800 14px/1 var(--f);color:var(--warn);margin:4px 0}
+.legbtns{display:flex;gap:5px;margin-top:7px}
+.legb{flex:1;background:#161b22;border:1px solid var(--line);border-radius:5px;
+  padding:6px 0;font:800 10px/1 var(--f);color:#8b98a5;cursor:pointer}
+.legb.on{background:rgba(227,179,65,.16);border-color:var(--warn);color:#e3b341}
+.diagrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin:12px 0 0}
+.diagb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:600 11.5px/1.4 var(--f);color:#c9d1d9;text-align:left}
+.diagb:hover{border-color:#484f58}
+.diagb.used{opacity:.45;pointer-events:none}
+.diagb i{display:block;font-style:normal;font-size:9px;color:#5c6773;margin-top:4px}
+.ecopt{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:12px 0 0}
+.ecb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:700 12px/1.3 var(--f);color:#c9d1d9;text-align:center}
+.ecb:hover{border-color:#484f58}
+
+/* home run trainer */
+.hrbuild{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:8px;margin:12px 0 0}
+.hrsel{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:9px}
+.hrsel label{display:block;font:800 9px/1 var(--f);letter-spacing:.12em;color:#5c6773;margin:0 0 6px}
+.hrsel select{width:100%;background:#161b22;color:#c9d1d9;border:1px solid var(--line);
+  border-radius:5px;padding:7px;font:600 11.5px/1 var(--f)}
+.runlist{margin:12px 0 0;display:flex;flex-direction:column;gap:6px}
+.runrow{display:flex;align-items:center;gap:9px;background:#0d1117;border:1px solid var(--line);
+  border-left:3px solid var(--dimmer);border-radius:7px;padding:9px 11px;font:600 11.5px/1.3 var(--f)}
+.runrow .x{margin-left:auto;cursor:pointer;color:#5c6773;font-weight:800;padding:0 4px}
+.runrow .x:hover{color:var(--power)}
+.runrow .cb{font-size:10px;color:#8b98a5}
+.runrow.pw{border-left-color:var(--power)} .runrow.dt{border-left-color:var(--sdi)}
+.poscol{display:grid;grid-template-columns:repeat(auto-fit,minmax(206px,1fr));gap:10px;margin:12px 0 0}
+.posbox{background:#0d1117;border:1px solid var(--line);border-radius:9px;padding:11px}
+.posbox>b{display:block;font-size:12px;color:#c9d1d9;margin:0 0 3px}
+.posbox>i{display:block;font-style:normal;font-size:9.5px;color:#5c6773;margin:0 0 9px}
+.fxrow{display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid #161b22}
+.fxrow .nm{flex:1;font:600 11px/1.3 var(--f);color:#c9d1d9}
+.fxrow .nm em{display:block;font-style:normal;font-size:9px;color:#5c6773}
+.ckpick{display:flex;gap:3px}
+.ckb{width:22px;height:22px;background:#161b22;border:1px solid var(--line);border-radius:4px;
+  font:800 9.5px/1 var(--f);color:#8b98a5;cursor:pointer}
+.ckb.on{background:rgba(227,179,65,.18);border-color:var(--warn);color:#e3b341}
+.ckb.full{border-color:var(--power);color:var(--power)}
+
+/* ── call sheet: the shared brief header for every sim ── */
+.callsheet{background:linear-gradient(180deg,#0e141b,#0b1016);border:1px solid var(--line);
+  border-radius:11px;overflow:hidden;margin:0 0 14px}
+.cshead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 13px;
+  background:#11181f;border-bottom:1px solid var(--line)}
+.csshow{font:800 10px/1 var(--f);letter-spacing:.09em;text-transform:uppercase;
+  padding:5px 9px;border-radius:5px;background:rgba(88,166,255,.14);color:#8cc2ff;
+  border:1px solid rgba(88,166,255,.3)}
+.csven{font:600 10.5px/1 var(--f);color:#8b98a5}
+.csclock{margin-left:auto;display:flex;align-items:center;gap:8px}
+.csdoors{font:700 10px/1 var(--f);color:var(--warn)}
+.cstime{font:800 15px/1 var(--f);color:#c9d1d9;font-variant-numeric:tabular-nums;
+  background:#0d1117;border:1px solid var(--line);border-radius:5px;padding:5px 9px}
+.cstime.over{color:var(--power);border-color:rgba(248,81,73,.4)}
+.csbody{padding:12px 14px}
+.csrole{font:700 10px/1.4 var(--f);color:#5c6773;margin:0 0 9px}
+.csrole b{color:#8b98a5}
+.cswho{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin:0 0 6px}
+.cswho .nm{font:800 12px/1.3 var(--f);color:var(--warn)}
+.cswho .mn{font:400 10.5px/1.3 var(--f);color:#5c6773;font-style:italic}
+.cssay{margin:0 0 10px;font:400 14px/1.6 var(--f);color:#d5dde5}
+.csreqs{margin:0;padding:0 0 0 17px;list-style:none}
+.csreqs li{position:relative;font:400 12.5px/1.55 var(--f);color:#a8b3bd;margin:0 0 4px}
+.csreqs li:before{content:"";position:absolute;left:-14px;top:7px;width:5px;height:5px;
+  border-radius:50%;background:var(--warn)}
+.csgrade{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:10px 0 0;
+  border-top:1px solid var(--line)}
+.csg{flex:1;min-width:104px;background:#0d1117;border:1px solid var(--line);
+  border-radius:7px;padding:8px 10px}
+.csg span{display:block;font:800 8.5px/1 var(--f);letter-spacing:.11em;color:#5c6773;margin:0 0 4px}
+.csg b{font:800 14px/1 var(--f);color:#c9d1d9}
+.csg.good b{color:var(--audio)} .csg.warn b{color:var(--warn)} .csg.bad b{color:var(--power)}
+@media(max-width:560px){.cstime{font-size:13px}.cssay{font-size:13px}}
+
+.homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
+  text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
+  border-radius:99px;transition:.15s}
+.homelink:hover{color:var(--txt);border-color:var(--dimmer)}
+
+/* ---------- rigging ---------- */
+ol.steps{display:block}
+.fb.warn{border-left-color:var(--warn)} .fb.warn b.h{color:var(--warn)}
+.rgopts{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:10px 0}
+.rgq{font-size:14px;margin:14px 0 4px;font-weight:600}
+.tagcard{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:12px 0}
+.tagcard .tgear{font:700 11px/1 var(--f);letter-spacing:.06em;text-transform:uppercase;color:var(--sdi)}
+.tagcard .tfind{font-size:15px;margin:8px 0 0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="homelink" href="../">← All guides</a>
+    <div class="badge" style="color:var(--sdi);border-color:var(--sdi)">Live Events · Rigging</div>
+    <h1>Rigging Field Guide</h1>
+    <p class="sub">Hardware, arena points and motors, bridle math, fly systems, truss and inspection — built to drill, not to read. Works offline.</p>
+  </div>
+</header>
+
+<nav role="tablist"><div class="navinner" id="nav"></div></nav>
+
+<div class="wrap">
+<section class="panel on" id="p-start">
+  <h2>How to use this</h2>
+  <p class="lede">Read the reference tabs once. Then live in the <b>Simulators</b>, <b>Drills</b> and <b>Scenarios</b> &mdash; that is where it sticks.</p>
+  <div class="key">
+    <b>The idea underneath all of rigging:</b> every load hangs on a <b>load path</b> &mdash; structure, attachment, sling, shackle, motor, truss, fixture &mdash; and the whole path is only as strong as its weakest piece. Your job is to know what every piece is rated for, keep every piece inside that rating (angles included), and tag out anything you would not hang over your own head.
+  </div>
+
+  <h3>The load path</h3>
+  <div class="chain">
+    <span class="node">Building steel</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Basket / beam wrap</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Shackle</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Bridle or dead hang</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Chain motor</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Truss</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Fixture + safety</span>
+  </div>
+
+  <h3>Color code</h3>
+  <div class="legend">
+    <span class="pill p-sdi">Hardware &middot; slings</span>
+    <span class="pill p-warn">Angles &middot; load math</span>
+    <span class="pill p-power">Stop &middot; tag it out</span>
+    <span class="pill p-audio">Safe &middot; in service</span>
+    <span class="pill p-data">Fly systems</span>
+  </div>
+
+  <h3>What's in here</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>Hardware</h4><p>WLL and design factor, shackles, steel, round slings, chain &mdash; and what each one is rated for.</p></div>
+    <div class="card L warn"><h4>Points &amp; Motors</h4><p>How an arena point goes from a chalk mark to a loaded hook. Up rigger, down rigger, chain motors.</p></div>
+    <div class="card L warn"><h4>Bridle Math</h4><p>Leg length, leg tension, the 120&deg; rule, and the one formula that covers unequal bridles.</p></div>
+    <div class="card L data"><h4>Fly Systems</h4><p>Counterweight and hemp. Loading order, the rope lock, trim, the fire curtain.</p></div>
+    <div class="card L rf"><h4>Truss &amp; Loads</h4><p>Load charts, tributary loads, flying truss level, wind, the numbers worth memorising.</p></div>
+    <div class="card L power"><h4>Safety &amp; Inspection</h4><p>Fall protection, calls, what retires a sling or shackle, OSHA numbers.</p></div>
+  </div>
+  <div class="key" style="border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.06)">
+    <b style="color:var(--power)">Before anything else.</b> This guide helps you understand the work and pass the test. It does not make you a qualified rigger. Point loads, structural capacity and anything you are unsure of belong to the <b>head rigger, the venue and the engineer</b>. If it does not look right, say so &mdash; every person on the call has the right to stop the work.
+  </div>
+  <div class="key" style="border-color:rgba(188,140,255,.3);background:rgba(188,140,255,.06)">
+    <b style="color:var(--sdi)">Save this to your phone.</b> Share &rarr; Add to Home Screen. Opens like an app and works with no signal.
+  </div>
+</section>
+
+<section class="panel" id="p-hw">
+  <h2>Hardware</h2>
+  <p class="lede">Every piece of rigging hardware carries a rating. Learn to find it, read it, and know what changes it.</p>
+
+  <h3>WLL, breaking strength, design factor</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>Minimum breaking strength (MBS)</h4><p>The load at which the part actually fails. <b>You never rig to this number.</b></p></div>
+    <div class="card L audio"><h4>Working load limit (WLL)</h4><p>The most you are allowed to put on it in service. <b>WLL = MBS &divide; design factor.</b> It is stamped, tagged or printed on the part.</p></div>
+    <div class="card L warn"><h4>Design factor (DF)</h4><p>The margin the manufacturer built in. <b>5:1</b> is the common minimum for rigging hardware and slings; performer flying uses more (often 10:1). The factor is <b>already inside the WLL</b> &mdash; don't apply it twice.</p></div>
+  </div>
+  <div class="key">
+    <b>What does reduce a WLL:</b> the <b>hitch</b> (choker, basket), the <b>angle</b> (sling angle, side-loaded shackle or eye bolt), <b>shock loading</b>, and <b>damage</b>. Those are real reductions you must account for. Re-dividing a WLL by the design factor is not &mdash; that is double-counting.
+  </div>
+
+  <h3>Shackles</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>Anchor (bow) shackle</h4><p>Round bow. The standard for arena work: takes two bridle legs in the bow. Screw-pin is what you will handle most.</p></div>
+    <div class="card L sdi"><h4>Chain (D) shackle</h4><p>Straight sides. For a single in-line pull only &mdash; not for multiple legs.</p></div>
+  </div>
+  <ol class="steps">
+    <li><b>Read the bow.</b> Size and WLL are forged into it. No markings, no use.</li>
+    <li><b>Pin fully seated.</b> Screw it in hand-tight, fully engaged, shoulder against the bow. A pin that is not fully threaded is not rated.</li>
+    <li><b>Mouse it</b> (seize with wire or a zip-tie as specified) when it will hang for the show or could be rotated by the load.</li>
+    <li><b>Multiple legs go in the bow, the single piece goes on the pin.</b> Keep the bow's included angle at or under 120&deg;.</li>
+    <li><b>Load in line.</b> Side loading cuts capacity &mdash; a common manufacturer table: 45&deg; off line &rarr; about 70% of WLL; 90&deg; &rarr; about 50%.</li>
+    <li><b>Never swap the pin for a bolt</b>, and never mix pins between shackles.</li>
+  </ol>
+  <table class="tbl">
+    <tr><th>Shackle size</th><th>Typical WLL (read the bow)</th><th>Where you'll see it</th></tr>
+    <tr><td>&frac12;&Prime;</td><td>2 t</td><td>Light points, fixture hardware</td></tr>
+    <tr><td>&#8541;&Prime;</td><td>3&frac14; t</td><td>The arena workhorse &mdash; baskets, bridles</td></tr>
+    <tr><td>&frac34;&Prime;</td><td>4&frac34; t</td><td>Heavier points, bridle apex on big loads</td></tr>
+  </table>
+
+  <h3>Steel (wire rope slings)</h3>
+  <p>&ldquo;Steel&rdquo; in an arena means wire-rope slings with eyes on both ends, cut to standard lengths (2&prime;, 5&prime;, 10&prime;, 20&prime;, 30&prime;, 50&prime;) and added together to make basket and bridle legs. 6&times;19 and 6&times;37 with an independent wire rope core (IWRC) are what you will see.</p>
+  <div class="grid">
+    <div class="card L sdi"><h4>6&times;19 vs 6&times;37</h4><p>Six strands of 19 or 37 wires. More, thinner wires = more flexible, less resistant to crushing and abrasion.</p></div>
+    <div class="card L sdi"><h4>Protect it at the beam</h4><p>Steel wrapped around a beam gets a <b>softener</b> &mdash; burlap, a sleeve or a pad &mdash; at every edge. Sharp flange edges cut wire and kill the bend.</p></div>
+    <div class="card L power"><h4>Kink, birdcage, crush</h4><p>Any of these permanently damages the rope. It does not get straightened and reused. <b>Tag it out.</b></p></div>
+  </div>
+
+  <h3>Round slings (spansets)</h3>
+  <p>Polyester core yarns inside a protective cover. Light, kind to finishes, and the cover colour tells you the rating. <b>The tag is the rating</b> &mdash; no tag, no lift.</p>
+  <table class="tbl">
+    <tr><th>Cover</th><th>Vertical WLL (lb)</th><th>Basket (vertical legs)</th></tr>
+    <tr><td><b style="color:#bc8cff">Purple</b></td><td>2,600</td><td>5,200</td></tr>
+    <tr><td><b style="color:#3fb950">Green</b></td><td>5,300</td><td>10,600</td></tr>
+    <tr><td><b style="color:#e3b341">Yellow</b></td><td>8,400</td><td>16,800</td></tr>
+    <tr><td><b style="color:#d2b48c">Tan</b></td><td>10,600</td><td>21,200</td></tr>
+    <tr><td><b style="color:#f85149">Red</b></td><td>13,200</td><td>26,400</td></tr>
+  </table>
+  <p class="expl">Industry color code for polyester round slings (WSTDA). A choker hitch is roughly 80% of vertical. A basket only doubles the rating when both legs hang vertical &mdash; spread them and the angle factor takes it back. Always confirm on the tag.</p>
+
+  <h3>Chain</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Grade 80 / 100 alloy</h4><p>The only chain for overhead lifting. Look for the grade stamp (8, 80, 10, 100) on the links.</p></div>
+    <div class="card L power"><h4>Grade 30 / 43 / 70</h4><p>Proof coil, high-test, transport chain. <b>Not for overhead lifting</b>, no matter how thick it looks.</p></div>
+    <div class="card L sdi"><h4>Deck chain / trim chain</h4><p>Short rated chain used to fine-tune a basket or bridle leg to the exact length. Shackle into a link, never hook a link sideways.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-points">
+  <h2>Points &amp; Motors</h2>
+  <p class="lede">An arena has no grid you can use as-is. Every show, the rig is built from points hung on the building's steel.</p>
+
+  <h3>Who does what</h3>
+  <div class="grid">
+    <div class="card L warn"><h4>Up rigger</h4><p>Works in the steel. Sets the basket or beam wrap at the plotted location, drops a rope, hauls up the hardware, builds the point. Tied off 100% of the time.</p></div>
+    <div class="card L sdi"><h4>Down rigger (ground rigger)</h4><p>Works on the floor. Finds the mark, builds the hardware bundle or bridle to the plot, ties it on, sends it up, hangs the motor. Keeps the floor under the work clear.</p></div>
+    <div class="card L rf"><h4>Head rigger</h4><p>Owns the plot, the loads and the call. Checks every point before it takes weight. Your questions go here.</p></div>
+  </div>
+
+  <h3>From chalk mark to loaded hook</h3>
+  <ol class="steps">
+    <li><b>Mark the floor.</b> Points are laid out from the rigging plot off a reference (usually centre line and a datum like the downstage edge). Each mark carries the point number and its type &mdash; dead hang or bridle, leg lengths, load.</li>
+    <li><b>Up rigger finds the steel over the mark</b> and calls &ldquo;<b>Rope!</b>&rdquo; before dropping a hand line to it.</li>
+    <li><b>Down rigger builds the bundle</b> to the plot: steel, shackles, deck chain, softeners. For a bridle, both legs are built on the floor so the apex hangs at the plotted spot.</li>
+    <li><b>Haul it up</b> &mdash; on the hand line or a motor, never over anyone. Everyone else stays out from under it.</li>
+    <li><b>Up rigger sets the basket</b> around the beam with softeners, shackles it, mouses what needs mousing.</li>
+    <li><b>Motor goes on.</b> Hook into the point (or the point into the motor, for a body-up hang), latch closed, chain checked for twist.</li>
+    <li><b>Head rigger checks the point</b> before it takes weight.</li>
+  </ol>
+
+  <h3>Chain motors</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>The usual motor</h4><p>A 1-ton or &frac12;-ton electric chain hoist (the CM Lodestar is the classic). Rated WLL is on the body. Chain runs into a <b>chain bag</b> that must hold all the chain.</p></div>
+    <div class="card L warn"><h4>Climbing vs body-up</h4><p><b>Climbing</b> (common on tour): motor is on the truss, hook goes to the point, motor climbs the chain. <b>Body-up</b>: motor hangs from the point and the hook lifts the load.</p></div>
+    <div class="card L power"><h4>Limit switches</h4><p>Upper and lower limits stop the hook before it hits the body (two-blocking) or runs out of chain. <b>Never bypass them.</b></p></div>
+    <div class="card L power"><h4>Running backwards</h4><p>Hit UP and it goes DOWN? <b>Stop.</b> The motor is out of phase &mdash; and on a reversed motor <b>the limit switches will not protect you.</b> Fix it at the controller/cable, not by holding the other button.</p></div>
+    <div class="card L rf"><h4>D8 vs D8+</h4><p>Hoist classes from the European standard most productions follow. <b>D8+</b> hoists have redundant brakes and a higher design factor so they can hold a load over people; a plain <b>D8</b> hoist over people needs a secondary safety.</p></div>
+    <div class="card L audio"><h4>Load cells</h4><p>On bigger rigs a load cell at each point reads actual weight live. A point reading high usually means something is snagged or the truss is out of level.</p></div>
+  </div>
+
+  <h3>Before a point leaves the floor</h3>
+  <div class="row">
+    <span class="counter" id="ckCount"></span>
+    <button class="btn" id="ckReset" style="margin-left:auto">Reset</button>
+  </div>
+  <div id="ckHost"></div>
+</section>
+
+<section class="panel" id="p-bridle">
+  <h2>Bridle Math</h2>
+  <p class="lede">A bridle puts a point where no beam is. Two legs from two beams meet at an apex. The legs always carry more than their share of the load &mdash; how much more depends on the angle.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 460 250" role="img" aria-label="Two-leg bridle between two beams with horizontal distances h1 and h2, vertical drop v and leg lengths L1 and L2">
+      <rect class="sf" x="40" y="20" width="60" height="14" rx="2"/>
+      <rect class="sf" x="340" y="20" width="60" height="14" rx="2"/>
+      <text class="lbl" x="70" y="14" text-anchor="middle">BEAM A</text>
+      <text class="lbl" x="370" y="14" text-anchor="middle">BEAM B</text>
+      <path class="s" style="stroke:#bc8cff;stroke-width:3" d="M70 34 L180 170"/>
+      <path class="s" style="stroke:#bc8cff;stroke-width:3" d="M370 34 L180 170"/>
+      <text class="lbl" x="108" y="100" style="fill:#bc8cff">L1</text>
+      <text class="lbl" x="285" y="96" style="fill:#bc8cff">L2</text>
+      <path class="s" style="stroke:#484f58;stroke-dasharray:4 4" d="M70 34 V170 H370 V34"/>
+      <path class="s" style="stroke:#484f58;stroke-dasharray:4 4" d="M180 34 V170"/>
+      <text class="lbl f-warn" x="125" y="186" text-anchor="middle">h1</text>
+      <text class="lbl f-warn" x="275" y="186" text-anchor="middle">h2</text>
+      <text class="lbl f-warn" x="192" y="104">v</text>
+      <circle cx="180" cy="170" r="6" fill="#0d1117" stroke="#e3b341" stroke-width="2.5"/>
+      <text class="lbl" x="196" y="166" style="font-size:9.5px">APEX (shackle)</text>
+      <path class="s" d="M180 176 V206"/>
+      <rect class="sf" x="164" y="206" width="32" height="24" rx="3"/>
+      <text class="lbl" x="180" y="244" text-anchor="middle">LOAD W</text>
+    </svg>
+    <div class="figcap"><b>h</b> = horizontal distance from the apex to each beam &middot; <b>v</b> = vertical drop from the beams to the apex &middot; <b>L</b> = leg length. The apex sits over the load, not halfway between the beams, unless the bridle is symmetrical.</div>
+  </div>
+
+  <h3>The three formulas</h3>
+  <table class="tbl">
+    <tr><th>You want</th><th>Formula</th><th>Plain words</th></tr>
+    <tr><td>Leg length</td><td><b>L = &radic;(h&sup2; + v&sup2;)</b></td><td>Pythagoras. Round <b>up</b> to the steel and chain you have.</td></tr>
+    <tr><td>Each leg's share of the weight</td><td><b>V1 = W &times; h2 &divide; (h1 + h2)</b></td><td>The leg <b>closer</b> to the load carries <b>more</b>. Symmetrical: each carries W &divide; 2.</td></tr>
+    <tr><td>Leg tension</td><td><b>T = V &times; L &divide; v</b></td><td>Share of the weight times leg length over drop. Always bigger than V.</td></tr>
+  </table>
+  <div class="key">
+    <b>Worked example.</b> 1,000 lb load, beams 6&prime; either side of the apex, 8&prime; drop. L = &radic;(36 + 64) = <b>10&prime;</b>. Each leg's share = 500 lb. Tension = 500 &times; 10 &divide; 8 = <b>625 lb per leg</b>. Both legs together carry 1,250 lb of tension to hold up 1,000 lb &mdash; that extra is what the angle costs you.
+  </div>
+
+  <h3>The angle table</h3>
+  <table class="tbl">
+    <tr><th>Leg angle from horizontal</th><th>Included angle at apex</th><th>Each leg (symmetrical)</th><th>Verdict</th></tr>
+    <tr><td>90&deg; (vertical)</td><td>0&deg;</td><td>50% of W</td><td>Dead hang</td></tr>
+    <tr><td>60&deg;</td><td>60&deg;</td><td>58% of W</td><td style="color:var(--audio)">Comfortable</td></tr>
+    <tr><td>45&deg;</td><td>90&deg;</td><td>71% of W</td><td style="color:var(--audio)">Common, fine</td></tr>
+    <tr><td>30&deg;</td><td>120&deg;</td><td>100% of W</td><td style="color:var(--warn)">The limit</td></tr>
+    <tr><td>15&deg;</td><td>150&deg;</td><td>193% of W</td><td style="color:var(--power)">Never</td></tr>
+  </table>
+  <p class="expl"><b>Keep the included angle at or under 120&deg;.</b> At 120&deg; each leg carries the whole load. Past it, each leg carries more than the load itself, and the sideways pull on the beams climbs fast. Sling angle factor = 1 &divide; sin(angle from horizontal).</p>
+
+  <div class="grid">
+    <div class="card L warn"><h4>Unequal bridles</h4><p>Different h on each side. The short-side leg is steeper and carries more of the weight; check <b>both</b> legs &mdash; the long one is flatter, so its tension can still be high.</p></div>
+    <div class="card L sdi"><h4>Beams at different heights</h4><p>Then v is different for each leg and the simple formulas above don't hold. That's the head rigger's or the software's calculation.</p></div>
+    <div class="card L power"><h4>Horizontal pull</h4><p>Every bridle leg pulls the beam sideways as well as down. Buildings are designed for down. That's why bridle points are on the venue's approved list, not wherever they fit.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-fly">
+  <h2>Fly Systems</h2>
+  <p class="lede">Theatres have a permanent system. Counterweight is most common; hemp is still around. Most theatres also have a fire curtain you must never block.</p>
+
+  <h3>Counterweight line set</h3>
+  <div class="chain">
+    <span class="node">Batten (pipe)</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Lift lines</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Loft blocks</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Head block</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Arbor (counterweight)</span>
+  </div>
+  <div class="grid">
+    <div class="card L data"><h4>Arbor</h4><p>Carriage that holds the counterweight bricks, kept in place by <b>spreader plates</b> and a locking plate on top. Rides in a T-track or wire guides.</p></div>
+    <div class="card L data"><h4>Purchase (operating) line</h4><p>The rope the flyman pulls. Runs from the top of the arbor over the head block, down through the <b>rope lock</b> on the lock rail, around the tension block at the floor, back to the bottom of the arbor.</p></div>
+    <div class="card L power"><h4>Rope lock</h4><p>Holds a <b>balanced</b> set in place. It is not a brake and is not designed to hold a set that is badly out of balance.</p></div>
+    <div class="card L data"><h4>Short, centre, long lines</h4><p>Lift lines are named by their distance from the head block: <b>short line</b> is nearest the fly gallery side, <b>long line</b> is farthest.</p></div>
+  </div>
+
+  <h3>Loading and unloading &mdash; the rule</h3>
+  <div class="key" style="border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.06)">
+    <b style="color:var(--power)">Loading: load on the batten first, then counterweight in the arbor. Unloading: counterweight out of the arbor first, then load off the batten.</b><br>
+    During loading the batten is at its low position and the arbor is up at the loading gallery. If the arbor ever outweighs the batten, the arbor falls and the batten flies out &mdash; a <b>runaway</b>. Keep the batten side heavy until the set is balanced.
+  </div>
+  <ol class="steps">
+    <li><b>Talk first.</b> Loading gallery and deck agree on what is coming on or off, and how much.</li>
+    <li><b>Rope lock on</b>, set at its low trim. Nobody unlocks a set that is being loaded.</li>
+    <li><b>Batten load goes on</b> &mdash; scenery, lights, pipe weight.</li>
+    <li><b>Counterweight goes in</b> at the loading gallery, spreader plates as you go, locking plate on top. Call &ldquo;<b>Heads!</b>&rdquo; and never lean over the rail.</li>
+    <li><b>Check balance</b> with a hand on the purchase line before the lock comes fully off. It should move with steady effort and stay where you leave it.</li>
+  </ol>
+
+  <h3>Words you'll hear</h3>
+  <div class="grid">
+    <div class="card L data"><h4>Trim</h4><p>The set's height for the show (in-trim / out-trim). Marked on the purchase line with spike tape.</p></div>
+    <div class="card L data"><h4>Arbor heavy / pipe heavy</h4><p>Which side outweighs the other. A slightly pipe-heavy set is safer than an arbor-heavy one.</p></div>
+    <div class="card L data"><h4>Hemp set</h4><p>Rope lines tied off (belayed) to pins on a pin rail, balanced by sandbags or muscle. No mechanical counterweight &mdash; the operator is the brake.</p></div>
+    <div class="card L power"><h4>Fire curtain</h4><p>Drops by gravity to separate stage from house. <b>Nothing</b> &mdash; cable, scenery, a ladder, a road case &mdash; ever sits in its path.</p></div>
+  </div>
+
+  <h3>Mechanical advantage</h3>
+  <table class="tbl">
+    <tr><th>Rig</th><th>Supporting parts</th><th>Theoretical MA</th></tr>
+    <tr><td>Single whip</td><td>1</td><td>1:1 (direction change only)</td></tr>
+    <tr><td>Gun tackle</td><td>2</td><td>2:1</td></tr>
+    <tr><td>Luff tackle</td><td>3</td><td>3:1</td></tr>
+    <tr><td>Double purchase</td><td>4</td><td>4:1</td></tr>
+  </table>
+  <p class="expl">Count the rope parts supporting the moving block. Friction costs roughly 10% per sheave, so the real advantage is always less than the count. Don't confuse the tackle above with a <b>double-purchase counterweight set</b>: there the arbor travels half the distance of the batten and carries twice its weight.</p>
+</section>
+
+<section class="panel" id="p-truss">
+  <h2>Truss &amp; Loads</h2>
+  <p class="lede">Truss is rated by its manufacturer, for a given span and a given way of loading it. The chart is the rating &mdash; not how strong it looks.</p>
+
+  <div class="grid">
+    <div class="card L rf"><h4>Box truss</h4><p>Four chords. The standard for touring rigs. 12&Prime; and 20.5&Prime; box are the common sizes.</p></div>
+    <div class="card L rf"><h4>Triangle / ladder</h4><p>Three or two chords. Lighter, weaker, orientation matters. Ladder is not for heavy point loads.</p></div>
+    <div class="card L power"><h4>Damage</h4><p>Bent or dented chord or diagonal, cracked weld, damaged spigot or coupler &mdash; <b>out of service</b>. Aluminium is never straightened and reused.</p></div>
+    <div class="card L sdi"><h4>Connections</h4><p>Spigots, pins and R-clips (or bolts) on every connection. Every pin, every time. Don't mix manufacturers.</p></div>
+  </div>
+
+  <h3>Reading a load chart</h3>
+  <div class="grid">
+    <div class="card L warn"><h4>UDL</h4><p>Uniformly distributed load &mdash; weight spread evenly along the span. Usually the biggest number on the chart.</p></div>
+    <div class="card L warn"><h4>Point loads</h4><p>Centre point, third points, quarter points. A single load at mid-span is the worst case &mdash; much lower than the UDL.</p></div>
+    <div class="card L warn"><h4>Span</h4><p>Distance between supports (motors). Longer span, lower allowable load &mdash; fast.</p></div>
+  </div>
+
+  <h3>Flying truss</h3>
+  <ol class="steps">
+    <li>Clear the floor under and around it. One voice calls the moves.</li>
+    <li>Bump each motor until all chains are just taut &mdash; truss still on the floor.</li>
+    <li>Lift a few inches and <b>stop</b>. Check level, check every point, check nothing is snagged.</li>
+    <li>Fly to trim, keeping it level the whole way. A lagging motor racks the truss and overloads the others &mdash; stop and bump to level.</li>
+  </ol>
+
+  <h3>How much is at each motor</h3>
+  <p>Each motor carries the weight in its <b>tributary zone</b> &mdash; half the distance to each neighbour &mdash; plus the motor, chain and anything hung right at the point. End motors only have half a zone on one side.</p>
+  <div class="key"><b>Example.</b> 40&prime; truss on 4 evenly spaced motors with 20 lb/ft spread along it. Spacing is about 13.3&prime;. Interior motors carry about 13.3&prime; &times; 20 = 267 lb of that load; end motors about 133 lb. Then add the motor, chain bag and cable at each point. <b>Cable is the weight everyone underestimates.</b></div>
+
+  <h3>Numbers worth memorising</h3>
+  <table class="tbl">
+    <tr><th>What</th><th>Number</th></tr>
+    <tr><td>Common hardware design factor</td><td>5:1 (in the WLL already)</td></tr>
+    <tr><td>Performer flying design factor</td><td>Typically 10:1</td></tr>
+    <tr><td>Max bridle included angle</td><td>120&deg;</td></tr>
+    <tr><td>Sling angle factor at 30&deg; / 45&deg; / 60&deg;</td><td>2.0 / 1.41 / 1.15</td></tr>
+    <tr><td>Dynamic load factor</td><td>DLF = 1 + a &divide; g (g = 32.2 ft/s&sup2;)</td></tr>
+    <tr><td>Wind pressure</td><td>q = 0.00256 &times; V&sup2; psf (V in mph)</td></tr>
+    <tr><td>Centre point load moment, simple span</td><td>M = P &times; L &divide; 4</td></tr>
+    <tr><td>Deflection limit</td><td>Manufacturer's &mdash; L/180 to L/360 is common</td></tr>
+  </table>
+  <p class="expl">Outdoor rigs run on a written <b>wind plan</b> with set speeds for watching, dropping soft goods, landing the rig and evacuating. The structure's plan sets the numbers, not the guide.</p>
+</section>
+
+<section class="panel" id="p-safety">
+  <h2>Safety &amp; Inspection</h2>
+  <p class="lede">Most rigging injuries come from falls, dropped objects and gear that should have been tagged out. All three are preventable.</p>
+
+  <h3>Calls everybody knows</h3>
+  <div class="grid">
+    <div class="card L power"><h4>&ldquo;Headache!&rdquo;</h4><p>Something is falling. <b>Don't look up</b> &mdash; cover your head and move out from under the work.</p></div>
+    <div class="card L warn"><h4>&ldquo;Rope!&rdquo;</h4><p>A line is being dropped from above. Clear the area under it.</p></div>
+    <div class="card L warn"><h4>&ldquo;Heads!&rdquo;</h4><p>Something is moving overhead &mdash; a set flying in, a point going up. Look and stay clear.</p></div>
+    <div class="card L audio"><h4>&ldquo;Motors running&rdquo;</h4><p>Chain motors are moving. Nobody under the rig; eyes on every point.</p></div>
+  </div>
+
+  <h3>Fall protection</h3>
+  <div class="grid">
+    <div class="card L power"><h4>When</h4><p>OSHA: <b>4 ft</b> in general industry, <b>6 ft</b> in construction, <b>10 ft</b> on scaffolds. In the steel, you are tied off <b>100%</b> of the time &mdash; including while moving.</p></div>
+    <div class="card L sdi"><h4>The system (ABCs)</h4><p><b>A</b>nchorage rated 5,000 lb per person (or engineered), <b>B</b>ody harness (full body, never a belt), <b>C</b>onnector (lanyard or self-retracting lifeline).</p></div>
+    <div class="card L warn"><h4>Clearance</h4><p>Free fall + lanyard deceleration + your height + a safety margin must fit above the next level down. A 6-ft lanyard needs far more than 6 ft below.</p></div>
+    <div class="card L power"><h4>Suspension trauma</h4><p>Hanging still in a harness can make you lose consciousness within minutes. There has to be a <b>rescue plan</b> before anyone goes up.</p></div>
+  </div>
+
+  <h3>Tag it out &mdash; what retires gear</h3>
+  <table class="tbl">
+    <tr><th>Gear</th><th>Out of service when</th></tr>
+    <tr><td>Steel (wire rope)</td><td>Kink, birdcage, crushing, heat damage, heavy corrosion, any broken wire at a fitting, broken-wire count over the limit for that rope, damaged or missing tag</td></tr>
+    <tr><td>Round sling</td><td>Cover cut or worn through, core yarns showing, melting or charring, chemical damage, knots, missing or unreadable tag</td></tr>
+    <tr><td>Shackle</td><td>Bent bow or pin, pin that won't seat, cracks, heavy wear, no markings, non-original pin</td></tr>
+    <tr><td>Hook</td><td>Throat opened or twisted beyond the manufacturer's limit, crack, missing or broken latch</td></tr>
+    <tr><td>Chain</td><td>Stretched links (gauge it), nicks, gouges, cracks, heat damage, wrong grade</td></tr>
+    <tr><td>Truss</td><td>Bent or dented members, cracked welds, damaged spigots or holes</td></tr>
+  </table>
+  <p class="expl">Broken-wire limits differ by standard and rope type &mdash; sling standards and running-rope standards use different counts. On a call, you don't need the number: <b>any broken wire you can see goes to the head rigger</b>. When in doubt, tag it out.</p>
+
+  <h3>OSHA numbers</h3>
+  <table class="tbl">
+    <tr><th>Event</th><th>Report to OSHA within</th></tr>
+    <tr><td>Work-related fatality</td><td>8 hours</td></tr>
+    <tr><td>In-patient hospitalisation, amputation or loss of an eye</td><td>24 hours</td></tr>
+  </table>
+  <div class="key"><b>Stop work authority.</b> Anyone on the call can stop the work when they see something unsafe &mdash; and it is protected. Hierarchy of controls, best to worst: <b>eliminate &rarr; substitute &rarr; engineer &rarr; administrative &rarr; PPE</b>.</div>
+</section>
+
+<section class="panel" id="p-sim">
+  <h2>Build the Bridle</h2>
+  <p class="lede">The head rigger hands you a point off the plot. Work out the leg lengths, the tension in each leg, and whether the hardware will hold it.</p>
+  <div class="sim" id="bridleSim">
+    <div class="ldbrief" id="brBrief"></div>
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="brStatus"></span>
+      <button class="btn" id="brNext" style="margin-left:auto">Next point</button>
+    </div>
+    <div class="fig" style="margin-top:0"><svg id="brSvg" viewBox="0 0 460 230" role="img" aria-label="Bridle geometry for this point"></svg></div>
+    <div id="brSteps"></div>
+    <div id="brFeed"></div>
+  </div>
+  <div class="key">
+    <b>What it's drilling.</b> Pythagoras for leg length, the closer leg carrying more, tension always beating the leg's share of the weight, the 120&deg; limit, and checking hardware against the <b>tension</b> &mdash; not the load.
+  </div>
+
+  <h2>Tag It Out</h2>
+  <p class="lede">Shop prep before a load-out. Every piece in the pile gets a decision: back in the case or out of service.</p>
+  <div class="sim" id="tagSim">
+    <div class="ldbrief" id="tgBrief"></div>
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="tgStatus"></span>
+      <button class="btn" id="tgRestart" style="margin-left:auto">Restart</button>
+    </div>
+    <div id="tgCard"></div>
+    <div id="tgFeed"></div>
+  </div>
+  <div class="key">
+    <b>What it's drilling.</b> The difference between cosmetic and structural, what the tag is worth, and the habit that saves people: <b>when in doubt, tag it out</b>.
+  </div>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly &mdash; "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer &mdash; including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Sequence Builder</h2>
+  <p class="lede">Tap the steps in the correct order. Wrong step and it tells you immediately.</p>
+  <div id="chainHost"></div>
+</section>
+
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>
+<footer>
+  Rigging Field Guide · Study and drill tool. It does not make anyone a qualified rigger — the head rigger, the venue and the engineer have the final word<br>
+  Gear illustrations are simplified diagrams for identification, not manufacturer specifications.
+</footer>
+</div>
+
+<script>
+/* ═══════════ call sheet — shared brief + clock for every sim ═══════════ */
+window.CallSheet=(function(){
+  var reg={};
+  function fmt(s){
+    var m=Math.floor(s/60), r=s%60;
+    return m+":"+(r<10?"0":"")+r;
+  }
+  function render(hostId,b){
+    var el=document.getElementById(hostId); if(!el) return;
+    var st=reg[hostId];
+    if(st&&st.iv) clearInterval(st.iv);
+    st=reg[hostId]={brief:b,elapsed:0,iv:null,stopped:false};
+
+    el.className="callsheet";
+    el.innerHTML=
+      '<div class="cshead">'+
+        '<span class="csshow">'+b.show+'</span>'+
+        '<span class="csven">'+b.venue+'</span>'+
+        '<span class="csclock"><span class="csdoors">'+b.clock+'</span>'+
+        '<span class="cstime" id="'+hostId+'_t">0:00</span></span>'+
+      '</div>'+
+      '<div class="csbody">'+
+        '<p class="csrole">YOU ARE <b>'+b.role+'</b> &nbsp;&middot;&nbsp; TARGET <b>'+b.target+' min</b></p>'+
+        '<div class="cswho"><span class="nm">'+b.boss+'</span><span class="mn">'+b.manner+'</span></div>'+
+        '<p class="cssay">&ldquo;'+b.say+'&rdquo;</p>'+
+        '<ul class="csreqs">'+b.reqs.map(function(r){return "<li>"+r+"</li>"}).join("")+'</ul>'+
+      '</div>';
+
+    st.iv=setInterval(function(){
+      if(st.stopped) return;
+      st.elapsed++;
+      var t=document.getElementById(hostId+"_t");
+      if(!t){ clearInterval(st.iv); return }
+      t.textContent=fmt(st.elapsed);
+      if(st.elapsed>b.target*60) t.className="cstime over";
+    },1000);
+  }
+  function stop(hostId){
+    var st=reg[hostId]; if(!st) return 0;
+    st.stopped=true; return st.elapsed;
+  }
+  /* returns a grade block to append to feedback, plus a verdict string */
+  function grade(hostId){
+    var st=reg[hostId]; if(!st) return {html:"",late:false,mins:0};
+    var mins=st.elapsed/60, t=st.brief.target;
+    var late = mins>t;
+    var cls = mins<=t*0.75 ? "good" : (late ? "bad" : "warn");
+    var note = mins<=t*0.75
+        ? "Ahead of the call."
+        : (!late ? "Inside the window." : "Over the window by "+Math.ceil(mins-t)+" min.");
+    return {
+      late:late, mins:mins,
+      html:'<div class="csgrade">'+
+        '<div class="csg '+cls+'"><span>YOUR TIME</span><b>'+fmt(st.elapsed)+'</b></div>'+
+        '<div class="csg"><span>THE CALL ALLOWED</span><b>'+t+':00</b></div>'+
+        '<div class="csg '+cls+'"><span>PACE</span><b>'+note+'</b></div>'+
+      '</div>'
+    };
+  }
+  return {render:render, stop:stop, grade:grade, fmt:fmt};
+})();
+
+
+(function(){
+"use strict";
+var STORE="rigging";
+var TABS=[["p-start","Start"],["p-hw","Hardware"],["p-points","Points & Motors"],["p-bridle","Bridle Math"],["p-fly","Fly Systems"],["p-truss","Truss & Loads"],["p-safety","Safety"],["p-sim","Simulators"],["p-drills","Drills"],["p-scen","Scenarios"]];
+
+var CARDS=[
+["What does WLL mean?","<b>Working load limit</b> &mdash; the most you may put on a part in service. WLL = minimum breaking strength &divide; design factor."],
+["What is a design factor?","The margin between breaking strength and WLL. <b>5:1</b> is the common minimum for rigging hardware and slings. It is already inside the WLL."],
+["A sling is rated 3,500 lb WLL and the leg tension is 3,200 lb. OK?","<b>Yes.</b> The design factor is already in the WLL. Dividing by it again is double-counting."],
+["What actually reduces a WLL?","The <b>hitch</b> (choker, basket), the <b>angle</b> (sling angle, side-loaded shackle or eye bolt), <b>shock loading</b> and <b>damage</b>."],
+["Anchor (bow) shackle vs chain (D) shackle?","<b>Bow:</b> round, takes multiple legs &mdash; the arena standard. <b>D:</b> straight, for a single in-line pull only."],
+["Two bridle legs and a motor hook on one shackle &mdash; what goes where?","<b>Legs in the bow, hook on the pin.</b> Keep the included angle in the bow at or under 120&deg;."],
+["What is mousing?","Seizing a shackle pin with wire or a tie so vibration or rotation can't back it out."],
+["Side-loaded shackle at 90&deg; &mdash; roughly what capacity?","About <b>50%</b> of WLL on a common manufacturer table (about 70% at 45&deg;). Keep shackles loaded in line."],
+["Typical WLL of a 5/8&Prime; screw-pin anchor shackle?","<b>3&frac14; t</b> &mdash; but always read the bow."],
+["What is &ldquo;steel&rdquo; in an arena?","Wire-rope slings with eyes both ends, in standard lengths, combined to make baskets and bridle legs."],
+["6&times;19 &mdash; what do the numbers mean?","<b>6 strands, 19 wires per strand.</b> 6&times;37 is more flexible but less crush- and abrasion-resistant."],
+["What is IWRC?","<b>Independent wire rope core</b> &mdash; a small wire rope at the centre. Holds its shape under load and crushing better than a fibre core."],
+["Why softeners on a beam?","Flange edges cut steel and slings. Burlap, sleeves or pads at every edge the sling touches."],
+["Steel with a kink in it?","<b>Tag it out.</b> Kinks, birdcaging and crushing are permanent damage. It does not get straightened and reused."],
+["Round sling colours: purple, green, yellow &mdash; vertical WLL?","<b>Purple 2,600 lb &middot; green 5,300 &middot; yellow 8,400.</b> (WSTDA code &mdash; always confirm on the tag.)"],
+["Round sling in a basket &mdash; does it double?","Only when both legs hang <b>vertical</b>. Spread the legs and the angle factor takes it back."],
+["Round sling with no tag?","<b>Out of service.</b> The tag is the rating. No tag, no lift."],
+["Which chain grades are for overhead lifting?","<b>Grade 80 and 100 alloy</b> only. Grade 30, 43 and 70 are not, however thick."],
+["Up rigger vs down rigger?","<b>Up:</b> in the steel &mdash; baskets, builds the point, tied off 100%. <b>Down:</b> on the floor &mdash; marks, builds bundles and bridles, sends hardware up, hangs motors."],
+["What does &ldquo;Rope!&rdquo; mean?","A line is about to be dropped from above. Clear the area under it."],
+["What do you do when someone yells &ldquo;Headache!&rdquo;?","<b>Don't look up.</b> Cover your head and move out from under the work."],
+["What is two-blocking?","The hook block running into the hoist body at the top of travel. It can break the chain. The upper limit switch prevents it."],
+["Chain motor runs DOWN when you press UP. What now?","<b>Stop.</b> It's out of phase &mdash; and on a reversed motor the <b>limit switches won't protect you</b>. Fix the phase at the controller or cable."],
+["Climbing motor vs body-up?","<b>Climbing:</b> motor on the truss, hook to the point, motor climbs its chain. <b>Body-up:</b> motor hangs from the point, hook lifts the load."],
+["D8 vs D8+ hoist?","<b>D8+</b> has redundant brakes and a higher design factor and can hold a load over people. A <b>D8</b> over people needs a secondary safety."],
+["Bridle leg length formula?","<b>L = &radic;(h&sup2; + v&sup2;)</b>. h = horizontal to the beam, v = vertical drop. Round up to the steel and chain you have."],
+["Which bridle leg carries more weight?","The leg <b>closer</b> to the load (shorter horizontal distance). Its share = W &times; (other leg's h) &divide; (h1 + h2)."],
+["Bridle leg tension formula?","<b>T = V &times; L &divide; v</b> &mdash; the leg's share of the weight, times leg length over vertical drop."],
+["Maximum bridle included angle?","<b>120&deg;.</b> At 120&deg; each leg carries the full load. Past it, each leg carries more than the load."],
+["Sling angle factor at 30&deg;, 45&deg; and 60&deg; from horizontal?","<b>2.0, 1.41, 1.15.</b> Factor = 1 &divide; sin(angle)."],
+["Counterweight loading order?","<b>Batten first, then arbor.</b> Unloading: <b>arbor first, then batten.</b> Never let the arbor outweigh the batten during loading."],
+["What is a runaway?","An out-of-balance set moving on its own &mdash; usually an arbor-heavy set flying out when the lock is released."],
+["Is a rope lock a brake?","<b>No.</b> It holds a balanced set. It is not designed to hold a set badly out of balance."],
+["Short line, centre line, long line?","Lift lines named by distance from the head block. <b>Short line</b> is nearest the fly-gallery side."],
+["Double purchase &mdash; what changes?","The arbor travels <b>half</b> the batten's distance and carries <b>twice</b> its weight. Theoretical MA 2:1 at the arbor."],
+["What goes in the fire curtain's path?","<b>Nothing.</b> Ever. It has to drop by gravity all the way to the deck."],
+["UDL vs point load on truss?","<b>UDL:</b> spread evenly &mdash; usually the highest rating. <b>Point load:</b> concentrated &mdash; a single centre load is the worst case."],
+["Bent diagonal on a truss section?","<b>Out of service.</b> Aluminium is never straightened and reused. Engineer or manufacturer decides."],
+["Dynamic load factor?","<b>DLF = 1 + a &divide; g</b>, g = 32.2 ft/s&sup2;. Any start, stop or bounce adds load."],
+["Wind pressure formula?","<b>q = 0.00256 &times; V&sup2;</b> (psf, V in mph). 60 mph &asymp; 9.2 psf."],
+["OSHA fall protection heights?","<b>4 ft</b> general industry &middot; <b>6 ft</b> construction &middot; <b>10 ft</b> scaffolds."],
+["Fall arrest anchorage strength?","<b>5,000 lb per person</b>, or engineered for the job."],
+["What is suspension trauma?","Hanging still in a harness after a fall &mdash; blood pools in the legs and you can lose consciousness within minutes. Plan the rescue <b>before</b> anyone goes up."],
+["OSHA reporting deadlines?","<b>Fatality: 8 hours.</b> Hospitalisation, amputation, loss of an eye: <b>24 hours.</b>"],
+["Hierarchy of controls?","<b>Eliminate &rarr; substitute &rarr; engineer &rarr; administrative &rarr; PPE.</b> PPE is the last line, not the first."]
+];
+
+var QS=[
+{q:"A chain motor is rated 1 ton (2,000 lb) WLL. You need to fly 500 lb over the audience. Is the motor adequate on capacity?",
+  o:["No — multiply 500 by 7 for people below","Yes — the design factor is already in the WLL; 500 lb is well under 2,000","Only at half speed","Only with a load cell"],a:1,
+  e:"<b>WLL already includes the design factor.</b> 500 lb on a 2,000 lb WLL hoist is within rating. Over people, what matters is the hoist's <b>class</b> (D8+ or a secondary safety), not re-dividing the WLL."},
+{q:"Two bridle legs and a motor hook go on one anchor shackle. Where does each go?",
+  o:["Legs on the pin, hook in the bow","Legs in the bow, hook on the pin","One leg on each side of the pin","It doesn't matter if the shackle is big enough"],a:1,
+  e:"<b>Multiple legs in the bow, single piece on the pin.</b> Legs on the pin side-load it and spread it. Keep the included angle in the bow at or under 120°."},
+{q:"Symmetrical bridle: 2,000 lb load, each beam 8 ft horizontally from the apex, 6 ft drop. What is each leg's length and tension?",
+  o:["10 ft, 1,000 lb","10 ft, about 1,667 lb","14 ft, about 1,333 lb","8 ft, 2,000 lb"],a:1,
+  e:"L = √(8² + 6²) = <b>10 ft</b>. Each leg's share = 1,000 lb. T = 1,000 × 10 ÷ 6 = <b>about 1,667 lb</b>. Flat legs (8 across, only 6 down) cost a lot of tension."},
+{q:"Unequal bridle: 1,200 lb, apex 4 ft from beam A and 8 ft from beam B, 6 ft drop. Which leg carries more of the weight, and how much?",
+  o:["Leg B — 800 lb","Leg A — 800 lb","They split it 600 / 600","Leg A — 400 lb"],a:1,
+  e:"Share A = 1,200 × 8 ÷ (4 + 8) = <b>800 lb</b>. The leg <b>closer</b> to the load carries more. Its tension = 800 × √(4²+6²) ÷ 6 = about 961 lb."},
+{q:"At what included angle does each leg of a symmetrical bridle carry the full load?",
+  o:["60°","90°","120°","180°"],a:2,
+  e:"<b>120°</b> included = 30° from horizontal; 1 ÷ sin 30° = 2, times half the load = the whole load in each leg. That is the limit — past it, each leg carries more than the load itself."},
+{q:"A purple round sling (2,600 lb vertical) is used in a basket with both legs hanging vertical. Capacity?",
+  o:["1,300 lb","2,080 lb","2,600 lb","5,200 lb"],a:3,
+  e:"A basket with <b>vertical</b> legs doubles the vertical rating: <b>5,200 lb</b>. Spread the legs and the sling angle factor reduces it. A choker is about 80% of vertical."},
+{q:"A round sling's cover has a cut and you can see core yarns. The tag is fine. Decision?",
+  o:["Keep it — the core carries the load","Tape over it and use it for light loads","Tag it out","Use it on the ground only"],a:2,
+  e:"<b>Tag it out.</b> The cover protects the core from cuts, abrasion and UV. Once the core is exposed, nobody can vouch for the rating."},
+{q:"You press UP on a chain motor and it runs DOWN. What's the right move?",
+  o:["Use the DOWN button to go up for now","Stop, and get the phase corrected before running it again","Swap the chain bag","Run it to the lower limit to reset it"],a:1,
+  e:"<b>Stop.</b> A reversed motor is out of phase, and its limit switches won't protect it — it can two-block or run off its chain. Correct the phase at the controller or cable."},
+{q:"What is two-blocking?",
+  o:["Two motors on one controller","The hook block hitting the hoist body at the top of travel","Two shackles in series","A bridle with two legs"],a:1,
+  e:"Two-blocking drives the hook into the body; the force can break the chain or the hook. The <b>upper limit switch</b> exists to stop it. Never bypass a limit."},
+{q:"Loading a counterweight set for the first time. What order?",
+  o:["Counterweight first, then the batten load","Batten load first, then counterweight","Both at the same time","Whichever crew is ready first"],a:1,
+  e:"<b>Batten first, then arbor.</b> The batten is down and the arbor is up at the loading gallery. If the arbor gets heavier than the batten, it falls and the batten flies out — a runaway."},
+{q:"Scenery has just been taken off a batten but the arbor still has its full counterweight. Someone reaches for the rope lock. What do you say?",
+  o:["Go ahead, it's empty now","Stop — the set is arbor-heavy; weight comes out of the arbor before that lock comes off","Pull it slowly","Only if two people hold the rope"],a:1,
+  e:"The set is now badly <b>arbor-heavy</b>. Releasing the lock is a runaway. When unloading, <b>counterweight comes off first</b>, then the batten load."},
+{q:"Short line, centre line and long line on a line set are named by:",
+  o:["Their distance from the head block","Upstage to downstage order","The weight they carry","The length of the batten"],a:0,
+  e:"Lift lines are named by their distance from the head block. The <b>short line</b> is nearest the fly-gallery side, the <b>long line</b> farthest."},
+{q:"A section of box truss has a bent diagonal. Correct action?",
+  o:["Straighten it and use it at half load","Use it at the end of a run where loads are low","Out of service until the manufacturer or an engineer says otherwise","Tape it so it's visible and keep going"],a:2,
+  e:"<b>Out of service.</b> Bent or dented members change how the truss carries load, and aluminium is never straightened and reused."},
+{q:"A 40 ft truss hangs on four evenly spaced motors with 20 lb/ft spread along it. Roughly what does each interior motor carry from that spread load?",
+  o:["200 lb","About 267 lb","400 lb","800 lb"],a:1,
+  e:"Spacing ≈ 13.3 ft. Each interior motor carries its tributary zone — half to each neighbour: 13.3 × 20 ≈ <b>267 lb</b>. End motors get about 133 lb. Then add motor, chain and cable."},
+{q:"A chain hoist accelerates a 1,000 lb load at 4 ft/s². Effective load?",
+  o:["About 1,000 lb","About 1,124 lb","About 1,500 lb","About 4,000 lb"],a:1,
+  e:"DLF = 1 + 4 ÷ 32.2 = 1.124. 1,000 × 1.124 ≈ <b>1,124 lb</b>. Starts, stops and bounces always add load."},
+{q:"Wind pressure on a 10 × 10 ft video wall at 60 mph, before any shape factor?",
+  o:["About 92 lb","About 600 lb","About 920 lb","About 6,000 lb"],a:2,
+  e:"q = 0.00256 × 60² ≈ 9.2 psf. 9.2 × 100 sq ft ≈ <b>920 lb</b> sideways — more once the shape factor for a flat panel is applied. That's why outdoor rigs run on a wind plan."},
+{q:"OSHA's fall protection trigger height in general industry is:",
+  o:["4 ft","6 ft","10 ft","15 ft"],a:0,
+  e:"<b>4 ft</b> in general industry, 6 ft in construction, 10 ft on scaffolds. In the steel you are tied off 100% regardless."},
+{q:"Someone yells “Headache!” while you're on the floor. You:",
+  o:["Look up to see what's coming","Cover your head and move out from under the work without looking up","Freeze where you are","Yell it back and keep working"],a:1,
+  e:"<b>Don't look up</b> — that puts your face in the path. Cover your head and move out from under the work."},
+{q:"Hotel ballroom. The AV company wants a 300 lb speaker hung from a ceiling sprinkler pipe because it's close. You:",
+  o:["Hang it — 300 lb is light","Refuse that attachment; use only the venue's rated points, through the house rigger","Use two sprinkler pipes to split the load","Use a bigger shackle"],a:1,
+  e:"Sprinkler pipe, duct, conduit and ceiling grid are <b>not rated rigging points</b>. Rated points only, approved by the venue — usually through the house rigger."},
+{q:"What's the best control on the hierarchy of controls?",
+  o:["PPE","Administrative rules","Engineering controls","Eliminating the hazard"],a:3,
+  e:"<b>Eliminate &rarr; substitute &rarr; engineer &rarr; administrative &rarr; PPE.</b> If you can do the work from the floor instead of at height, that beats any harness."},
+{q:"OSHA must be notified of a work-related fatality within:",
+  o:["8 hours","24 hours","72 hours","7 days"],a:0,
+  e:"<b>8 hours</b> for a fatality. In-patient hospitalisation, amputation or loss of an eye: <b>24 hours</b>."}
+];
+
+var CHAINS=[
+{t:"Arena point — chalk mark to loaded hook",
+  s:["Mark the floor from the plot","Up rigger finds the steel, calls “Rope!”","Down rigger builds the bundle to the plot","Haul it up — nobody under it","Basket the beam with softeners and shackle it","Hang the motor, latch closed","Head rigger checks before it takes weight"],
+  w:"The floor mark is the plot made real. Everything after it is about getting rated hardware to the right steel without anyone underneath, then having a second set of eyes before it takes weight."},
+{t:"The load path — top to bottom (climbing motor)",
+  s:["Building steel","Beam wrap with softeners","Shackle","Bridle apex or dead-hang steel","Motor hook","Chain motor","Truss","Fixture and its safety"],
+  w:"Every link is rated, and the whole path is only as strong as the weakest one — including the building."},
+{t:"Loading a counterweight set",
+  s:["Agree the load with the loading gallery","Rope lock on, set at low trim","Load goes on the batten","Counterweight goes in the arbor","Spreader plates and locking plate on","Check balance with a hand on the line","Release the lock and fly it"],
+  w:"Batten first, arbor second, so the set is never arbor-heavy while the lock is the only thing holding it."},
+{t:"Unloading a counterweight set",
+  s:["Bring the set to its loading position and lock it","Tell the gallery what's coming off","Counterweight out of the arbor","Load off the batten","Check balance before the lock comes off"],
+  w:"The exact reverse of loading: arbor first, batten second. Pull the batten load first and you've built a runaway."},
+{t:"Flying a truss",
+  s:["Clear the floor under and around it","Bump each motor until the chains are taut","Lift a few inches and stop","Check level, every point, nothing snagged","Fly to trim keeping it level","Confirm trim and secure the controller"],
+  w:"The stop a few inches up is where you catch a snag, a lagging motor or a bad point while the truss can still go straight back down."},
+{t:"Going up in the steel",
+  s:["Rescue plan agreed","Inspect harness and lanyard","Harness on, fitted, buddy-checked","Clip to a rated anchorage before you're exposed","Stay 100% tied off while moving"],
+  w:"The rescue plan comes first because suspension trauma doesn't wait for someone to figure one out."}
+];
+
+var SCN=[
+{w:"Arena · motor call",
+  q:"Points are up and the motors are on. You bump motor 7 UP to take the slack — the chain runs DOWN. The motor tech is across the floor. What do you do?",
+  a:"<b>Stop and leave it stopped.</b><br><br><b>1.</b> Don't “just use the other button”. A reversed motor is out of phase, and its <b>limit switches don't protect it</b> — it can two-block or run off its chain.<br><b>2.</b> Call it on the radio: “Motor 7 is running backwards.”<br><b>3.</b> The phase gets corrected at the controller or cable by whoever owns the motor system, then 7 is bumped again to confirm UP goes up.<br><b>4.</b> If one is reversed, check the others on that cable or channel before the truss goes anywhere."},
+{w:"Arena · bridle point",
+  q:"You built a bridle on the floor from the plot. Once it's up and the motor takes slack, the apex is hanging about 18 inches off the chalk mark toward beam A. What happened and what's the fix?",
+  a:"<b>The legs aren't the lengths the plot asked for.</b> If the apex moved toward A, the A leg is too short or the B leg is too long.<br><br><b>1.</b> Don't drag the point over by hand or tag-line it into place — that changes the angles and the load on both legs.<br><b>2.</b> Let it back down, re-measure both legs including shackles and deck chain, and correct the length to the plot.<br><b>3.</b> If the plot math itself looks off, take it to the head rigger. Moving the apex changes each leg's share of the weight."},
+{w:"Shop · load-out",
+  q:"Packing round slings, you find a green one with a cut in the cover. You can see core yarns, but it's only an inch long. Your partner says it's fine for a basket. What do you do?",
+  a:"<b>Tag it out.</b><br><br><b>1.</b> Exposed core yarns retire a round sling — the cover is what protects the core, and nobody can vouch for the rating now.<br><b>2.</b> Mark it clearly as out of service and keep it apart from good gear, so it doesn't get packed back by someone else.<br><b>3.</b> Tell the head rigger or shop lead so it's logged and replaced. A sling that “disappears” without a record usually comes back."},
+{w:"Hotel ballroom · corporate general session",
+  q:"The AV vendor wants to hang two 300 lb speakers and a small truss. There's no plot. They point at the sprinkler pipe and a ceiling grid. The client's in the room. What happens?",
+  a:"<b>Nothing hangs until there are rated points.</b><br><br><b>1.</b> Sprinkler pipe, duct, conduit and ceiling grid are <b>not</b> rigging points, at any load.<br><b>2.</b> Ask for the house rigger or engineering. Hotels with rigging have rated points and usually their own rigger who must approve or do the hanging.<br><b>3.</b> If there are no rated points, the answer is ground support — towers or stands — not a creative attachment.<br><b>4.</b> Keep it quiet and professional in front of the client. “We need the house rigger's points for this” is the whole conversation."},
+{w:"Theatre · strike",
+  q:"A drop is being taken off a pipe at deck level. The deck crew has unclipped it and the pipe is empty. Someone is about to take the rope lock off to send the pipe out. The arbor still has the weight in it.",
+  a:"<b>“Hold the lock!” — loudly, now.</b><br><br><b>1.</b> With the load gone and the weight still in, the set is badly <b>arbor-heavy</b>. Release the lock and the arbor falls and the pipe flies out — a runaway.<br><b>2.</b> The weight has to come out of the arbor at the loading gallery <b>before</b> the lock comes off.<br><b>3.</b> The right order was arbor first, then the drop. Get the gallery on headset, unload to balance, then check with a hand on the line."},
+{w:"Arena · truss fly-out",
+  q:"A 60 ft truss on six motors is a few feet off the floor. One end is clearly lower than the other and the chains on that end look slack. Load cells show the motors at the high end climbing.",
+  a:"<b>Stop all motors.</b><br><br><b>1.</b> A lagging or stalled motor at the low end means the others are carrying its share — and the truss is racking.<br><b>2.</b> Find out why: tripped motor, wrong channel, slack chain, snag.<br><b>3.</b> Bring it back to level by bumping the low motors (or lowering the high ones) one at a time, watching the load cells even out.<br><b>4.</b> Then the few-inches-and-stop check again before it goes higher."},
+{w:"Outdoor festival · weather",
+  q:"The wind is building through the afternoon. A big video wall is flown on the ground-supported roof. Someone says it's fine because nothing is moving yet.",
+  a:"<b>The wind plan decides, not how it looks.</b><br><br><b>1.</b> Wind load grows with the <b>square</b> of the speed: double the wind is four times the force. A 10 × 10 ft wall sees roughly 920 lb at 60 mph before shape factor.<br><b>2.</b> The structure has a written wind plan with speeds for watching, dropping soft goods and banners, landing the wall, and clearing the stage.<br><b>3.</b> Someone is watching an anemometer and calling it. Your job is to know which step you're on and to be ready before the number is reached, not after."},
+{w:"Arena · in the steel",
+  q:"You're up on a beam moving to the next point. Your lanyard won't reach the next anchor without unclipping for a second. The point is right there.",
+  a:"<b>You don't unclip.</b><br><br><b>1.</b> 100% tie-off means always: use a twin-leg lanyard and clip the second leg before unclipping the first, or re-route on a beam strap or retractable that reaches.<br><b>2.</b> If you can't make the move without being unclipped, stop and ask — it's a planning problem, not a speed problem.<br><b>3.</b> Everybody else on the call wants you to take the extra 30 seconds."}
+];
+
+var CK=[
+"Point number and type match the plot — dead hang or bridle, leg lengths, load",
+"Every piece has a readable rating — shackles stamped, slings and steel tagged",
+"Shackle pins fully seated; pins that stay up for the show are moused",
+"Bridle legs in the bow of the apex shackle; included angle at or under 120°",
+"Softeners on every beam edge the steel or sling touches",
+"Deck chain shackled through a link — never hooked or knotted",
+"Motor hook latch closed, chain not twisted, chain bag on and big enough",
+"Motor bumped: UP goes up",
+"Floor under the haul cleared; “Rope!” called before anything drops",
+"Head rigger has checked the point before it takes weight"
+];
+
+
+/* ═══════════ safe storage ═══════════ */
+var mem={};
+var store={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return mem[k]||null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+};
+
+/* ═══════════ tabs ═══════════ */
+var nav=document.getElementById("nav");
+TABS.forEach(function(t,i){
+  var b=document.createElement("button");
+  b.textContent=t[1]; b.setAttribute("role","tab");
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.onclick=function(){go(t[0])};
+  b.dataset.target=t[0];
+  nav.appendChild(b);
+});
+function go(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  nav.querySelectorAll("button").forEach(function(b){
+    b.setAttribute("aria-selected", b.dataset.target===id?"true":"false");
+    if(b.dataset.target===id && b.scrollIntoView){
+      try{b.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"})}catch(e){}
+    }
+  });
+  try{window.scrollTo({top:0,behavior:"smooth"})}catch(e){window.scrollTo(0,0)}
+  store.set(STORE+"_tab",id);
+}
+var saved=store.get(STORE+"_tab");
+if(saved && document.getElementById(saved)) go(saved);
+
+/* ═══════════ flashcards ═══════════ */
+var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
+function fcInit(sh){
+  fcQueue=CARDS.map(function(c,i){return i});
+  if(sh) fcQueue.sort(function(){return Math.random()-.5});
+  fcIdx=0;fcRender();
+}
+function fcRender(){
+  fcCard.classList.remove("flip");
+  var n=document.getElementById("fcCount");
+  if(!fcQueue.length){
+    document.getElementById("fcQ").innerHTML="All clear.";
+    document.getElementById("fcA").innerHTML="You've worked through the whole deck. Shuffle to run it again cold.";
+    n.textContent="0 left";return;
+  }
+  if(fcIdx>=fcQueue.length) fcIdx=0;
+  var c=CARDS[fcQueue[fcIdx]];
+  document.getElementById("fcQ").innerHTML=c[0];
+  document.getElementById("fcA").innerHTML=c[1];
+  n.textContent=fcQueue.length+" card"+(fcQueue.length===1?"":"s")+" left";
+}
+fcCard.onclick=function(){fcCard.classList.toggle("flip")};
+document.getElementById("fcGot").onclick=function(){
+  if(!fcQueue.length)return;
+  fcQueue.splice(fcIdx,1);fcRender();
+};
+document.getElementById("fcAgain").onclick=function(){
+  if(!fcQueue.length)return;
+  fcIdx=(fcIdx+1)%fcQueue.length;fcRender();
+};
+document.getElementById("fcShuffle").onclick=function(){fcInit(true)};
+document.getElementById("fcReset").onclick=function(){fcInit(false)};
+fcInit(true);
+
+/* ═══════════ quiz ═══════════ */
+var qi=0,qScore=0,qHost=document.getElementById("quizHost");
+function qRender(){
+  if(qi>=QS.length){
+    var pct=Math.round(qScore/QS.length*100);
+    var msg = pct>=90?"Dialed in. You could run this material for someone else.":
+              pct>=75?"Solid. Clean up the misses and you're gig-ready.":
+              pct>=50?"Foundation's there. Run the flashcards, then come back.":
+                      "Go back through the reference tabs — then run this cold.";
+    qHost.innerHTML='<div class="qbox" style="text-align:center">'+
+      '<div class="score" style="color:'+(pct>=75?"var(--audio)":pct>=50?"var(--warn)":"var(--power)")+'">'+pct+'%</div>'+
+      '<p style="margin:0 0 4px;font-size:15px">'+qScore+' of '+QS.length+' correct</p>'+
+      '<p style="color:var(--dim);font-size:14px;margin:0 0 18px">'+msg+'</p>'+
+      '<button class="btn pri" id="qAgain">Run it again</button></div>';
+    document.getElementById("qAgain").onclick=function(){qi=0;qScore=0;QS.sort(function(){return Math.random()-.5});qRender()};
+    return;
+  }
+  var q=QS[qi];
+  var h='<div class="qbox"><div class="bar"><i style="width:'+(qi/QS.length*100)+'%"></i></div>'+
+        '<p style="color:var(--dim);font-size:12px;margin:10px 0 0;letter-spacing:.5px">QUESTION '+(qi+1)+' OF '+QS.length+'</p>'+
+        '<p class="qtext">'+q.q+'</p>';
+  q.o.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='<div id="qFoot"></div></div>';
+  qHost.innerHTML=h;
+  qHost.querySelectorAll(".opt").forEach(function(b){
+    b.onclick=function(){
+      var pick=+b.dataset.i;
+      qHost.querySelectorAll(".opt").forEach(function(x,i){
+        x.disabled=true;
+        if(i===q.a)x.classList.add("right");
+        else if(i===pick)x.classList.add("wrong");
+      });
+      if(pick===q.a)qScore++;
+      document.getElementById("qFoot").innerHTML=
+        '<p class="expl">'+q.e+'</p>'+
+        '<div class="row"><button class="btn pri" id="qNext" style="margin-left:auto">'+
+        (qi===QS.length-1?"See results":"Next")+'</button></div>';
+      document.getElementById("qNext").onclick=function(){qi++;qRender()};
+    };
+  });
+}
+qRender();
+
+/* ═══════════ chain builder ═══════════ */
+var ci=0,cHost=document.getElementById("chainHost");
+function cRender(){
+  var c=CHAINS[ci];
+  var shuffled=c.s.map(function(s,i){return {s:s,i:i}}).sort(function(){return Math.random()-.5});
+  var h='<div class="qbox"><p style="color:var(--dim);font-size:12px;margin:0;letter-spacing:.5px">CHAIN '+(ci+1)+' OF '+CHAINS.length+'</p>'+
+        '<p class="qtext" style="margin:8px 0 0">'+c.t+'</p>'+
+        '<div class="slots" id="cSlots"></div><div id="cToks">';
+  shuffled.forEach(function(o){h+='<button class="tok" data-i="'+o.i+'">'+o.s+'</button>'});
+  h+='</div><div class="row" id="cFoot"><button class="btn" id="cClear">Clear</button>'+
+     '<button class="btn" id="cSkip" style="margin-left:auto">Next chain</button></div></div>';
+  cHost.innerHTML=h;
+  var next=0;
+  cHost.querySelectorAll(".tok").forEach(function(b){
+    b.onclick=function(){
+      var want=+b.dataset.i;
+      if(want===next){
+        b.classList.add("used");
+        var n=document.createElement("span");
+        n.className="tok ok";n.textContent=b.textContent;
+        var sl=document.getElementById("cSlots");
+        if(next>0){var ar=document.createElement("span");ar.className="arrow";ar.textContent="→";sl.appendChild(ar)}
+        sl.appendChild(n);
+        next++;
+        if(next===c.s.length){
+          document.getElementById("cFoot").insertAdjacentHTML("afterbegin",
+            '<span style="color:var(--audio);font-weight:600;font-size:14px">Chain complete.</span>');
+          if(c.w) document.getElementById("cFoot").insertAdjacentHTML("afterend",'<p class="expl">'+c.w+'</p>');
+        }
+      } else {
+        b.classList.add("no");
+        setTimeout(function(){b.classList.remove("no")},450);
+      }
+    };
+  });
+  document.getElementById("cClear").onclick=cRender;
+  document.getElementById("cSkip").onclick=function(){ci=(ci+1)%CHAINS.length;cRender()};
+}
+cRender();
+
+/* ═══════════ pre-doors checklist ═══════════ */
+var ckHost=document.getElementById("ckHost");
+if(ckHost){
+  var ckState={};
+  try{ckState=JSON.parse(store.get(STORE+"_ck")||"{}")}catch(e){ckState={}}
+  var ckCount=document.getElementById("ckCount");
+  function ckSave(){store.set(STORE+"_ck",JSON.stringify(ckState))}
+  function ckTally(){
+    var n=CK.filter(function(_,i){return ckState[i]}).length;
+    ckCount.textContent=n+" of "+CK.length+" complete";
+    ckCount.style.color = n===CK.length ? "var(--audio)" : "var(--dim)";
+  }
+  CK.forEach(function(t,i){
+    var d=document.createElement("div");
+    d.className="ckitem";
+    d.style.cssText="text-align:left;display:flex;gap:11px;align-items:flex-start;padding:11px 13px;margin-bottom:7px";
+    var vc = /VIDEO CALL|NO BLUE MIX/.test(t);
+    d.innerHTML='<span class="ckbox" style="flex:0 0 auto;width:19px;height:19px;border-radius:5px;'+
+      'border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:1px"></span>'+
+      '<span class="cktxt" style="font-size:13.5px;line-height:1.5'+(vc?';color:var(--warn);font-weight:600':'')+'">'+t+'</span>';
+    function paint(){
+      var on=!!ckState[i];
+      var box=d.querySelector(".ckbox"), tx=d.querySelector(".cktxt");
+      box.textContent = on?"✓":"";
+      box.style.background = on?"var(--audio)":"transparent";
+      box.style.borderColor = on?"var(--audio)":"var(--line)";
+      box.style.color = on?"#08130b":"transparent";
+      tx.style.opacity = on?".45":"1";
+      tx.style.textDecoration = on?"line-through":"none";
+      d.style.borderColor = on?"var(--line)":(vc?"rgba(227,179,65,.35)":"var(--line)");
+    }
+    d.onclick=function(){ckState[i]=!ckState[i];paint();ckSave();ckTally()};
+    paint();
+    ckHost.appendChild(d);
+  });
+  ckTally();
+  document.getElementById("ckReset").onclick=function(){
+    ckState={};ckSave();
+    ckHost.querySelectorAll(".ckitem").forEach(function(d){
+      var b=d.querySelector(".ckbox"),t=d.querySelector(".cktxt");
+      b.textContent="";b.style.background="transparent";b.style.borderColor="var(--line)";
+      t.style.opacity="1";t.style.textDecoration="none";
+    });
+    ckTally();
+  };
+}
+
+/* ═══════════ connector ID drill ═══════════ */
+document.querySelectorAll(".idgrid .idcard").forEach(function(c){
+  var nm=c.querySelector(".nm");
+  if(!nm) return;
+  c.onclick=function(){
+    var on=c.classList.toggle("open");
+    nm.textContent = on ? "" : "?";
+    nm.style.display = on ? "none" : "block";
+  };
+});
+
+/* ═══════════ scenarios ═══════════ */
+var sh=document.getElementById("scnHost");
+SCN.forEach(function(s,i){
+  var d=document.createElement("div");
+  d.className="scn";
+  d.innerHTML='<div class="setting">'+s.w+'</div><p class="q">'+s.q+'</p>'+
+    '<button class="btn" data-i="'+i+'">How would you work it?</button>'+
+    '<div class="reveal">'+s.a+'</div>';
+  sh.appendChild(d);
+  var btn=d.querySelector("button"),rev=d.querySelector(".reveal");
+  btn.onclick=function(){
+    var on=rev.classList.toggle("on");
+    btn.textContent=on?"Hide":"How would you work it?";
+  };
+});
+
+
+})();
+
+/* ═══════════ rigging · build the bridle ═══════════ */
+(function(){
+  var host=document.getElementById("bridleSim"); if(!host) return;
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("brSvg");
+  function m(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+  function r1(x){return Math.round(x*10)/10}
+  function lb(x){return Math.round(x).toLocaleString("en-US")+" lb"}
+  function ft(x){return r1(x).toFixed(1)+" ft"}
+
+  /* W load, h1/h2 horizontal from apex to beam A/B, v drop from beams to apex, tag = steel leg WLL */
+  var JOBS=[
+   {cs:{show:"Rock concert",venue:"Arena, downstage truss",boss:"Head Rigger",manner:"checks every point twice",clock:"Motors on in 40 min"},
+    say:"Point 4 is a straight bridle, nice and steep. Build it to the plot and tell me it'll hold before it goes up.",
+    W:1000,h1:6,h2:6,v:8,tag:2000},
+   {cs:{show:"Sports · halftime show",venue:"Arena, centre-hung clear of the scoreboard",boss:"Head Rigger",manner:"in a hurry, still careful",clock:"Points up in 30 min"},
+    say:"Wide beams on this one, so the legs run flat. Steel in the bin is tagged fifteen hundred. Your call.",
+    W:1800,h1:9,h2:9,v:6,tag:1500},
+   {cs:{show:"Corporate · product launch",venue:"Convention centre hall",boss:"Venue Rigger",manner:"by the book",clock:"Doors in 3 hrs"},
+    say:"Point sits closer to the A beam. Work out both legs — I want the heavy one.",
+    W:1200,h1:4,h2:8,v:6,tag:2000},
+   {cs:{show:"Concert · side-hung PA",venue:"Arena, low steel",boss:"Head Rigger",manner:"has seen this go wrong",clock:"Hang in 20 min"},
+    say:"Steel's low in this building and the beams are a long way apart. Tell me what the angle does to this one.",
+    W:800,h1:12,h2:12,v:5,tag:2000},
+   {cs:{show:"Festival · indoor second stage",venue:"Expo hall",boss:"Head Rigger",manner:"wants the math, not a guess",clock:"Points up in 45 min"},
+    say:"Two thousand pounds, apex three feet off A. The steel says fifteen hundred and the share on A is fifteen hundred. Is that close enough?",
+    W:2000,h1:3,h2:9,v:6,tag:1500}
+  ];
+
+  var ji=0, J, step, wrong, calc;
+
+  function solve(j){
+    var L1=Math.sqrt(j.h1*j.h1+j.v*j.v), L2=Math.sqrt(j.h2*j.h2+j.v*j.v);
+    var V1=j.W*j.h2/(j.h1+j.h2), V2=j.W*j.h1/(j.h1+j.h2);
+    var T1=V1*L1/j.v, T2=V2*L2/j.v;
+    var inc=(Math.atan(j.h1/j.v)+Math.atan(j.h2/j.v))*180/Math.PI;
+    var heavy = T1>=T2 ? "A" : "B";
+    return {L1:L1,L2:L2,V1:V1,V2:V2,T1:T1,T2:T2,inc:inc,heavy:heavy,Tmax:Math.max(T1,T2),
+            Vheavy: heavy==="A"?V1:V2, Lheavy: heavy==="A"?L1:L2};
+  }
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){var k=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[k];a[k]=t} return a }
+  function uniq(opts){ /* opts: [{t,ok}] ; drop duplicate labels, keep the correct one */
+    var seen={}, out=[];
+    opts.forEach(function(o){ if(!seen[o.t] || o.ok){ if(seen[o.t]) out=out.filter(function(p){return p.t!==o.t}); seen[o.t]=1; out.push(o);} });
+    return shuffle(out);
+  }
+
+  function buildSteps(){
+    var c=calc, j=J, steps=[];
+    var symm = j.h1===j.h2;
+    steps.push({q:"Leg lengths? (h is horizontal to each beam, v is the drop)",
+      opts:uniq([
+        {t:"A "+ft(c.L1)+" · B "+ft(c.L2), ok:true},
+        {t:"A "+ft(j.h1+j.v)+" · B "+ft(j.h2+j.v)},
+        {t:"A "+ft(j.v)+" · B "+ft(j.v)},
+        {t:"A "+ft(Math.max(j.h1,j.v))+" · B "+ft(Math.max(j.h2,j.v))}
+      ]),
+      why:"L = √(h² + v²). A: √("+j.h1+"² + "+j.v+"²) = <b>"+ft(c.L1)+"</b>. B: √("+j.h2+"² + "+j.v+"²) = <b>"+ft(c.L2)+"</b>. Adding h and v together overstates it; the leg is the hypotenuse."});
+    steps.push({q:symm?"Tension in each leg?":"Tension in the heavier leg?",
+      opts:uniq([
+        {t:(symm?"":"Leg "+c.heavy+" · ")+lb(c.Tmax), ok:true},
+        {t:(symm?"":"Leg "+c.heavy+" · ")+lb(c.Vheavy)},
+        {t:(symm?"":"Leg "+c.heavy+" · ")+lb(j.W)},
+        {t:(symm?"":"Leg "+(c.heavy==="A"?"B":"A")+" · ")+lb(Math.min(c.T1,c.T2)*(symm?2:1))}
+      ]),
+      why:(symm
+        ? "Each leg's share is W ÷ 2 = "+lb(j.W/2)+". "
+        : "The leg <b>closer</b> to the load carries more weight. Share "+c.heavy+" = "+lb(j.W)+" × "+(c.heavy==="A"?j.h2:j.h1)+" ÷ "+(j.h1+j.h2)+" = "+lb(c.Vheavy)+". ")+
+        "Tension = share × L ÷ v = "+lb(c.Vheavy)+" × "+ft(c.Lheavy)+" ÷ "+j.v+" ft = <b>"+lb(c.Tmax)+"</b>. Tension is always more than the leg's share of the weight."});
+    var incOk = c.inc<=120;
+    var wrongInc = 180-c.inc;
+    steps.push({q:"Included angle at the apex — and can it hang?",
+      opts:uniq([
+        {t:Math.round(c.inc)+"° — "+(incOk?"inside 120°, fine":"over 120°, don't hang it"), ok:true},
+        {t:Math.round(c.inc)+"° — "+(incOk?"over 120°, don't hang it":"inside 120°, fine")},
+        {t:Math.round(wrongInc)+"° — "+(wrongInc<=120?"inside 120°, fine":"over 120°, don't hang it")},
+        {t:"Angle doesn't matter if the steel is big enough"}
+      ]),
+      why:"Each leg's angle from vertical is atan(h ÷ v): "+Math.round(Math.atan(j.h1/j.v)*180/Math.PI)+"° + "+Math.round(Math.atan(j.h2/j.v)*180/Math.PI)+"° = <b>"+Math.round(c.inc)+"°</b>. "+
+        (incOk ? "That's inside the 120° limit." : "That's <b>past 120°</b> — each leg is carrying more than the whole load and pulling the beams sideways hard. It goes back to the head rigger: lower the apex, or find closer steel."),
+      stop:!incOk});
+    if(incOk){
+      var over = c.Tmax>j.tag;
+      steps.push({q:"Steel legs are tagged "+lb(j.tag)+" WLL. Load is "+lb(j.W)+". Hang it?",
+        opts:uniq([
+          {t:"Tension "+lb(c.Tmax)+" — "+(over?"over the tag, don't hang it":"under the tag, hang it"), ok:true},
+          {t:"Tension "+lb(c.Tmax)+" — "+(over?"under the tag, hang it":"over the tag, don't hang it")},
+          {t:"Yes — each leg only carries half the load"},
+          {t:(j.W<=j.tag?"Yes — the load is under the tag":"No — the load is over the tag")}
+        ]),
+        why:"Check hardware against the <b>leg tension</b>, not the load. Heaviest leg = "+lb(c.Tmax)+" against a "+lb(j.tag)+" tag: "+
+          (over ? "<b>over</b>. Bigger steel, or change the geometry so the legs are steeper." : "<b>under</b>, so the steel is fine on capacity. Shackles get the same check.")});
+    }
+    return steps;
+  }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var j=J, s=Math.min(360/(j.h1+j.h2), 150/j.v);
+    var ax=50+j.h1*s, by=34, ay=by+j.v*s, xA=ax-j.h1*s, xB=ax+j.h2*s;
+    var off=(460-(xB-xA))/2-xA; xA+=off; xB+=off; ax+=off;
+    svg.appendChild(m("rect",{class:"sf",x:xA-26,y:by-14,width:52,height:14,rx:2}));
+    svg.appendChild(m("rect",{class:"sf",x:xB-26,y:by-14,width:52,height:14,rx:2}));
+    svg.appendChild(m("text",{class:"lbl",x:xA,y:by-18,"text-anchor":"middle"},"BEAM A"));
+    svg.appendChild(m("text",{class:"lbl",x:xB,y:by-18,"text-anchor":"middle"},"BEAM B"));
+    svg.appendChild(m("path",{class:"s",style:"stroke:#484f58;stroke-dasharray:4 4",d:"M"+xA+" "+by+" V"+ay+" H"+xB+" V"+by}));
+    svg.appendChild(m("path",{class:"s",style:"stroke:#484f58;stroke-dasharray:4 4",d:"M"+ax+" "+by+" V"+ay}));
+    svg.appendChild(m("path",{class:"s",style:"stroke:#bc8cff;stroke-width:3",d:"M"+xA+" "+by+" L"+ax+" "+ay+" L"+xB+" "+by}));
+    svg.appendChild(m("text",{class:"lbl f-warn",x:(xA+ax)/2,y:ay+15,"text-anchor":"middle"},"h1 = "+j.h1+" ft"));
+    svg.appendChild(m("text",{class:"lbl f-warn",x:(ax+xB)/2,y:ay+15,"text-anchor":"middle"},"h2 = "+j.h2+" ft"));
+    svg.appendChild(m("text",{class:"lbl f-warn",x:ax+6,y:(by+ay)/2},"v = "+j.v+" ft"));
+    svg.appendChild(m("circle",{cx:ax,cy:ay,r:6,fill:"#0d1117",stroke:"#e3b341","stroke-width":2.5}));
+    svg.appendChild(m("path",{class:"s",d:"M"+ax+" "+(ay+6)+" V"+(ay+26)}));
+    svg.appendChild(m("rect",{class:"sf",x:ax-22,y:ay+26,width:44,height:20,rx:3}));
+    svg.appendChild(m("text",{class:"lbl",x:ax,y:ay+40,"text-anchor":"middle",style:"font-size:9.5px;fill:#c9d1d9"},lb(j.W)));
+  }
+
+  function fb(cls,h,msg){document.getElementById("brFeed").innerHTML='<div class="fb '+cls+'"><b class="h">'+h+'</b>'+msg+'</div>'}
+
+  function render(){
+    var steps=J.steps, el=document.getElementById("brSteps");
+    document.getElementById("brStatus").textContent="Point "+(ji+1)+" of "+JOBS.length+" · step "+Math.min(step+1,steps.length)+" of "+steps.length;
+    if(step>=steps.length){ el.innerHTML=""; return; }
+    var S=steps[step];
+    var h='<p class="rgq">'+S.q+'</p><div class="rgopts">';
+    S.opts.forEach(function(o,i){ h+='<div class="camb" data-i="'+i+'">'+o.t+'</div>' });
+    el.innerHTML=h+'</div>';
+    el.querySelectorAll(".camb").forEach(function(b){ b.onclick=function(){ pick(+b.dataset.i) } });
+  }
+
+  function pick(i){
+    var S=J.steps[step], o=S.opts[i];
+    if(!o.ok){ wrong++; fb("no","“Run that again”",S.why); return; }
+    step++;
+    var done = step>=J.steps.length || S.stop;
+    if(!done){ fb("ok","“Right”",S.why); render(); return; }
+    step=J.steps.length; render();
+    CallSheet.stop("brBrief");
+    var g=CallSheet.grade("brBrief");
+    var c=calc, hangs = c.inc<=120 && c.Tmax<=J.tag;
+    fb(wrong?"warn":"ok", wrong?"“Got there — check your working next time”":"“That's the math I wanted”",
+      S.why+"<br><br><b>Verdict:</b> "+(hangs?"this point hangs as plotted.":"this point does <b>not</b> hang as plotted — it goes back to the head rigger with your numbers.")+
+      (wrong?" "+wrong+" wrong answer"+(wrong>1?"s":"")+" on the way.":"")+g.html);
+  }
+
+  function reset(){
+    J=JOBS[ji]; calc=solve(J); J.steps=buildSteps(); step=0; wrong=0;
+    CallSheet.render("brBrief",{show:J.cs.show,venue:J.cs.venue,role:"Down rigger",boss:J.cs.boss,
+      manner:J.cs.manner,clock:J.cs.clock,target:3,say:J.say,
+      reqs:["Leg lengths from the plot geometry.","Tension in the leg that carries the most.","Angle check, then hardware check against <b>tension</b>."]});
+    document.getElementById("brFeed").innerHTML="";
+    draw(); render();
+  }
+  document.getElementById("brNext").onclick=function(){ ji=(ji+1)%JOBS.length; reset() };
+  reset();
+})();
+
+/* ═══════════ rigging · tag it out ═══════════ */
+(function(){
+  var host=document.getElementById("tagSim"); if(!host) return;
+  var ITEMS=[
+   {g:"5/8″ screw-pin anchor shackle",f:"Bow stamped 3¼ t. Pin threads clean and seats fully. Light surface rust on the bow.",keep:true,
+    why:"Markings readable, pin seats, no distortion. Light surface rust is cosmetic — wipe it and it goes back in the case."},
+   {g:"3/4″ anchor shackle",f:"The original pin is missing. Someone has put a hardware-store bolt and nut through it.",keep:false,
+    why:"A bolt is not a rated pin. The shackle's rating depends on its own pin. <b>Tag it out</b> — and pull the bolt so nobody 'fixes' it again."},
+   {g:"5/8″ anchor shackle",f:"The size and WLL markings on the bow have been ground off.",keep:false,
+    why:"No markings, no rating, no use. You can't prove what it is."},
+   {g:"Purple round sling",f:"Dusty and scuffed from the last tour. No cuts, no melted spots. Tag present and readable.",keep:true,
+    why:"Dirt and scuffing on an intact cover are cosmetic. Cover whole, tag readable — it goes back."},
+   {g:"Green round sling",f:"Cover in perfect shape. The tag is missing.",keep:false,
+    why:"<b>The tag is the rating.</b> Without it, nobody can say what it's rated for. Out of service."},
+   {g:"Yellow round sling",f:"A shiny, hard, glazed patch on the cover where it was dragged across steel.",keep:false,
+    why:"Glazing means the fibres melted from friction heat. That's damage, not dirt. Tag it out."},
+   {g:"10 ft steel (wire rope sling)",f:"One broken wire, right where the rope goes into the swaged sleeve.",keep:false,
+    why:"Any broken wire at a fitting retires the sling — that's where the load concentrates and where failure starts."},
+   {g:"20 ft steel",f:"A sharp kink about halfway along, from being folded into the case.",keep:false,
+    why:"A kink permanently damages wire rope. It does not get straightened and reused."},
+   {g:"5 ft steel",f:"Some grease and dirt. Tag readable. No broken wires, kinks or crushing you can find.",keep:true,
+    why:"Grease is fine — wire rope is supposed to be lubricated. No damage and a readable tag: it goes back."},
+   {g:"Deck chain",f:"Grade 80 stamp on the links. Gauged — within limits. No nicks or gouges.",keep:true,
+    why:"Right grade, in gauge, undamaged. Keep it."},
+   {g:"Chain in the rigging bin",f:"Links stamped G43. It looks heavier than the Grade 80 deck chain.",keep:false,
+    why:"Grade 43 is transport chain — <b>not for overhead lifting</b>, however thick. Get it out of the rigging bin entirely."},
+   {g:"1-ton chain motor",f:"The hook's safety latch spring is broken — the latch flops open.",keep:false,
+    why:"Out of service until the latch is repaired. A hook without a working latch can shed its load."},
+   {g:"12″ box truss, 10 ft section",f:"A dent in one main chord right next to a diagonal joint.",keep:false,
+    why:"A dented chord changes how the section carries load, and it sits at a joint. Out of service until the manufacturer or an engineer says otherwise."},
+   {g:"12″ box truss, 8 ft section",f:"Scratches and scuffed paint along the chords. No dents, no bends, welds look clean.",keep:true,
+    why:"Scratched finish is cosmetic. Straight members and clean welds: it goes back on the truck."}
+  ];
+  var order, idx, right, wrong, answered;
+  function fb(cls,h,msg){document.getElementById("tgFeed").innerHTML='<div class="fb '+cls+'"><b class="h">'+h+'</b>'+msg+'</div>'}
+  function start(){
+    order=ITEMS.map(function(_,i){return i}); for(var i=order.length-1;i>0;i--){var k=Math.floor(Math.random()*(i+1)),t=order[i];order[i]=order[k];order[k]=t}
+    idx=0; right=0; wrong=0; answered=false;
+    CallSheet.render("tgBrief",{show:"Tour · shop prep",venue:"Vendor shop, before the load-out",role:"Rigging hand",
+      boss:"Head Rigger",manner:"would rather lose a sling than a person",clock:"Truck loads in 2 hrs",target:4,
+      say:"Everything in this pile goes on the truck or gets tagged. Make the call on each one and tell me why.",
+      reqs:["A decision on every piece.","Cosmetic stays, structural goes.","When in doubt, tag it out."]});
+    document.getElementById("tgFeed").innerHTML="";
+    show();
+  }
+  function show(){
+    document.getElementById("tgStatus").textContent="Piece "+Math.min(idx+1,ITEMS.length)+" of "+ITEMS.length+" · "+right+" right";
+    var el=document.getElementById("tgCard");
+    if(idx>=ITEMS.length){
+      CallSheet.stop("tgBrief");
+      var g=CallSheet.grade("tgBrief");
+      el.innerHTML="";
+      fb(wrong?"warn":"ok", wrong?"“Good pile — a few to think about”":"“Clean sort”",
+        right+" of "+ITEMS.length+" right."+(wrong?" Run it again and watch for the difference between <b>dirty</b> and <b>damaged</b>.":"")+g.html);
+      return;
+    }
+    var it=ITEMS[order[idx]];
+    answered=false;
+    el.innerHTML='<div class="tagcard"><div class="tgear">'+it.g+'</div><p class="tfind">'+it.f+'</p></div>'+
+      '<div class="rgopts"><div class="camb" data-k="1"><span class="dot" style="border-color:#3fb950"></span>Back in the case</div>'+
+      '<div class="camb" data-k="0"><span class="dot" style="border-color:#f85149"></span>Tag it out</div></div>';
+    el.querySelectorAll(".camb").forEach(function(b){ b.onclick=function(){ pick(b.dataset.k==="1") } });
+  }
+  function pick(keep){
+    if(answered) return; answered=true;
+    var it=ITEMS[order[idx]], ok=(keep===it.keep);
+    if(ok) right++; else wrong++;
+    fb(ok?"ok":"no", ok?(it.keep?"“Yep, it goes back”":"“Good catch”"):(it.keep?"“That one's fine”":"“That one doesn't go on the truck”"),
+      it.why+'<div class="row" style="margin:12px 0 0"><button class="btn pri" id="tgGo" style="margin-left:auto">Next piece →</button></div>');
+    document.getElementById("tgGo").onclick=function(){ idx++; document.getElementById("tgFeed").innerHTML=""; show(); };
+  }
+  document.getElementById("tgRestart").onclick=start;
+  start();
+})();
+</script>
+</body>
+</html>

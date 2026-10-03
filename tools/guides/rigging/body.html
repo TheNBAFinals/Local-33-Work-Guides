@@ -1,0 +1,406 @@
+<section class="panel on" id="p-start">
+  <h2>How to use this</h2>
+  <p class="lede">Read the reference tabs once. Then live in the <b>Simulators</b>, <b>Drills</b> and <b>Scenarios</b> &mdash; that is where it sticks.</p>
+  <div class="key">
+    <b>The idea underneath all of rigging:</b> every load hangs on a <b>load path</b> &mdash; structure, attachment, sling, shackle, motor, truss, fixture &mdash; and the whole path is only as strong as its weakest piece. Your job is to know what every piece is rated for, keep every piece inside that rating (angles included), and tag out anything you would not hang over your own head.
+  </div>
+
+  <h3>The load path</h3>
+  <div class="chain">
+    <span class="node">Building steel</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Basket / beam wrap</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Shackle</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Bridle or dead hang</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Chain motor</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Truss</span><span class="arrow a-sdi">&rarr;</span>
+    <span class="node">Fixture + safety</span>
+  </div>
+
+  <h3>Color code</h3>
+  <div class="legend">
+    <span class="pill p-sdi">Hardware &middot; slings</span>
+    <span class="pill p-warn">Angles &middot; load math</span>
+    <span class="pill p-power">Stop &middot; tag it out</span>
+    <span class="pill p-audio">Safe &middot; in service</span>
+    <span class="pill p-data">Fly systems</span>
+  </div>
+
+  <h3>What's in here</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>Hardware</h4><p>WLL and design factor, shackles, steel, round slings, chain &mdash; and what each one is rated for.</p></div>
+    <div class="card L warn"><h4>Points &amp; Motors</h4><p>How an arena point goes from a chalk mark to a loaded hook. Up rigger, down rigger, chain motors.</p></div>
+    <div class="card L warn"><h4>Bridle Math</h4><p>Leg length, leg tension, the 120&deg; rule, and the one formula that covers unequal bridles.</p></div>
+    <div class="card L data"><h4>Fly Systems</h4><p>Counterweight and hemp. Loading order, the rope lock, trim, the fire curtain.</p></div>
+    <div class="card L rf"><h4>Truss &amp; Loads</h4><p>Load charts, tributary loads, flying truss level, wind, the numbers worth memorising.</p></div>
+    <div class="card L power"><h4>Safety &amp; Inspection</h4><p>Fall protection, calls, what retires a sling or shackle, OSHA numbers.</p></div>
+  </div>
+  <div class="key" style="border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.06)">
+    <b style="color:var(--power)">Before anything else.</b> This guide helps you understand the work and pass the test. It does not make you a qualified rigger. Point loads, structural capacity and anything you are unsure of belong to the <b>head rigger, the venue and the engineer</b>. If it does not look right, say so &mdash; every person on the call has the right to stop the work.
+  </div>
+  <div class="key" style="border-color:rgba(188,140,255,.3);background:rgba(188,140,255,.06)">
+    <b style="color:var(--sdi)">Save this to your phone.</b> Share &rarr; Add to Home Screen. Opens like an app and works with no signal.
+  </div>
+</section>
+
+<section class="panel" id="p-hw">
+  <h2>Hardware</h2>
+  <p class="lede">Every piece of rigging hardware carries a rating. Learn to find it, read it, and know what changes it.</p>
+
+  <h3>WLL, breaking strength, design factor</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>Minimum breaking strength (MBS)</h4><p>The load at which the part actually fails. <b>You never rig to this number.</b></p></div>
+    <div class="card L audio"><h4>Working load limit (WLL)</h4><p>The most you are allowed to put on it in service. <b>WLL = MBS &divide; design factor.</b> It is stamped, tagged or printed on the part.</p></div>
+    <div class="card L warn"><h4>Design factor (DF)</h4><p>The margin the manufacturer built in. <b>5:1</b> is the common minimum for rigging hardware and slings; performer flying uses more (often 10:1). The factor is <b>already inside the WLL</b> &mdash; don't apply it twice.</p></div>
+  </div>
+  <div class="key">
+    <b>What does reduce a WLL:</b> the <b>hitch</b> (choker, basket), the <b>angle</b> (sling angle, side-loaded shackle or eye bolt), <b>shock loading</b>, and <b>damage</b>. Those are real reductions you must account for. Re-dividing a WLL by the design factor is not &mdash; that is double-counting.
+  </div>
+
+  <h3>Shackles</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>Anchor (bow) shackle</h4><p>Round bow. The standard for arena work: takes two bridle legs in the bow. Screw-pin is what you will handle most.</p></div>
+    <div class="card L sdi"><h4>Chain (D) shackle</h4><p>Straight sides. For a single in-line pull only &mdash; not for multiple legs.</p></div>
+  </div>
+  <ol class="steps">
+    <li><b>Read the bow.</b> Size and WLL are forged into it. No markings, no use.</li>
+    <li><b>Pin fully seated.</b> Screw it in hand-tight, fully engaged, shoulder against the bow. A pin that is not fully threaded is not rated.</li>
+    <li><b>Mouse it</b> (seize with wire or a zip-tie as specified) when it will hang for the show or could be rotated by the load.</li>
+    <li><b>Multiple legs go in the bow, the single piece goes on the pin.</b> Keep the bow's included angle at or under 120&deg;.</li>
+    <li><b>Load in line.</b> Side loading cuts capacity &mdash; a common manufacturer table: 45&deg; off line &rarr; about 70% of WLL; 90&deg; &rarr; about 50%.</li>
+    <li><b>Never swap the pin for a bolt</b>, and never mix pins between shackles.</li>
+  </ol>
+  <table class="tbl">
+    <tr><th>Shackle size</th><th>Typical WLL (read the bow)</th><th>Where you'll see it</th></tr>
+    <tr><td>&frac12;&Prime;</td><td>2 t</td><td>Light points, fixture hardware</td></tr>
+    <tr><td>&#8541;&Prime;</td><td>3&frac14; t</td><td>The arena workhorse &mdash; baskets, bridles</td></tr>
+    <tr><td>&frac34;&Prime;</td><td>4&frac34; t</td><td>Heavier points, bridle apex on big loads</td></tr>
+  </table>
+
+  <h3>Steel (wire rope slings)</h3>
+  <p>&ldquo;Steel&rdquo; in an arena means wire-rope slings with eyes on both ends, cut to standard lengths (2&prime;, 5&prime;, 10&prime;, 20&prime;, 30&prime;, 50&prime;) and added together to make basket and bridle legs. 6&times;19 and 6&times;37 with an independent wire rope core (IWRC) are what you will see.</p>
+  <div class="grid">
+    <div class="card L sdi"><h4>6&times;19 vs 6&times;37</h4><p>Six strands of 19 or 37 wires. More, thinner wires = more flexible, less resistant to crushing and abrasion.</p></div>
+    <div class="card L sdi"><h4>Protect it at the beam</h4><p>Steel wrapped around a beam gets a <b>softener</b> &mdash; burlap, a sleeve or a pad &mdash; at every edge. Sharp flange edges cut wire and kill the bend.</p></div>
+    <div class="card L power"><h4>Kink, birdcage, crush</h4><p>Any of these permanently damages the rope. It does not get straightened and reused. <b>Tag it out.</b></p></div>
+  </div>
+
+  <h3>Round slings (spansets)</h3>
+  <p>Polyester core yarns inside a protective cover. Light, kind to finishes, and the cover colour tells you the rating. <b>The tag is the rating</b> &mdash; no tag, no lift.</p>
+  <table class="tbl">
+    <tr><th>Cover</th><th>Vertical WLL (lb)</th><th>Basket (vertical legs)</th></tr>
+    <tr><td><b style="color:#bc8cff">Purple</b></td><td>2,600</td><td>5,200</td></tr>
+    <tr><td><b style="color:#3fb950">Green</b></td><td>5,300</td><td>10,600</td></tr>
+    <tr><td><b style="color:#e3b341">Yellow</b></td><td>8,400</td><td>16,800</td></tr>
+    <tr><td><b style="color:#d2b48c">Tan</b></td><td>10,600</td><td>21,200</td></tr>
+    <tr><td><b style="color:#f85149">Red</b></td><td>13,200</td><td>26,400</td></tr>
+  </table>
+  <p class="expl">Industry color code for polyester round slings (WSTDA). A choker hitch is roughly 80% of vertical. A basket only doubles the rating when both legs hang vertical &mdash; spread them and the angle factor takes it back. Always confirm on the tag.</p>
+
+  <h3>Chain</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Grade 80 / 100 alloy</h4><p>The only chain for overhead lifting. Look for the grade stamp (8, 80, 10, 100) on the links.</p></div>
+    <div class="card L power"><h4>Grade 30 / 43 / 70</h4><p>Proof coil, high-test, transport chain. <b>Not for overhead lifting</b>, no matter how thick it looks.</p></div>
+    <div class="card L sdi"><h4>Deck chain / trim chain</h4><p>Short rated chain used to fine-tune a basket or bridle leg to the exact length. Shackle into a link, never hook a link sideways.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-points">
+  <h2>Points &amp; Motors</h2>
+  <p class="lede">An arena has no grid you can use as-is. Every show, the rig is built from points hung on the building's steel.</p>
+
+  <h3>Who does what</h3>
+  <div class="grid">
+    <div class="card L warn"><h4>Up rigger</h4><p>Works in the steel. Sets the basket or beam wrap at the plotted location, drops a rope, hauls up the hardware, builds the point. Tied off 100% of the time.</p></div>
+    <div class="card L sdi"><h4>Down rigger (ground rigger)</h4><p>Works on the floor. Finds the mark, builds the hardware bundle or bridle to the plot, ties it on, sends it up, hangs the motor. Keeps the floor under the work clear.</p></div>
+    <div class="card L rf"><h4>Head rigger</h4><p>Owns the plot, the loads and the call. Checks every point before it takes weight. Your questions go here.</p></div>
+  </div>
+
+  <h3>From chalk mark to loaded hook</h3>
+  <ol class="steps">
+    <li><b>Mark the floor.</b> Points are laid out from the rigging plot off a reference (usually centre line and a datum like the downstage edge). Each mark carries the point number and its type &mdash; dead hang or bridle, leg lengths, load.</li>
+    <li><b>Up rigger finds the steel over the mark</b> and calls &ldquo;<b>Rope!</b>&rdquo; before dropping a hand line to it.</li>
+    <li><b>Down rigger builds the bundle</b> to the plot: steel, shackles, deck chain, softeners. For a bridle, both legs are built on the floor so the apex hangs at the plotted spot.</li>
+    <li><b>Haul it up</b> &mdash; on the hand line or a motor, never over anyone. Everyone else stays out from under it.</li>
+    <li><b>Up rigger sets the basket</b> around the beam with softeners, shackles it, mouses what needs mousing.</li>
+    <li><b>Motor goes on.</b> Hook into the point (or the point into the motor, for a body-up hang), latch closed, chain checked for twist.</li>
+    <li><b>Head rigger checks the point</b> before it takes weight.</li>
+  </ol>
+
+  <h3>Chain motors</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>The usual motor</h4><p>A 1-ton or &frac12;-ton electric chain hoist (the CM Lodestar is the classic). Rated WLL is on the body. Chain runs into a <b>chain bag</b> that must hold all the chain.</p></div>
+    <div class="card L warn"><h4>Climbing vs body-up</h4><p><b>Climbing</b> (common on tour): motor is on the truss, hook goes to the point, motor climbs the chain. <b>Body-up</b>: motor hangs from the point and the hook lifts the load.</p></div>
+    <div class="card L power"><h4>Limit switches</h4><p>Upper and lower limits stop the hook before it hits the body (two-blocking) or runs out of chain. <b>Never bypass them.</b></p></div>
+    <div class="card L power"><h4>Running backwards</h4><p>Hit UP and it goes DOWN? <b>Stop.</b> The motor is out of phase &mdash; and on a reversed motor <b>the limit switches will not protect you.</b> Fix it at the controller/cable, not by holding the other button.</p></div>
+    <div class="card L rf"><h4>D8 vs D8+</h4><p>Hoist classes from the European standard most productions follow. <b>D8+</b> hoists have redundant brakes and a higher design factor so they can hold a load over people; a plain <b>D8</b> hoist over people needs a secondary safety.</p></div>
+    <div class="card L audio"><h4>Load cells</h4><p>On bigger rigs a load cell at each point reads actual weight live. A point reading high usually means something is snagged or the truss is out of level.</p></div>
+  </div>
+
+  <h3>Before a point leaves the floor</h3>
+  <div class="row">
+    <span class="counter" id="ckCount"></span>
+    <button class="btn" id="ckReset" style="margin-left:auto">Reset</button>
+  </div>
+  <div id="ckHost"></div>
+</section>
+
+<section class="panel" id="p-bridle">
+  <h2>Bridle Math</h2>
+  <p class="lede">A bridle puts a point where no beam is. Two legs from two beams meet at an apex. The legs always carry more than their share of the load &mdash; how much more depends on the angle.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 460 250" role="img" aria-label="Two-leg bridle between two beams with horizontal distances h1 and h2, vertical drop v and leg lengths L1 and L2">
+      <rect class="sf" x="40" y="20" width="60" height="14" rx="2"/>
+      <rect class="sf" x="340" y="20" width="60" height="14" rx="2"/>
+      <text class="lbl" x="70" y="14" text-anchor="middle">BEAM A</text>
+      <text class="lbl" x="370" y="14" text-anchor="middle">BEAM B</text>
+      <path class="s" style="stroke:#bc8cff;stroke-width:3" d="M70 34 L180 170"/>
+      <path class="s" style="stroke:#bc8cff;stroke-width:3" d="M370 34 L180 170"/>
+      <text class="lbl" x="108" y="100" style="fill:#bc8cff">L1</text>
+      <text class="lbl" x="285" y="96" style="fill:#bc8cff">L2</text>
+      <path class="s" style="stroke:#484f58;stroke-dasharray:4 4" d="M70 34 V170 H370 V34"/>
+      <path class="s" style="stroke:#484f58;stroke-dasharray:4 4" d="M180 34 V170"/>
+      <text class="lbl f-warn" x="125" y="186" text-anchor="middle">h1</text>
+      <text class="lbl f-warn" x="275" y="186" text-anchor="middle">h2</text>
+      <text class="lbl f-warn" x="192" y="104">v</text>
+      <circle cx="180" cy="170" r="6" fill="#0d1117" stroke="#e3b341" stroke-width="2.5"/>
+      <text class="lbl" x="196" y="166" style="font-size:9.5px">APEX (shackle)</text>
+      <path class="s" d="M180 176 V206"/>
+      <rect class="sf" x="164" y="206" width="32" height="24" rx="3"/>
+      <text class="lbl" x="180" y="244" text-anchor="middle">LOAD W</text>
+    </svg>
+    <div class="figcap"><b>h</b> = horizontal distance from the apex to each beam &middot; <b>v</b> = vertical drop from the beams to the apex &middot; <b>L</b> = leg length. The apex sits over the load, not halfway between the beams, unless the bridle is symmetrical.</div>
+  </div>
+
+  <h3>The three formulas</h3>
+  <table class="tbl">
+    <tr><th>You want</th><th>Formula</th><th>Plain words</th></tr>
+    <tr><td>Leg length</td><td><b>L = &radic;(h&sup2; + v&sup2;)</b></td><td>Pythagoras. Round <b>up</b> to the steel and chain you have.</td></tr>
+    <tr><td>Each leg's share of the weight</td><td><b>V1 = W &times; h2 &divide; (h1 + h2)</b></td><td>The leg <b>closer</b> to the load carries <b>more</b>. Symmetrical: each carries W &divide; 2.</td></tr>
+    <tr><td>Leg tension</td><td><b>T = V &times; L &divide; v</b></td><td>Share of the weight times leg length over drop. Always bigger than V.</td></tr>
+  </table>
+  <div class="key">
+    <b>Worked example.</b> 1,000 lb load, beams 6&prime; either side of the apex, 8&prime; drop. L = &radic;(36 + 64) = <b>10&prime;</b>. Each leg's share = 500 lb. Tension = 500 &times; 10 &divide; 8 = <b>625 lb per leg</b>. Both legs together carry 1,250 lb of tension to hold up 1,000 lb &mdash; that extra is what the angle costs you.
+  </div>
+
+  <h3>The angle table</h3>
+  <table class="tbl">
+    <tr><th>Leg angle from horizontal</th><th>Included angle at apex</th><th>Each leg (symmetrical)</th><th>Verdict</th></tr>
+    <tr><td>90&deg; (vertical)</td><td>0&deg;</td><td>50% of W</td><td>Dead hang</td></tr>
+    <tr><td>60&deg;</td><td>60&deg;</td><td>58% of W</td><td style="color:var(--audio)">Comfortable</td></tr>
+    <tr><td>45&deg;</td><td>90&deg;</td><td>71% of W</td><td style="color:var(--audio)">Common, fine</td></tr>
+    <tr><td>30&deg;</td><td>120&deg;</td><td>100% of W</td><td style="color:var(--warn)">The limit</td></tr>
+    <tr><td>15&deg;</td><td>150&deg;</td><td>193% of W</td><td style="color:var(--power)">Never</td></tr>
+  </table>
+  <p class="expl"><b>Keep the included angle at or under 120&deg;.</b> At 120&deg; each leg carries the whole load. Past it, each leg carries more than the load itself, and the sideways pull on the beams climbs fast. Sling angle factor = 1 &divide; sin(angle from horizontal).</p>
+
+  <div class="grid">
+    <div class="card L warn"><h4>Unequal bridles</h4><p>Different h on each side. The short-side leg is steeper and carries more of the weight; check <b>both</b> legs &mdash; the long one is flatter, so its tension can still be high.</p></div>
+    <div class="card L sdi"><h4>Beams at different heights</h4><p>Then v is different for each leg and the simple formulas above don't hold. That's the head rigger's or the software's calculation.</p></div>
+    <div class="card L power"><h4>Horizontal pull</h4><p>Every bridle leg pulls the beam sideways as well as down. Buildings are designed for down. That's why bridle points are on the venue's approved list, not wherever they fit.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-fly">
+  <h2>Fly Systems</h2>
+  <p class="lede">Theatres have a permanent system. Counterweight is most common; hemp is still around. Most theatres also have a fire curtain you must never block.</p>
+
+  <h3>Counterweight line set</h3>
+  <div class="chain">
+    <span class="node">Batten (pipe)</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Lift lines</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Loft blocks</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Head block</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Arbor (counterweight)</span>
+  </div>
+  <div class="grid">
+    <div class="card L data"><h4>Arbor</h4><p>Carriage that holds the counterweight bricks, kept in place by <b>spreader plates</b> and a locking plate on top. Rides in a T-track or wire guides.</p></div>
+    <div class="card L data"><h4>Purchase (operating) line</h4><p>The rope the flyman pulls. Runs from the top of the arbor over the head block, down through the <b>rope lock</b> on the lock rail, around the tension block at the floor, back to the bottom of the arbor.</p></div>
+    <div class="card L power"><h4>Rope lock</h4><p>Holds a <b>balanced</b> set in place. It is not a brake and is not designed to hold a set that is badly out of balance.</p></div>
+    <div class="card L data"><h4>Short, centre, long lines</h4><p>Lift lines are named by their distance from the head block: <b>short line</b> is nearest the fly gallery side, <b>long line</b> is farthest.</p></div>
+  </div>
+
+  <h3>Loading and unloading &mdash; the rule</h3>
+  <div class="key" style="border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.06)">
+    <b style="color:var(--power)">Loading: load on the batten first, then counterweight in the arbor. Unloading: counterweight out of the arbor first, then load off the batten.</b><br>
+    During loading the batten is at its low position and the arbor is up at the loading gallery. If the arbor ever outweighs the batten, the arbor falls and the batten flies out &mdash; a <b>runaway</b>. Keep the batten side heavy until the set is balanced.
+  </div>
+  <ol class="steps">
+    <li><b>Talk first.</b> Loading gallery and deck agree on what is coming on or off, and how much.</li>
+    <li><b>Rope lock on</b>, set at its low trim. Nobody unlocks a set that is being loaded.</li>
+    <li><b>Batten load goes on</b> &mdash; scenery, lights, pipe weight.</li>
+    <li><b>Counterweight goes in</b> at the loading gallery, spreader plates as you go, locking plate on top. Call &ldquo;<b>Heads!</b>&rdquo; and never lean over the rail.</li>
+    <li><b>Check balance</b> with a hand on the purchase line before the lock comes fully off. It should move with steady effort and stay where you leave it.</li>
+  </ol>
+
+  <h3>Words you'll hear</h3>
+  <div class="grid">
+    <div class="card L data"><h4>Trim</h4><p>The set's height for the show (in-trim / out-trim). Marked on the purchase line with spike tape.</p></div>
+    <div class="card L data"><h4>Arbor heavy / pipe heavy</h4><p>Which side outweighs the other. A slightly pipe-heavy set is safer than an arbor-heavy one.</p></div>
+    <div class="card L data"><h4>Hemp set</h4><p>Rope lines tied off (belayed) to pins on a pin rail, balanced by sandbags or muscle. No mechanical counterweight &mdash; the operator is the brake.</p></div>
+    <div class="card L power"><h4>Fire curtain</h4><p>Drops by gravity to separate stage from house. <b>Nothing</b> &mdash; cable, scenery, a ladder, a road case &mdash; ever sits in its path.</p></div>
+  </div>
+
+  <h3>Mechanical advantage</h3>
+  <table class="tbl">
+    <tr><th>Rig</th><th>Supporting parts</th><th>Theoretical MA</th></tr>
+    <tr><td>Single whip</td><td>1</td><td>1:1 (direction change only)</td></tr>
+    <tr><td>Gun tackle</td><td>2</td><td>2:1</td></tr>
+    <tr><td>Luff tackle</td><td>3</td><td>3:1</td></tr>
+    <tr><td>Double purchase</td><td>4</td><td>4:1</td></tr>
+  </table>
+  <p class="expl">Count the rope parts supporting the moving block. Friction costs roughly 10% per sheave, so the real advantage is always less than the count. Don't confuse the tackle above with a <b>double-purchase counterweight set</b>: there the arbor travels half the distance of the batten and carries twice its weight.</p>
+</section>
+
+<section class="panel" id="p-truss">
+  <h2>Truss &amp; Loads</h2>
+  <p class="lede">Truss is rated by its manufacturer, for a given span and a given way of loading it. The chart is the rating &mdash; not how strong it looks.</p>
+
+  <div class="grid">
+    <div class="card L rf"><h4>Box truss</h4><p>Four chords. The standard for touring rigs. 12&Prime; and 20.5&Prime; box are the common sizes.</p></div>
+    <div class="card L rf"><h4>Triangle / ladder</h4><p>Three or two chords. Lighter, weaker, orientation matters. Ladder is not for heavy point loads.</p></div>
+    <div class="card L power"><h4>Damage</h4><p>Bent or dented chord or diagonal, cracked weld, damaged spigot or coupler &mdash; <b>out of service</b>. Aluminium is never straightened and reused.</p></div>
+    <div class="card L sdi"><h4>Connections</h4><p>Spigots, pins and R-clips (or bolts) on every connection. Every pin, every time. Don't mix manufacturers.</p></div>
+  </div>
+
+  <h3>Reading a load chart</h3>
+  <div class="grid">
+    <div class="card L warn"><h4>UDL</h4><p>Uniformly distributed load &mdash; weight spread evenly along the span. Usually the biggest number on the chart.</p></div>
+    <div class="card L warn"><h4>Point loads</h4><p>Centre point, third points, quarter points. A single load at mid-span is the worst case &mdash; much lower than the UDL.</p></div>
+    <div class="card L warn"><h4>Span</h4><p>Distance between supports (motors). Longer span, lower allowable load &mdash; fast.</p></div>
+  </div>
+
+  <h3>Flying truss</h3>
+  <ol class="steps">
+    <li>Clear the floor under and around it. One voice calls the moves.</li>
+    <li>Bump each motor until all chains are just taut &mdash; truss still on the floor.</li>
+    <li>Lift a few inches and <b>stop</b>. Check level, check every point, check nothing is snagged.</li>
+    <li>Fly to trim, keeping it level the whole way. A lagging motor racks the truss and overloads the others &mdash; stop and bump to level.</li>
+  </ol>
+
+  <h3>How much is at each motor</h3>
+  <p>Each motor carries the weight in its <b>tributary zone</b> &mdash; half the distance to each neighbour &mdash; plus the motor, chain and anything hung right at the point. End motors only have half a zone on one side.</p>
+  <div class="key"><b>Example.</b> 40&prime; truss on 4 evenly spaced motors with 20 lb/ft spread along it. Spacing is about 13.3&prime;. Interior motors carry about 13.3&prime; &times; 20 = 267 lb of that load; end motors about 133 lb. Then add the motor, chain bag and cable at each point. <b>Cable is the weight everyone underestimates.</b></div>
+
+  <h3>Numbers worth memorising</h3>
+  <table class="tbl">
+    <tr><th>What</th><th>Number</th></tr>
+    <tr><td>Common hardware design factor</td><td>5:1 (in the WLL already)</td></tr>
+    <tr><td>Performer flying design factor</td><td>Typically 10:1</td></tr>
+    <tr><td>Max bridle included angle</td><td>120&deg;</td></tr>
+    <tr><td>Sling angle factor at 30&deg; / 45&deg; / 60&deg;</td><td>2.0 / 1.41 / 1.15</td></tr>
+    <tr><td>Dynamic load factor</td><td>DLF = 1 + a &divide; g (g = 32.2 ft/s&sup2;)</td></tr>
+    <tr><td>Wind pressure</td><td>q = 0.00256 &times; V&sup2; psf (V in mph)</td></tr>
+    <tr><td>Centre point load moment, simple span</td><td>M = P &times; L &divide; 4</td></tr>
+    <tr><td>Deflection limit</td><td>Manufacturer's &mdash; L/180 to L/360 is common</td></tr>
+  </table>
+  <p class="expl">Outdoor rigs run on a written <b>wind plan</b> with set speeds for watching, dropping soft goods, landing the rig and evacuating. The structure's plan sets the numbers, not the guide.</p>
+</section>
+
+<section class="panel" id="p-safety">
+  <h2>Safety &amp; Inspection</h2>
+  <p class="lede">Most rigging injuries come from falls, dropped objects and gear that should have been tagged out. All three are preventable.</p>
+
+  <h3>Calls everybody knows</h3>
+  <div class="grid">
+    <div class="card L power"><h4>&ldquo;Headache!&rdquo;</h4><p>Something is falling. <b>Don't look up</b> &mdash; cover your head and move out from under the work.</p></div>
+    <div class="card L warn"><h4>&ldquo;Rope!&rdquo;</h4><p>A line is being dropped from above. Clear the area under it.</p></div>
+    <div class="card L warn"><h4>&ldquo;Heads!&rdquo;</h4><p>Something is moving overhead &mdash; a set flying in, a point going up. Look and stay clear.</p></div>
+    <div class="card L audio"><h4>&ldquo;Motors running&rdquo;</h4><p>Chain motors are moving. Nobody under the rig; eyes on every point.</p></div>
+  </div>
+
+  <h3>Fall protection</h3>
+  <div class="grid">
+    <div class="card L power"><h4>When</h4><p>OSHA: <b>4 ft</b> in general industry, <b>6 ft</b> in construction, <b>10 ft</b> on scaffolds. In the steel, you are tied off <b>100%</b> of the time &mdash; including while moving.</p></div>
+    <div class="card L sdi"><h4>The system (ABCs)</h4><p><b>A</b>nchorage rated 5,000 lb per person (or engineered), <b>B</b>ody harness (full body, never a belt), <b>C</b>onnector (lanyard or self-retracting lifeline).</p></div>
+    <div class="card L warn"><h4>Clearance</h4><p>Free fall + lanyard deceleration + your height + a safety margin must fit above the next level down. A 6-ft lanyard needs far more than 6 ft below.</p></div>
+    <div class="card L power"><h4>Suspension trauma</h4><p>Hanging still in a harness can make you lose consciousness within minutes. There has to be a <b>rescue plan</b> before anyone goes up.</p></div>
+  </div>
+
+  <h3>Tag it out &mdash; what retires gear</h3>
+  <table class="tbl">
+    <tr><th>Gear</th><th>Out of service when</th></tr>
+    <tr><td>Steel (wire rope)</td><td>Kink, birdcage, crushing, heat damage, heavy corrosion, any broken wire at a fitting, broken-wire count over the limit for that rope, damaged or missing tag</td></tr>
+    <tr><td>Round sling</td><td>Cover cut or worn through, core yarns showing, melting or charring, chemical damage, knots, missing or unreadable tag</td></tr>
+    <tr><td>Shackle</td><td>Bent bow or pin, pin that won't seat, cracks, heavy wear, no markings, non-original pin</td></tr>
+    <tr><td>Hook</td><td>Throat opened or twisted beyond the manufacturer's limit, crack, missing or broken latch</td></tr>
+    <tr><td>Chain</td><td>Stretched links (gauge it), nicks, gouges, cracks, heat damage, wrong grade</td></tr>
+    <tr><td>Truss</td><td>Bent or dented members, cracked welds, damaged spigots or holes</td></tr>
+  </table>
+  <p class="expl">Broken-wire limits differ by standard and rope type &mdash; sling standards and running-rope standards use different counts. On a call, you don't need the number: <b>any broken wire you can see goes to the head rigger</b>. When in doubt, tag it out.</p>
+
+  <h3>OSHA numbers</h3>
+  <table class="tbl">
+    <tr><th>Event</th><th>Report to OSHA within</th></tr>
+    <tr><td>Work-related fatality</td><td>8 hours</td></tr>
+    <tr><td>In-patient hospitalisation, amputation or loss of an eye</td><td>24 hours</td></tr>
+  </table>
+  <div class="key"><b>Stop work authority.</b> Anyone on the call can stop the work when they see something unsafe &mdash; and it is protected. Hierarchy of controls, best to worst: <b>eliminate &rarr; substitute &rarr; engineer &rarr; administrative &rarr; PPE</b>.</div>
+</section>
+
+<section class="panel" id="p-sim">
+  <h2>Build the Bridle</h2>
+  <p class="lede">The head rigger hands you a point off the plot. Work out the leg lengths, the tension in each leg, and whether the hardware will hold it.</p>
+  <div class="sim" id="bridleSim">
+    <div class="ldbrief" id="brBrief"></div>
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="brStatus"></span>
+      <button class="btn" id="brNext" style="margin-left:auto">Next point</button>
+    </div>
+    <div class="fig" style="margin-top:0"><svg id="brSvg" viewBox="0 0 460 230" role="img" aria-label="Bridle geometry for this point"></svg></div>
+    <div id="brSteps"></div>
+    <div id="brFeed"></div>
+  </div>
+  <div class="key">
+    <b>What it's drilling.</b> Pythagoras for leg length, the closer leg carrying more, tension always beating the leg's share of the weight, the 120&deg; limit, and checking hardware against the <b>tension</b> &mdash; not the load.
+  </div>
+
+  <h2>Tag It Out</h2>
+  <p class="lede">Shop prep before a load-out. Every piece in the pile gets a decision: back in the case or out of service.</p>
+  <div class="sim" id="tagSim">
+    <div class="ldbrief" id="tgBrief"></div>
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="tgStatus"></span>
+      <button class="btn" id="tgRestart" style="margin-left:auto">Restart</button>
+    </div>
+    <div id="tgCard"></div>
+    <div id="tgFeed"></div>
+  </div>
+  <div class="key">
+    <b>What it's drilling.</b> The difference between cosmetic and structural, what the tag is worth, and the habit that saves people: <b>when in doubt, tag it out</b>.
+  </div>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly &mdash; "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer &mdash; including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Sequence Builder</h2>
+  <p class="lede">Tap the steps in the correct order. Wrong step and it tells you immediately.</p>
+  <div id="chainHost"></div>
+</section>
+
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>

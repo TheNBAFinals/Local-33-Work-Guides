@@ -15,8 +15,9 @@ Interactive study guides for live event production. Built to drill, not to read.
 | Lighting | `/lighting/` | Fixtures, DMX, consoles, truss cabling |
 | Electric | `/electric/` | Distro, feeder, cam-lok, Socapex, phase balance |
 | Backline | `/backline/` | Drum mics, drum sub, DI boxes, XLR runs, input lists |
+| Rigging | `/rigging/` | Hardware, arena points and motors, bridle math, fly systems, truss, inspection |
 
-Planned: Rigging, Carpentry, Special FX.
+Planned: Carpentry, Special FX.
 
 ## How they work
 
@@ -31,5 +32,10 @@ gain-structure simulator.
 ## Adding a guide
 
 Guides are generated from a shared template so they all look and behave the same.
-Drop a new folder at the repo root containing an `index.html`, then add its card
-to the hub page.
+The template is the Electric guide; `tools/build.py` pulls its styles and core
+drill code and combines them with each guide's own content in `tools/guides/<dept>/`
+(`meta.json`, `body.html`, `data.js`, optional `sims.js` and `extra.css`).
+
+    python3 tools/build.py rigging
+
+writes `rigging/index.html`. Then add the guide's card to the hub page and a row above.
