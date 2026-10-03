@@ -1059,6 +1059,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   <div class="card L video">
     <h4>Video switcher <span class="pill p-video">Chooses</span></h4>
     <p>Multiple inputs in, <b>you choose which one goes out</b>. One or more outputs depending on size. ATEM Mini Pro is the common small-format box.</p>
+    <p><b>Know which mode it's in.</b> The ATEM Mini Pro ships in <b>cut bus</b> mode &mdash; press a source and it is <b>on air immediately</b>. In <b>program/preview</b> mode (set in ATEM Software Control) a button only loads preview until you hit <b>CUT</b> or <b>AUTO</b>.</p>
   </div>
 
   <div class="card L sdi">
@@ -1175,6 +1176,58 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   <div class="key">
     <b>Why two converters?</b> HDMI dies around 50 ft. SDI goes 300. The converters are a translation layer for the long walk across the ballroom — not processing, just transport.
   </div>
+  <h2>Datavideo Meeting-Room Switcher Rack</h2>
+  <p class="lede">A cased rental package you'll meet in corporate breakouts: an <b>8-input switching rack</b>, a <b>touchscreen controller</b> and a <b>16&Prime; multiview monitor</b>. Mixed SDI and HDMI in and out, scaling to 1080p, and two still stores for a holding slide.</p>
+
+  <div class="grid">
+    <div class="card L video"><h4>Inputs</h4><p><b>SDI 1&ndash;4</b> and <b>HDMI 1&ndash;4</b>. By default SDI 1&ndash;4 are Inputs 1&ndash;4 and <b>HDMI 1&ndash;4 are Inputs 5&ndash;8</b> on the touchscreen.</p></div>
+    <div class="card L sdi"><h4>Outputs</h4><p><b>SDI 1&ndash;3</b> and <b>HDMI 1&ndash;3</b>. By default every output carries Program except <b>HDMI 3, which is the multiview</b> &mdash; that's where the 16&Prime; monitor goes.</p></div>
+    <div class="card L data"><h4>Controller</h4><p>One <b>CAT6 cable</b> from the controller's <b>DVIP</b> port to the rack's PoE port carries both power and control. <b>Not</b> the RS-232 port.</p></div>
+  </div>
+
+  <h3>Power-up, in this order</h3>
+  <ol class="steps">
+    <li>Controller to the rack: CAT6 from the controller's <b>DVIP</b> port to the rack's <b>Ethernet (PoE)</b> port.</li>
+    <li>16&Prime; monitor to <b>HDMI OUT 3</b>, and to power.</li>
+    <li>Power to the rack, then the rack power supply's switch on the front. The controller boots on its own.</li>
+    <li>Switcher on: <b>press and hold</b> its front power button for a second or two.</li>
+    <li>Sources into the inputs, destinations off the outputs.</li>
+  </ol>
+
+  <h3>Clear the last show before you start</h3>
+  <p>Racks come back from the last job with its routing, stills and names still in them. On the touchscreen: <b>Settings (gear) &rarr; Load Default Settings &rarr; Basic Mode Routing Default</b>, confirm, let it reboot. Then do the same with <b>Advanced Mode Routing Default</b>.</p>
+  <table class="tbl">
+    <tr><th>Loading defaults clears</th><th>It does not clear</th></tr>
+    <tr><td>Output routing, the cross-point map, Still 1 and Still 2, input icons, the user lock code. Advanced default also restores the multiview layout.</td><td><b>Multiview input names.</b> Rename or reset those separately under Settings &rarr; Multiview Input Name.</td></tr>
+  </table>
+
+  <h3>Basic vs Advanced mode</h3>
+  <table class="tbl">
+    <tr><th></th><th>Basic</th><th>Advanced</th></tr>
+    <tr><td>Switching</td><td>Touch a source and it goes to program with a seamless transition</td><td>Load <b>preview</b>, then <b>CUT</b> or <b>FADE</b> &mdash; or touch the program row to take it directly</td></tr>
+    <tr><td>Outputs</td><td>Program (or multiview) on every output &mdash; every screen shows the same thing</td><td>Any input, still, preview, program or multiview to any output &mdash; different screens, different content</td></tr>
+    <tr><td>Use it for</td><td>Simple rooms, or when the client runs it themselves</td><td>When the screens need different content, or you want preview before air</td></tr>
+  </table>
+
+  <h3>The touchscreen tabs</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Switching</h4><p>Where you run the show. In Basic mode this is also where you <b>lock</b> the screen so a client can only switch.</p></div>
+    <div class="card L video"><h4>Cross Point</h4><p>Maps physical inputs to switcher buttons. Presenter laptop on HDMI 1? Map it to <b>Input 1</b> so it's the first button. Affects both modes.</p></div>
+    <div class="card L video"><h4>Icon</h4><p>Puts a label icon on a button &mdash; e.g. LOGO on the holding slide. <b>Long-press</b> to clear it back to &ldquo;INPUT X&rdquo;.</p></div>
+    <div class="card L video"><h4>Still</h4><p>Put the source in <b>Program</b>, go to Still, pick <b>Still 1 or 2</b>, press <b>Grab</b>, wait about 10 seconds. Stills only come from a live grab &mdash; no loading from USB.</p></div>
+    <div class="card L video"><h4>OUT Routing</h4><p>Pick an output, then pick what feeds it. Basic mode only offers Program and Multiview; Advanced offers everything.</p></div>
+  </div>
+  <div class="key"><b>Settings worth knowing:</b> output resolution (default <b>1080p59.94</b>), cross-dissolve time in frames (default 30), multiview input names, and an <b>HDCP</b> on/off switch. <b>Leave network, input-mode and firmware settings alone</b> &mdash; they belong to the vendor's shop.</div>
+
+  <h3>When it misbehaves</h3>
+  <table class="tbl">
+    <tr><th>Symptom</th><th>Fix</th></tr>
+    <tr><td>Controller says &ldquo;No Device on the Network&rdquo;</td><td>CAT6 in the <b>DVIP</b> port? Power the rack down, connect the controller, power back up. Try a known-good cable.</td></tr>
+    <tr><td>No video on any output</td><td>Check connections, then the <b>HDCP</b> setting &mdash; protected sources won't pass with it wrong.</td></tr>
+    <tr><td>Still won't grab properly</td><td>The source has to be <b>in Program</b> when you grab. Put it there and grab again.</td></tr>
+    <tr><td>Old stills, icons or wrong routing</td><td>Load both default settings.</td></tr>
+    <tr><td>Last show's names on the multiview</td><td>Settings &rarr; Multiview Input Name &rarr; rename or Reset.</td></tr>
+  </table>
 </section>
 
 <!-- ══════════════════ WORKFLOW ══════════════════ -->
@@ -1991,7 +2044,12 @@ var CARDS=[
   ["Which compressor type for a panel discussion?","<b>RMS Manual</b> (or SlowOpto for transparency). Never PunchBag on a corporate panel."],
   ["How do you find a problem frequency?","Take one PEQ band, set it <b>narrow (1/9 oct)</b>, <b>boost +12 dB</b>, and sweep. The ugly spot jumps out. Then invert to a cut and widen slightly."],
   ["Copy + a channel Sel key copies what — and what does it miss?","All related <b>processing</b> for that channel. It does <b>not</b> copy the preamp, and never copies channel linking or ducker settings."],
-  ["What's the fastest way to set up 8 identical speech mics?","Build one properly, store it as a <b>Channel Library</b> (\"SPEECH\"), then recall it. Or hold Copy + Paste across Sel keys — four channels in six seconds."]
+  ["What's the fastest way to set up 8 identical speech mics?","Build one properly, store it as a <b>Channel Library</b> (\"SPEECH\"), then recall it. Or hold Copy + Paste across Sel keys — four channels in six seconds."],
+  ["Datavideo meeting-room rack \u2014 which inputs are HDMI on the touchscreen?","<b>Inputs 5\u20138.</b> SDI 1\u20134 are Inputs 1\u20134 and HDMI 1\u20134 are Inputs 5\u20138 by default. Use the Cross Point tab to move the laptop to Input 1."],
+  ["Datavideo rack \u2014 which output feeds the multiview monitor?","<b>HDMI OUT 3.</b> Every other output carries Program by default."],
+  ["Datavideo controller won't connect \u2014 first check?","The CAT6 is in the controller's <b>DVIP</b> port, not RS-232. One cable carries power and control."],
+  ["Datavideo rack \u2014 Basic vs Advanced?","<b>Basic:</b> touch a source, it goes to program, same picture on every screen. <b>Advanced:</b> preview then CUT/FADE, and any source to any output."],
+  ["How do you grab a still on the Datavideo rack?","Source <b>in Program</b> \u2192 Still tab \u2192 Still 1 or 2 \u2192 Grab \u2192 wait ~10 s. No USB loading."]
 ];
 var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
 function fcInit(sh){
@@ -2141,7 +2199,13 @@ var QS=[
   a:1,e:"It clears everything storable in a scene and it ignores — then resets — your Safes and Global Filter. But stored scenes and libraries survive, which is why storing a Scene first is your safety net."},
  {q:"Room hums as soon as the presenter plugs in their laptop. First suspect?",
   o:["The wireless receivers","ST3 — it's unbalanced — plus the laptop is on a charger","The GEQ","The AMM"],
-  a:1,e:"ST3 is an unbalanced 3.5mm input and a charging laptop is the single most common ground-loop source in a breakout room. A DI or isolation transformer solves it permanently."}
+  a:1,e:"ST3 is an unbalanced 3.5mm input and a charging laptop is the single most common ground-loop source in a breakout room. A DI or isolation transformer solves it permanently."},
+{q:"You open a Datavideo meeting-room rack and the touchscreen still shows the last client's logo icons and routing. What do you do?",
+  o:["Work around them","Load Basic Mode Routing Default, then Advanced Mode Routing Default","Factory-reset the firmware","Unplug the controller for ten seconds"],a:1,
+  e:"<b>Load both defaults</b> from Settings \u2192 Load Default Settings. That clears routing, the cross-point map, stills, icons and the lock code. Multiview names are separate \u2014 reset those under Multiview Input Name."},
+{q:"On the Datavideo rack in Basic mode, the client wants the confidence monitor to show something different from the main screen. Can you do it?",
+  o:["Yes, route it on the OUT Routing tab","No \u2014 Basic mode only offers Program or Multiview on each output; switch to Advanced mode","Yes, with a still store","Only on the SDI outputs"],a:1,
+  e:"Basic mode puts Program (or the multiview) on every output. <b>Advanced mode</b> lets any input, still, preview, program or multiview go to any output."}
 ];
 var qi=0,qScore=0,qHost=document.getElementById("quizHost");
 function qRender(){
@@ -2210,7 +2274,10 @@ var CHAINS=[
  {t:"Breakout room power-up",
   s:["Everything down and off","Connect dSNAKE (if used)","Mixer ON at rear switch","Amps / powered speakers ON","Set screen brightness"]},
  {t:"Ringing out a room",
-  s:["Select LR, open GEQ tab","PAFL the mix","Press GEQ Fader Flip","Raise level until it just rings","Read the red dot on the RTA","Cut that band a few dB","Stop at 3–5 cuts"]}
+  s:["Select LR, open GEQ tab","PAFL the mix","Press GEQ Fader Flip","Raise level until it just rings","Read the red dot on the RTA","Cut that band a few dB","Stop at 3–5 cuts"]},
+ {t:"Datavideo meeting-room rack \u2014 power-up",
+  s:["CAT6 from controller DVIP to the rack's PoE port","Multiview monitor on HDMI OUT 3","Power the rack and switch on its power supply","Hold the switcher's power button","Load Basic, then Advanced, routing defaults","Sources in, destinations out","Test every output"],
+  w:"The controller gets its power over the CAT6, so connect it before the rack comes up. Clearing defaults first means you start from a known state, not the last show's."}
 ];
 var ci=0,cHost=document.getElementById("chainHost");
 function cRender(){
@@ -2359,7 +2426,13 @@ var SCN=[
   a:"An empty room is reflective and bass-heavy; a full room absorbs. Your empty-room mix was flattered by reflections that 400 bodies just soaked up.<br><br><b>Don't just push the fader.</b> Work the structure: confirm your <b>gain/trim</b> is still giving you a healthy input level, then adjust. If you set trim conservatively you have headroom to work with — this is exactly why gain structure matters.<br><br>Watch feedback as you come up. Room absorption changed your feedback threshold too, usually in your favor, but the mic position relative to the speakers hasn't changed.<br><br><b>The lesson:</b> always leave yourself headroom at set-up. A mix with no room to move is a mix that fails the moment conditions change — and conditions always change."},
  {w:"Strike · 11:00pm",
   q:"Show's over. Everyone's tired and the truck is waiting. What separates a professional strike from a sloppy one?",
-  a:"<b>Power down in reverse order</b> — amps and powered speakers off before sources, so you don't send a thump through the system.<br><br><b>Coil cable properly</b> (over-under) and keep your labels on. The next crew — possibly you — inherits whatever you do here. A snake coiled wrong is a snake with a broken conductor in six months.<br><br><b>Account for every piece.</b> Small converters, IR sync windows, antenna mounts, and power bricks are what go missing. They're also the exact items whose absence kills a load-in.<br><br><b>The principle from the deck applies in reverse:</b> don't rush your system. Rushing strike is how gear goes missing and how you get hurt at the end of a fourteen-hour day."}
+  a:"<b>Power down in reverse order</b> — amps and powered speakers off before sources, so you don't send a thump through the system.<br><br><b>Coil cable properly</b> (over-under) and keep your labels on. The next crew — possibly you — inherits whatever you do here. A snake coiled wrong is a snake with a broken conductor in six months.<br><br><b>Account for every piece.</b> Small converters, IR sync windows, antenna mounts, and power bricks are what go missing. They're also the exact items whose absence kills a load-in.<br><br><b>The principle from the deck applies in reverse:</b> don't rush your system. Rushing strike is how gear goes missing and how you get hurt at the end of a fourteen-hour day."},
+{w:"Breakout \u00b7 Datavideo rack, 30 min to doors",
+  q:"The touchscreen says \u201cNo Device on the Network.\u201d The rack is on, the monitor shows the multiview. What's your order?",
+  a:"<b>It's the link between the controller and the rack.</b><br><br><b>1.</b> Check the CAT6 is in the controller's <b>DVIP</b> port \u2014 the RS-232 port right next to it looks similar and does nothing here.<br><b>2.</b> Power the rack down, make sure the controller is connected, then power the rack back up so the controller boots with it.<br><b>3.</b> Swap in a known-good CAT6.<br><br>Video is already passing (the multiview is up), so don't start re-patching sources."},
+{w:"Breakout \u00b7 Datavideo rack, client-run room",
+  q:"The client will switch their own slides and camera from the touchscreen. You want them unable to wander into routing or settings. How do you set it up?",
+  a:"<b>Basic mode, then lock it.</b><br><br><b>1.</b> Basic mode: touching a source takes it to program with a seamless transition \u2014 nothing to get wrong.<br><b>2.</b> Use the Cross Point and Icon tabs so the client's laptop and camera are the first buttons, clearly labelled.<br><b>3.</b> Grab their holding slide into a still store while it's in program.<br><b>4.</b> Lock it with the <b>Lock</b> button on the Basic Switching tab. Locked, the screen stays on Switching \u2014 no Home, no Settings. The 4-digit user code lives under Settings \u2192 Passcode, and creating one needs the vendor's admin code \u2014 get it from your V1 or the shop, not the client.<br><br>Keep the unlock code with your crew, not taped to the controller."}
 ];
 var sh=document.getElementById("scnHost");
 SCN.forEach(function(s,i){
