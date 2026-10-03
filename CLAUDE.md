@@ -69,6 +69,11 @@ Don't re-merge these files if they're still sitting in ./inbox/.
 - terranea_video_refresher.html → fold into video/ (venue scenario)
 - Qu-16 PDFs + source-manuals/ (Datavideo KAFL switcher) → source material for av/ and video/
 
+## Finder tags (where else source files live)
+- Blue tag = study-guide material. Blue + Red = Local 33-related study-guide material.
+- Find them with: mdfind "kMDItemUserTags == 'Blue'"  — check these alongside ./inbox/ when syncing.
+- As of Oct 3 2026 the tagged files were the two Qu-16 PDFs and the two Datavideo KAFL PDFs (all merged).
+
 ## Photo library (do NOT copy into the repo wholesale)
 iCloud Drive › "Local 33 Docs:NFO" › "New 2 Add" — ~230 gear photos (HEIC) from Aug–Sep 2026 gigs.
 When building guides: review, pick the useful ones, convert to compressed JPG/WebP, embed only what's needed.
