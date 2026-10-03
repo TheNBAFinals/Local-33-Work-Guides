@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Backline Field Guide</title>
+<meta name="description" content="Backline for live events: drum miking, the Veam drum sub, DI boxes, instruments, XLR runs and line-check troubleshooting.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1117">
+<style>
+
+:root{
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2430; --line:#2b3440;
+  --txt:#e6edf3; --dim:#8b98a5; --dimmer:#5c6773;
+  /* signal color code — used everywhere, consistently */
+  --audio:#3fb950;    /* XLR / analog audio — GREEN */
+  --rf:#f0883e;       /* RF / wireless / coax — ORANGE */
+  --video:#58a6ff;    /* HDMI / video — BLUE */
+  --sdi:#bc8cff;      /* SDI / BNC — PURPLE */
+  --power:#f85149;    /* IEC / power — RED */
+  --data:#39d0d8;     /* CAT / Dante / network — CYAN */
+  --warn:#e3b341;
+  --radius:14px;
+  font-synthesis:none;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+a{color:var(--video)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(160deg,#161b22 0%,#0d1117 100%);
+  border-bottom:1px solid var(--line);padding:28px 16px 22px;
+}
+header .inner{max-width:900px;margin:0 auto}
+h1{margin:0 0 6px;font-size:26px;letter-spacing:-.5px;line-height:1.2}
+.sub{color:var(--dim);font-size:14px;margin:0}
+.badge{display:inline-block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--rf);border:1px solid var(--rf);border-radius:99px;padding:3px 10px;margin-bottom:10px;font-weight:600}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav .navinner{display:flex;gap:4px;max-width:900px;margin:0 auto;padding:8px 12px}
+nav button{
+  flex:0 0 auto;background:transparent;border:1px solid transparent;color:var(--dim);
+  font:600 13px/1 inherit;padding:9px 13px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+nav button:hover{color:var(--txt);background:var(--bg2)}
+nav button[aria-selected="true"]{background:var(--bg3);color:var(--txt);border-color:var(--line)}
+
+/* ---------- panels ---------- */
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:30px 0 4px;letter-spacing:-.3px}
+h2:first-child{margin-top:26px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--txt)}
+.lede{color:var(--dim);margin:0 0 18px;font-size:14.5px}
+
+/* ---------- cards ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin:12px 0}
+.card h4{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card p{margin:0;color:var(--dim);font-size:14.5px}
+.card p+p{margin-top:8px}
+.card.L{border-left:3px solid var(--line)}
+.card.audio{border-left-color:var(--audio)} .card.rf{border-left-color:var(--rf)}
+.card.video{border-left-color:var(--video)} .card.sdi{border-left-color:var(--sdi)}
+.card.power{border-left-color:var(--power)} .card.data{border-left-color:var(--data)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.p-audio{background:rgba(63,185,80,.15);color:var(--audio)}
+.p-rf{background:rgba(240,136,62,.15);color:var(--rf)}
+.p-video{background:rgba(88,166,255,.15);color:var(--video)}
+.p-sdi{background:rgba(188,140,255,.15);color:var(--sdi)}
+.p-power{background:rgba(248,81,73,.15);color:var(--power)}
+.p-data{background:rgba(57,208,216,.15);color:var(--data)}
+
+/* ---------- key callout ---------- */
+.key{background:rgba(227,179,65,.08);border:1px solid rgba(227,179,65,.3);
+  border-radius:10px;padding:12px 14px;margin:14px 0;font-size:14px}
+.key b{color:var(--warn)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.legend span{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:6px}
+
+/* ---------- signal chain visual ---------- */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0}
+.node{background:var(--bg3);border:1px solid var(--line);border-radius:9px;
+  padding:8px 12px;font-size:13px;font-weight:600}
+.arrow{color:var(--dimmer);font-size:14px;font-weight:700}
+.arrow.a-audio{color:var(--audio)} .arrow.a-rf{color:var(--rf)}
+.arrow.a-video{color:var(--video)} .arrow.a-sdi{color:var(--sdi)}
+
+/* ---------- figures ---------- */
+.fig{background:#090d12;border:1px solid var(--line);border-radius:11px;
+  padding:16px 12px 12px;margin:14px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:430px;margin:0 auto}
+.figcap{font-size:12px;color:var(--dimmer);text-align:center;margin-top:10px;line-height:1.55}
+.figcap b{color:var(--dim)}
+svg .s{fill:none;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg .sf{fill:#1c2430;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round}
+svg .sd{fill:#0d1117;stroke:#5c6773;stroke-width:1.5}
+svg .met{fill:#3f4a57;stroke:#8b98a5;stroke-width:1.5}
+svg .gold{fill:#c9a227}
+svg .hl{fill:none;stroke-width:2;stroke-dasharray:5 4}
+svg .lead{stroke-width:1.4;fill:none}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+svg .lbl{font-size:11px;font-weight:600;fill:#8b98a5}
+svg .num{font-size:10px;font-weight:700;fill:#0d1117}
+svg .tag{font-size:11.5px;font-weight:800;letter-spacing:.5px}
+svg .cap{font-size:12px;font-weight:700;fill:#e6edf3}
+.c-audio{stroke:#3fb950} .f-audio{fill:#3fb950}
+.c-rf{stroke:#f0883e} .f-rf{fill:#f0883e}
+.c-video{stroke:#58a6ff} .f-video{fill:#58a6ff}
+.c-sdi{stroke:#bc8cff} .f-sdi{fill:#bc8cff}
+.c-power{stroke:#f85149} .f-power{fill:#f85149}
+.c-data{stroke:#39d0d8} .f-data{fill:#39d0d8}
+.c-warn{stroke:#e3b341} .f-warn{fill:#e3b341}
+
+/* ---------- connector ID drill ---------- */
+.idgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.idcard{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:12px;
+  cursor:pointer;text-align:center;transition:.15s}
+.idcard:hover{border-color:var(--dimmer)}
+.idcard svg{width:100%;height:auto;max-width:130px}
+.idcard .nm{font-size:12.5px;font-weight:700;margin-top:8px}
+.idcard .rv{font-size:11.5px;color:var(--dim);margin-top:5px;display:none;line-height:1.5}
+.idcard.open .rv{display:block}
+.idcard.open{border-color:var(--rf)}
+.ckitem{background:var(--bg2);border:1px solid var(--line);border-radius:11px;cursor:pointer;transition:.15s}
+.ckitem:hover{border-color:var(--dimmer)}
+
+/* ---------- ordered steps ---------- */
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 48px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14.5px}
+ol.steps li::before{content:counter(s);position:absolute;left:14px;top:11px;
+  width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);
+  color:var(--rf);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+ul.chk{list-style:none;padding:0;margin:12px 0}
+ul.chk li{padding:9px 12px 9px 32px;position:relative;font-size:14.5px;color:var(--dim);
+  border-bottom:1px solid var(--line)}
+ul.chk li:last-child{border-bottom:none}
+ul.chk li::before{content:"▸";position:absolute;left:12px;color:var(--audio);font-weight:700}
+
+/* ---------- table ---------- */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;display:block;overflow-x:auto}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{color:var(--dim);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px}
+
+/* ---------- buttons ---------- */
+.btn{background:var(--bg3);border:1px solid var(--line);color:var(--txt);
+  font:600 14px/1 inherit;padding:11px 18px;border-radius:9px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--dimmer)}
+.btn.pri{background:var(--audio);border-color:var(--audio);color:#08130b}
+.btn.pri:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+
+/* ---------- flashcards ---------- */
+.fcstage{perspective:1200px;margin:16px 0}
+.fc{position:relative;min-height:190px;cursor:pointer;transition:transform .5s;
+  transform-style:preserve-3d}
+.fc.flip{transform:rotateY(180deg)}
+.fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);border:1px solid var(--line);background:var(--bg2);
+  padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fcback{transform:rotateY(180deg);background:var(--bg3)}
+.fcq{font-size:18px;font-weight:600;line-height:1.4}
+.fca{font-size:15px;color:var(--dim);line-height:1.6}
+.fchint{position:absolute;bottom:12px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--dimmer);letter-spacing:.5px;text-transform:uppercase}
+.counter{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- quiz ---------- */
+.qbox{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:16px 0}
+.qtext{font-size:16.5px;font-weight:600;margin:0 0 16px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--line);
+  color:var(--txt);font:15px/1.45 inherit;padding:13px 15px;border-radius:10px;margin-bottom:9px;
+  cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--dimmer)}
+.opt.right{border-color:var(--audio);background:rgba(63,185,80,.12)}
+.opt.wrong{border-color:var(--power);background:rgba(248,81,73,.12)}
+.opt:disabled{cursor:default}
+.expl{font-size:14px;color:var(--dim);border-left:3px solid var(--rf);
+  padding:2px 0 2px 12px;margin:14px 0 0}
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--audio);width:0;transition:width .3s}
+.score{font-size:44px;font-weight:800;letter-spacing:-2px;margin:6px 0}
+
+/* ---------- chain builder ---------- */
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;
+  background:var(--bg2);border:1px dashed var(--line);border-radius:12px;margin:12px 0;align-items:center}
+.slots:empty::before{content:"Tap the pieces below in order…";color:var(--dimmer);font-size:13.5px}
+.tok{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 13px;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+.tok:hover{border-color:var(--dimmer)}
+.tok.used{opacity:.25;pointer-events:none}
+.tok.ok{border-color:var(--audio);color:var(--audio)}
+.tok.no{border-color:var(--power);color:var(--power)}
+
+/* ---------- scenario ---------- */
+.scn{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:var(--radius);padding:18px;margin:14px 0}
+.scn .setting{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--rf);
+  font-weight:700;margin-bottom:8px}
+.scn .q{font-size:15px;margin:0 0 12px;line-height:1.55}
+.reveal{display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;
+  font-size:14.5px;color:var(--dim);line-height:1.65}
+.reveal.on{display:block}
+.reveal b{color:var(--txt)}
+
+footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
+  color:var(--dimmer);font-size:12.5px;text-align:center;line-height:1.7}
+@media(max-width:520px){
+  h1{font-size:22px} .wrap{padding:0 13px 70px} .card{padding:14px 15px}
+  .score{font-size:38px}
+}
+
+/* ---------- simulators ---------- */
+.sim{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0}
+.simrow{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.simmeters{display:flex;gap:16px;flex:0 0 auto}
+.mtr{width:64px;text-align:center;position:relative}
+.mtrbar{position:relative;height:230px;width:34px;margin:0 auto;border-radius:5px;
+  overflow:hidden;background:#05080b;border:1px solid var(--line)}
+.mzone{position:absolute;left:0;right:0}
+.mclip{top:0;height:26%;background:rgba(248,81,73,.16)}
+.mgood{top:26%;height:52%;background:rgba(63,185,80,.12)}
+.mnoise{bottom:0;height:22%;background:rgba(92,103,115,.16)}
+.mfill{position:absolute;left:3px;right:3px;bottom:0;border-radius:3px;
+  background:linear-gradient(180deg,#3fb950,#2a7f38);transition:height .12s}
+.mfill.room{background:linear-gradient(180deg,#58a6ff,#2b6cb8)}
+.mfill.hot{background:linear-gradient(180deg,#f85149,#a4322c)}
+.mtick{position:absolute;left:0;right:0;height:1px;background:rgba(230,237,243,.45)}
+.mtick span{position:absolute;right:-24px;top:-7px;font-size:9.5px;color:var(--dim);font-weight:700}
+.mlbl{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--dim);margin-top:9px;line-height:1.5}
+.mlbl span{color:var(--txt);font-size:13px;font-variant-numeric:tabular-nums}
+.pkled{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;
+  padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--dimmer);letter-spacing:.5px}
+.pkled.on{background:var(--power);border-color:var(--power);color:#fff}
+.simctl{flex:1 1 250px;min-width:230px}
+.slab{display:block;font-size:11px;font-weight:700;letter-spacing:.7px;color:var(--dim);margin-bottom:7px}
+.slab b{float:right;color:var(--txt);font-variant-numeric:tabular-nums;letter-spacing:0}
+.simctl input[type=range]{width:100%;accent-color:var(--audio);height:26px}
+.srange{display:flex;justify-content:space-between;font-size:10px;color:var(--dimmer);margin-top:-2px}
+.srcnote{margin-top:10px;font-size:12px;color:var(--dimmer)}
+.verdict{margin-top:16px;border-left:3px solid var(--line);padding:11px 14px;
+  background:var(--bg3);border-radius:0 9px 9px 0;font-size:14px;line-height:1.6}
+.verdict b{display:block;margin-bottom:4px;font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.verdict.ok{border-left-color:var(--audio)} .verdict.ok b{color:var(--audio)}
+.verdict.warn{border-left-color:var(--warn)} .verdict.warn b{color:var(--warn)}
+.verdict.bad{border-left-color:var(--power)} .verdict.bad b{color:var(--power)}
+@media(max-width:520px){.simrow{gap:16px}.mtrbar{height:180px;width:30px}.mtr{width:56px}}
+
+/* ---------- rig builder ---------- */
+.rigwrap{background:#05080b;border:1px solid var(--line);border-radius:11px;padding:8px;overflow-x:auto}
+.rigwrap svg{width:100%;min-width:520px;height:auto;display:block}
+.fx{cursor:pointer}
+.fxbody{fill:#1c2430;stroke:#5c6773;stroke-width:2}
+.fx.sel .fxbody{stroke:#3fb950;stroke-width:2.5}
+.fx.dead .fxbody{stroke:#f85149;fill:#2a1416}
+.fx.flick .fxbody{stroke:#e3b341;stroke-dasharray:4 3}
+.fxlbl{font-size:10px;font-weight:700;fill:#8b98a5}
+.fxnum{font-size:11px;font-weight:800;fill:#e6edf3}
+.dxline{fill:none;stroke:#bc8cff;stroke-width:2.5;stroke-linecap:round}
+.dxline.bad{stroke:#f85149;stroke-dasharray:5 4}
+.uni{height:26px;border-radius:5px;background:#05080b;border:1px solid var(--line);
+  position:relative;overflow:hidden;margin-bottom:10px}
+.uni i{position:absolute;top:0;bottom:0;border-right:1px solid rgba(13,17,23,.8)}
+.addrlist{font-size:12px;color:var(--dim);line-height:1.9;font-variant-numeric:tabular-nums;
+  max-height:190px;overflow-y:auto}
+.addrlist b{color:var(--txt)}
+.addrlist .over{color:var(--power)}
+
+/* ---------- wall sim ---------- */
+.pn{cursor:pointer}
+.pnb{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.pn.on .pnb{fill:#16241a;stroke:#3fb950;stroke-width:2}
+.pn.p1 .pnb{stroke:#3fb950} .pn.p2 .pnb{stroke:#58a6ff}
+.pn.p3 .pnb{stroke:#f0883e} .pn.p4 .pnb{stroke:#bc8cff}
+.pn.dead .pnb{fill:#2a1416;stroke:#f85149}
+.pnn{font-size:10px;font-weight:700;fill:#8b98a5}
+.lwline{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.lwline.c1{stroke:#3fb950}.lwline.c2{stroke:#58a6ff}.lwline.c3{stroke:#f0883e}.lwline.c4{stroke:#bc8cff}
+.lwline.bk{stroke:#39d0d8;stroke-dasharray:5 4;stroke-width:2}
+.wallprev{background:#05080b;border:1px solid var(--line);border-radius:9px;padding:10px;
+  display:grid;gap:2px;margin-bottom:12px;min-height:110px;align-content:center}
+.wallprev span{background:#1c2430;border:1px solid #2b3440;border-radius:2px;aspect-ratio:1}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.statgrid div{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.statgrid b{display:block;font-size:10px;letter-spacing:.6px;color:var(--dimmer);text-transform:uppercase}
+.statgrid span{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ---------- patch challenge ---------- */
+.fixcard{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:11px;padding:15px 17px;margin-bottom:14px}
+.fixcard h4{margin:0 0 6px;font-size:16px;letter-spacing:-.2px}
+.fixcard p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.6}
+.fixcard .brief{margin-top:9px;font-size:12.5px;color:var(--warn);font-weight:600}
+.slots4{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:9px;margin-bottom:14px}
+.slot{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  cursor:pointer;transition:.15s}
+.slot:hover{border-color:var(--dimmer)}
+.slot.active{border-color:var(--warn);background:rgba(227,179,65,.07)}
+.slot.ok{border-color:var(--audio)} .slot.no{border-color:var(--power)}
+.slot b{display:block;font-size:9.5px;letter-spacing:.7px;color:var(--dimmer);margin-bottom:5px}
+.slot .pick{font-size:13px;font-weight:600;color:var(--dim)}
+.slot.filled .pick{color:var(--txt)}
+.banklab{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--dimmer);
+  text-transform:uppercase;margin:0 0 7px}
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.opt2{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;
+  font-size:12.5px;font-weight:600;cursor:pointer;color:var(--txt);transition:.15s}
+.opt2:hover{border-color:var(--dimmer)}
+.opt2.on{border-color:var(--warn);background:rgba(227,179,65,.12)}
+.fb{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-top:9px;font-size:13.5px;line-height:1.65}
+.fb b.h{display:block;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.fb.ok{border-left-color:var(--audio)} .fb.ok b.h{color:var(--audio)}
+.fb.no{border-left-color:var(--power)} .fb.no b.h{color:var(--power)}
+
+/* ---------- run the call ---------- */
+.callbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px;font-size:13.5px;line-height:1.65;color:var(--dim)}
+.callbrief b{color:var(--txt)}
+.callbrief table{width:100%;margin-top:10px;font-size:12.5px;border-collapse:collapse}
+.callbrief td{padding:3px 0;border-bottom:1px solid var(--line)}
+.callbrief td:last-child{text-align:right;color:var(--txt);font-variant-numeric:tabular-nums}
+.prog{height:5px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--warn);width:0;transition:width .3s}
+.cbq{font-size:16px;font-weight:600;line-height:1.5;margin:0 0 14px}
+.report{margin-top:16px}
+.rline{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-bottom:9px;font-size:13.5px;line-height:1.65}
+.rline b.h{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px}
+.rline.good{border-left-color:var(--audio)} .rline.good b.h{color:var(--audio)}
+.rline.bad{border-left-color:var(--power)} .rline.bad b.h{color:var(--power)}
+.rline.warn{border-left-color:var(--warn)} .rline.warn b.h{color:var(--warn)}
+.grade{text-align:center;padding:20px;background:var(--bg3);border:1px solid var(--line);
+  border-radius:12px;margin-bottom:16px}
+.grade .g{font-size:46px;font-weight:800;letter-spacing:-2px;line-height:1}
+.grade .gs{font-size:14px;color:var(--dim);margin-top:6px}
+
+/* ---------- fixture menu trainer ---------- */
+.fixpanel{background:#0a0d11;border:1px solid var(--line);border-radius:13px;padding:18px;
+  max-width:340px;margin:0 auto}
+.lcd{background:#0d2818;border:2px solid #1f3a2a;border-radius:6px;padding:14px 12px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#5dfba0;
+  text-shadow:0 0 8px rgba(93,251,160,.4);min-height:76px;margin-bottom:16px}
+.lcd .l1{font-size:15px;font-weight:700;letter-spacing:1px}
+.lcd .l2{font-size:20px;font-weight:700;letter-spacing:1.5px;margin-top:7px}
+.lcd .l3{font-size:11px;opacity:.6;margin-top:7px;letter-spacing:.5px}
+.lcd.saved{border-color:#3fb950;box-shadow:0 0 14px rgba(63,185,80,.25)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fkey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:8px;
+  padding:13px 4px;font:700 12px/1 inherit;cursor:pointer;transition:.1s}
+.fkey:hover{border-color:var(--dimmer)}
+.fkey:active{background:var(--warn);color:#1a1206;border-color:var(--warn)}
+.keyhint{font-size:10.5px;color:var(--dimmer);text-align:center;margin-top:11px;line-height:1.5}
+
+/* ---------- eos trainer ---------- */
+.cmdline{background:#05080b;border:1px solid var(--line);border-radius:8px;padding:13px 15px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;color:#e6edf3;
+  margin-bottom:14px;min-height:48px;letter-spacing:.5px}
+.cmdprompt{color:var(--dimmer)}
+.caret{color:var(--video);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.eokeys{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.eokey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:7px;
+  padding:11px 4px;font:700 11.5px/1 inherit;cursor:pointer;transition:.1s}
+.eokey:hover{border-color:var(--dimmer)}
+.eokey:active{background:var(--video);color:#06121f;border-color:var(--video)}
+.eokey.num{color:var(--warn)}
+.eokey.mod{color:var(--video)}
+
+/* ---------- truss trainer ---------- */
+.ldbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px}
+.ldbrief .who{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--rf);
+  font-weight:700;margin-bottom:7px}
+.ldbrief p{margin:0 0 8px;font-size:14px;line-height:1.65;color:var(--txt)}
+.ldbrief ul{margin:8px 0 0;padding-left:18px;color:var(--dim);font-size:13px;line-height:1.8}
+.ldbrief li::marker{color:var(--rf)}
+.fxt{cursor:pointer}
+.fxt .b{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.fxt.pick .b{stroke:#e3b341;stroke-width:2.5}
+.fxt.done .b{fill:#121f16;stroke:#3fb950}
+.fxt.err .b{fill:#2a1416;stroke:#f85149}
+.fxt t{pointer-events:none}
+.ckt{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:8px;margin-top:12px}
+.ck{background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;transition:.15s}
+.ck:hover{border-color:var(--dimmer)}
+.ck.sel{border-color:var(--warn);background:rgba(227,179,65,.08)}
+.ck.over{border-color:var(--power);background:rgba(248,81,73,.08)}
+.ck b{display:block;font-size:11px;letter-spacing:.6px;color:var(--dimmer)}
+.ck .amp{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:3px}
+.ck .who2{font-size:10.5px;color:var(--dim);margin-top:3px;min-height:13px}
+.legendrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:11px;color:var(--dim)}
+.legendrow span{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+
+/* eos trainer v2 */
+.lvltabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.lvltab{background:#0d1117;border:1px solid var(--line);color:#8b98a5;border-radius:6px;
+  padding:6px 13px;font:700 11.5px/1 var(--f);cursor:pointer;letter-spacing:.04em}
+.lvltab.on{background:rgba(88,166,255,.12);border-color:var(--video);color:#cfe3ff}
+.keybank{margin:10px 0 0}
+.keybank>span{display:block;font:800 9.5px/1 var(--f);letter-spacing:.13em;
+  color:#5c6773;margin:0 0 5px;text-transform:uppercase}
+.keybank .eokeys{margin:0}
+.topictag{display:inline-block;font:800 9px/1 var(--f);letter-spacing:.1em;
+  padding:3px 7px;border-radius:4px;background:#131a22;color:#8b98a5;
+  border:1px solid var(--line);margin:0 0 7px}
+
+/* electric sims */
+.camrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin:12px 0 0}
+.camb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px 8px;
+  cursor:pointer;text-align:center;font:700 11px/1.35 var(--f);color:#c9d1d9;transition:.12s}
+.camb:hover{border-color:#484f58}
+.camb.done{opacity:.4;pointer-events:none;border-color:#3fb950}
+.camb .dot{display:block;width:20px;height:20px;border-radius:50%;margin:0 auto 6px;border:3px solid}
+.camb small{display:block;color:#5c6773;font-size:9px;font-weight:600;margin-top:3px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.stepc{background:#131a22;border:1px solid var(--line);border-radius:20px;
+  padding:5px 11px;font:700 10px/1 var(--f);color:#8b98a5}
+.stepc.ok{border-color:#3fb950;color:#3fb950}
+.stepc.bad{border-color:#f85149;color:#f85149}
+.loadrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0 0}
+.lditem{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:10px}
+.lditem b{display:block;font-size:11.5px;color:#c9d1d9;margin-bottom:3px}
+.lditem .amps{font:800 14px/1 var(--f);color:var(--warn);margin:4px 0}
+.legbtns{display:flex;gap:5px;margin-top:7px}
+.legb{flex:1;background:#161b22;border:1px solid var(--line);border-radius:5px;
+  padding:6px 0;font:800 10px/1 var(--f);color:#8b98a5;cursor:pointer}
+.legb.on{background:rgba(227,179,65,.16);border-color:var(--warn);color:#e3b341}
+.diagrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin:12px 0 0}
+.diagb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:600 11.5px/1.4 var(--f);color:#c9d1d9;text-align:left}
+.diagb:hover{border-color:#484f58}
+.diagb.used{opacity:.45;pointer-events:none}
+.diagb i{display:block;font-style:normal;font-size:9px;color:#5c6773;margin-top:4px}
+.ecopt{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:12px 0 0}
+.ecb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:700 12px/1.3 var(--f);color:#c9d1d9;text-align:center}
+.ecb:hover{border-color:#484f58}
+
+/* home run trainer */
+.hrbuild{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:8px;margin:12px 0 0}
+.hrsel{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:9px}
+.hrsel label{display:block;font:800 9px/1 var(--f);letter-spacing:.12em;color:#5c6773;margin:0 0 6px}
+.hrsel select{width:100%;background:#161b22;color:#c9d1d9;border:1px solid var(--line);
+  border-radius:5px;padding:7px;font:600 11.5px/1 var(--f)}
+.runlist{margin:12px 0 0;display:flex;flex-direction:column;gap:6px}
+.runrow{display:flex;align-items:center;gap:9px;background:#0d1117;border:1px solid var(--line);
+  border-left:3px solid var(--dimmer);border-radius:7px;padding:9px 11px;font:600 11.5px/1.3 var(--f)}
+.runrow .x{margin-left:auto;cursor:pointer;color:#5c6773;font-weight:800;padding:0 4px}
+.runrow .x:hover{color:var(--power)}
+.runrow .cb{font-size:10px;color:#8b98a5}
+.runrow.pw{border-left-color:var(--power)} .runrow.dt{border-left-color:var(--sdi)}
+.poscol{display:grid;grid-template-columns:repeat(auto-fit,minmax(206px,1fr));gap:10px;margin:12px 0 0}
+.posbox{background:#0d1117;border:1px solid var(--line);border-radius:9px;padding:11px}
+.posbox>b{display:block;font-size:12px;color:#c9d1d9;margin:0 0 3px}
+.posbox>i{display:block;font-style:normal;font-size:9.5px;color:#5c6773;margin:0 0 9px}
+.fxrow{display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid #161b22}
+.fxrow .nm{flex:1;font:600 11px/1.3 var(--f);color:#c9d1d9}
+.fxrow .nm em{display:block;font-style:normal;font-size:9px;color:#5c6773}
+.ckpick{display:flex;gap:3px}
+.ckb{width:22px;height:22px;background:#161b22;border:1px solid var(--line);border-radius:4px;
+  font:800 9.5px/1 var(--f);color:#8b98a5;cursor:pointer}
+.ckb.on{background:rgba(227,179,65,.18);border-color:var(--warn);color:#e3b341}
+.ckb.full{border-color:var(--power);color:var(--power)}
+
+/* ── call sheet: the shared brief header for every sim ── */
+.callsheet{background:linear-gradient(180deg,#0e141b,#0b1016);border:1px solid var(--line);
+  border-radius:11px;overflow:hidden;margin:0 0 14px}
+.cshead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 13px;
+  background:#11181f;border-bottom:1px solid var(--line)}
+.csshow{font:800 10px/1 var(--f);letter-spacing:.09em;text-transform:uppercase;
+  padding:5px 9px;border-radius:5px;background:rgba(88,166,255,.14);color:#8cc2ff;
+  border:1px solid rgba(88,166,255,.3)}
+.csven{font:600 10.5px/1 var(--f);color:#8b98a5}
+.csclock{margin-left:auto;display:flex;align-items:center;gap:8px}
+.csdoors{font:700 10px/1 var(--f);color:var(--warn)}
+.cstime{font:800 15px/1 var(--f);color:#c9d1d9;font-variant-numeric:tabular-nums;
+  background:#0d1117;border:1px solid var(--line);border-radius:5px;padding:5px 9px}
+.cstime.over{color:var(--power);border-color:rgba(248,81,73,.4)}
+.csbody{padding:12px 14px}
+.csrole{font:700 10px/1.4 var(--f);color:#5c6773;margin:0 0 9px}
+.csrole b{color:#8b98a5}
+.cswho{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin:0 0 6px}
+.cswho .nm{font:800 12px/1.3 var(--f);color:var(--warn)}
+.cswho .mn{font:400 10.5px/1.3 var(--f);color:#5c6773;font-style:italic}
+.cssay{margin:0 0 10px;font:400 14px/1.6 var(--f);color:#d5dde5}
+.csreqs{margin:0;padding:0 0 0 17px;list-style:none}
+.csreqs li{position:relative;font:400 12.5px/1.55 var(--f);color:#a8b3bd;margin:0 0 4px}
+.csreqs li:before{content:"";position:absolute;left:-14px;top:7px;width:5px;height:5px;
+  border-radius:50%;background:var(--warn)}
+.csgrade{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:10px 0 0;
+  border-top:1px solid var(--line)}
+.csg{flex:1;min-width:104px;background:#0d1117;border:1px solid var(--line);
+  border-radius:7px;padding:8px 10px}
+.csg span{display:block;font:800 8.5px/1 var(--f);letter-spacing:.11em;color:#5c6773;margin:0 0 4px}
+.csg b{font:800 14px/1 var(--f);color:#c9d1d9}
+.csg.good b{color:var(--audio)} .csg.warn b{color:var(--warn)} .csg.bad b{color:var(--power)}
+@media(max-width:560px){.cstime{font-size:13px}.cssay{font-size:13px}}
+
+.homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
+  text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
+  border-radius:99px;transition:.15s}
+.homelink:hover{color:var(--txt);border-color:var(--dimmer)}
+
+/* ---------- backline ---------- */
+ol.steps{display:block}
+.fb.warn{border-left-color:var(--warn)} .fb.warn b.h{color:var(--warn)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="homelink" href="../">← All guides</a>
+    <div class="badge" style="color:var(--audio);border-color:var(--audio)">Live Events · Backline</div>
+    <h1>Backline Field Guide</h1>
+    <p class="sub">Drum mics, the drum sub, DI boxes, XLR runs and the input list — built to drill, not to read. Works offline.</p>
+  </div>
+</header>
+
+<nav role="tablist"><div class="navinner" id="nav"></div></nav>
+
+<div class="wrap">
+<section class="panel on" id="p-start">
+  <h2>How to use this</h2>
+  <p class="lede">Read the reference tabs once, then live in the <b>Simulator</b>, <b>Drills</b> and <b>Scenarios</b>.</p>
+  <div class="key">
+    <b>The idea underneath all of it:</b> every mic and DI on stage is one signal that has to land on one numbered input. <b>The input list is the law.</b> Your job is to put the right mic in the right place, run its XLR to the right channel on the drum sub, label it, and fix it fast when line check finds a dead one. Gain, EQ and phantom switching belong to FOH &mdash; but you have to know which channels need phantom so you can tell them.
+  </div>
+
+  <h3>Where your job ends</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Backline hand</h4><p>Set the gear, place mics where the drum tech or A1 asks, run and label XLR, patch the drum sub to the input list, swap bad cables at line check.</p></div>
+    <div class="card L video"><h4>Audio department</h4><p>Console, gain, EQ, phantom, polarity flips, monitor mixes, system tuning. You tell them what is where; they decide what it sounds like.</p></div>
+  </div>
+
+  <h3>Signal path</h3>
+  <div class="chain">
+    <span class="node">Mic or DI</span><span class="arrow a-audio">→</span>
+    <span class="node">XLR</span><span class="arrow a-audio">→</span>
+    <span class="node">Drum sub (Veam box)</span><span class="arrow a-audio">→</span>
+    <span class="node">Multipin / snake</span><span class="arrow a-audio">→</span>
+    <span class="node">Stage rack / FOH</span>
+  </div>
+
+  <h3>Color code</h3>
+  <div class="legend">
+    <span class="pill p-audio">Dynamic mic · no phantom</span>
+    <span class="pill p-video">Condenser · needs 48 V</span>
+    <span class="pill p-rf">DI box · line from instrument</span>
+    <span class="pill p-power">Instrument power</span>
+  </div>
+
+  <h3>What's in here</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Drum Kit</h4><p>Tap-a-drum map, the standard 10-channel order, mic placement for every piece.</p></div>
+    <div class="card L data"><h4>Drum Sub</h4><p>What a Veam box is, inputs vs returns, how to cable and label it.</p></div>
+    <div class="card L rf"><h4>Instruments &amp; DI</h4><p>Bass, guitar, keys, acoustic. Passive vs active DI, ground lift, a full band input list.</p></div>
+    <div class="card L video"><h4>XLR Runs</h4><p>Pinout, phantom, cable discipline, over-under coiling, fast troubleshooting.</p></div>
+    <div class="card L power"><h4>Simulator</h4><p>Patch the drum sub to a real input list against the clock — then tell FOH which channels need phantom.</p></div>
+  </div>
+  <div class="key" style="border-color:rgba(63,185,80,.3);background:rgba(63,185,80,.06)">
+    <b style="color:var(--audio)">Save this to your phone.</b> Share → Add to Home Screen. Opens like an app and works with no signal.
+  </div>
+</section>
+
+<section class="panel" id="p-kit">
+  <h2>The Drum Kit</h2>
+  <p class="lede">Tap any piece to see what it is, what mic usually goes on it, where the mic goes, and its usual channel.</p>
+
+  <div class="sim">
+    <div class="rigwrap">
+      <svg id="kitSvg" viewBox="0 0 640 330" role="img" aria-label="Top-down drum kit map, tap a piece for its mic details"></svg>
+    </div>
+    <div id="kitInfo" class="verdict" style="margin-top:12px"><b>Tap a drum or cymbal</b>Kick, snare, hi-hat, three toms, two cymbals and both overheads are on the map.</div>
+  </div>
+
+  <h2>Standard drum input order</h2>
+  <p class="lede">The common touring starting point. Kick on 1 is the near-universal convention, and everything works outward from there.</p>
+  <table class="tbl">
+    <tr><th>Ch</th><th>Source</th><th>Mic type</th><th>Common mics</th><th>48 V</th></tr>
+    <tr><td>1</td><td>Kick In</td><td>Boundary condenser</td><td>Shure Beta 91A</td><td><b style="color:var(--video)">Yes</b></td></tr>
+    <tr><td>2</td><td>Kick Out</td><td>Large dynamic</td><td>Beta 52A · AKG D112 · Audix D6</td><td>No</td></tr>
+    <tr><td>3</td><td>Snare Top</td><td>Dynamic</td><td>SM57 · e905</td><td>No</td></tr>
+    <tr><td>4</td><td>Snare Bottom</td><td>Dynamic</td><td>SM57 · e604</td><td>No</td></tr>
+    <tr><td>5</td><td>Hi-Hat</td><td>Small condenser</td><td>AKG C451 · SM81 · e614</td><td><b style="color:var(--video)">Yes</b></td></tr>
+    <tr><td>6</td><td>Rack Tom 1</td><td>Clip-on dynamic</td><td>e604 · e904 · Audix D2</td><td>No</td></tr>
+    <tr><td>7</td><td>Rack Tom 2</td><td>Clip-on dynamic</td><td>e604 · e904 · Audix D4</td><td>No</td></tr>
+    <tr><td>8</td><td>Floor Tom</td><td>Dynamic</td><td>e604 · MD421 · Audix D4</td><td>No</td></tr>
+    <tr><td>9</td><td>Overhead L</td><td>Condenser</td><td>C451 · SM81 · C414</td><td><b style="color:var(--video)">Yes</b></td></tr>
+    <tr><td>10</td><td>Overhead R</td><td>Condenser</td><td>C451 · SM81 · C414</td><td><b style="color:var(--video)">Yes</b></td></tr>
+  </table>
+  <div class="key">
+    <b>Reality check.</b> This is where most lists start, not where they all end. Some shows skip hi-hat or kick in, some add ride, a second floor tom, room mics or a talkback. <b>Whatever the tour's input list says beats this table every time.</b>
+  </div>
+
+  <h2>Mic types</h2>
+  <div class="grid">
+    <div class="card L audio"><h4>Dynamic <span class="pill p-audio">no phantom</span></h4><p>A tiny speaker in reverse. Takes enormous level without distorting. Kick out, snare, toms, guitar and bass amps. SM57, Beta 52A, e604, D112.</p></div>
+    <div class="card L video"><h4>Condenser <span class="pill p-video">48 V</span></h4><p>More sensitive, more detail, and it needs phantom power from the console to work at all. Hi-hat, overheads, ride, acoustic. C451, SM81, C414.</p></div>
+    <div class="card L video"><h4>Boundary <span class="pill p-video">48 V</span></h4><p>Lies flat on a surface. Inside the kick on a pillow or the shell. The <b>Beta 91A is a condenser</b> &mdash; it needs phantom, which surprises people because it lives in the kick.</p></div>
+  </div>
+
+  <h2>Placement, piece by piece</h2>
+  <ol class="steps">
+    <li><b>Kick in</b> &mdash; boundary flat inside on the pillow or shell, pointed at the beater. Closer to the beater = more click.</li>
+    <li><b>Kick out</b> &mdash; at the port in the front head, angled toward the beater impact. In the port = more attack, further out = more boom.</li>
+    <li><b>Snare top</b> &mdash; about 1&ndash;2&Prime; above the head, 2&Prime; in from the rim, about 45&deg;. Aim the back of the mic at the hi-hat to reject it.</li>
+    <li><b>Snare bottom</b> &mdash; under the drum aimed up at the wires. Faces the opposite way to the top mic, so FOH flips its polarity.</li>
+    <li><b>Hi-hat</b> &mdash; about 4&Prime; above the top cymbal, between bell and edge, angled away from the snare. Keep the stand clear of the drummer's left foot and the hat clutch.</li>
+    <li><b>Rack toms</b> &mdash; clip to the rim, 1&ndash;2&Prime; above the head, aimed toward the centre. Keep the capsule out of the stick path.</li>
+    <li><b>Floor tom</b> &mdash; clip or short boom from the side, 1&ndash;2&Prime; up, aimed at the centre. Watch the drummer's right hand.</li>
+    <li><b>Overheads</b> &mdash; a matched pair, roughly 3&ndash;4 ft above the kit, <b>both the same distance from the snare</b>. Measure it with a tape or a mic cable. Unequal distance = a thin, phasey snare.</li>
+  </ol>
+  <div class="key">
+    <b>Ask before you guess.</b> Drum techs and A1s have strong opinions about placement. Set to the standard, then ask "where do you want them?" before you lock anything down.
+  </div>
+</section>
+
+<section class="panel" id="p-sub">
+  <h2>The Drum Sub (Veam Box)</h2>
+  <p class="lede">A Veam box &mdash; also called a stage box, drop, sub-snake or drum sub &mdash; is a box of numbered XLR inputs that lives on or beside the riser. Every drum mic lands in it, and a single multipin carries the lot to the stage rack or FOH. Ten-plus XLRs become one cable.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 640 170" role="img" aria-label="Drum sub with ten numbered XLR inputs and two returns">
+      <rect class="sf" x="20" y="30" width="600" height="96" rx="10"/>
+      <text class="lbl" x="34" y="22" style="font-size:9.5px;font-weight:800;fill:#8b98a5">DRUM SUB · 10 INPUTS · 2 RETURNS · MULTIPIN OUT</text>
+      <g id="vsInputs"></g>
+      <text class="lbl" x="36" y="116" style="font-size:9px;fill:#8b98a5">INPUTS (female XLR) &mdash; mics and DIs plug in here</text>
+      <circle cx="540" cy="66" r="13" fill="#0d1117" stroke="#f0883e" stroke-width="2.5"/>
+      <circle cx="580" cy="66" r="13" fill="#0d1117" stroke="#f0883e" stroke-width="2.5"/>
+      <text class="lbl" x="540" y="70" text-anchor="middle" style="font-size:9px;font-weight:800;fill:#f0883e">A</text>
+      <text class="lbl" x="580" y="70" text-anchor="middle" style="font-size:9px;font-weight:800;fill:#f0883e">B</text>
+      <text class="lbl" x="560" y="98" text-anchor="middle" style="font-size:8.5px;fill:#f0883e">RETURNS (male)</text>
+      <path class="s" style="stroke:#3fb950;stroke-width:5" d="M320 126 V150 H600"/>
+      <text class="lbl" x="330" y="164" style="font-size:9px;fill:#3fb950">multipin to stage rack / FOH</text>
+    </svg>
+    <div class="figcap"><b>Inputs are female, returns are male.</b> A mic's male XLR plugs into the box. Returns send signal back <i>out</i> &mdash; to a drum-fill wedge or an in-ear pack &mdash; so they have the opposite gender.</div>
+  </div>
+
+  <h2>How to cable a drum sub</h2>
+  <ol class="steps">
+    <li><b>Get the input list.</b> From the touring A1 or the house audio lead. Do not start without it.</li>
+    <li><b>Find the box position.</b> Usually on the riser, upstage of the drummer or at a riser corner, away from foot traffic.</li>
+    <li><b>Place mics and DIs first.</b> Confirm positions with the drum tech, then run cable &mdash; not the other way round.</li>
+    <li><b>Run each XLR from the mic to the box.</b> Excess coiled at the <i>mic</i> end, not in the middle of the run.</li>
+    <li><b>Patch to the list.</b> Channel number on the box = channel number on the list. Read it twice.</li>
+    <li><b>Label the box end.</b> Gaff and a Sharpie: <b>1 K-IN</b>, <b>2 K-OUT</b>, <b>3 SN-T</b>. Label the mic end too if the run is long.</li>
+    <li><b>Tell FOH which channels need phantom</b> &mdash; every condenser and active DI. Then call ready for line check.</li>
+    <li><b>Line check:</b> scratch or tap each mic in order while FOH watches the meters. Dead channel? Seat both ends, swap the cable, then ask about phantom.</li>
+    <li><b>Dress it.</b> Tape runs flat to the riser, keep them away from the drummer's feet and pedals, keep the kit able to move if it needs to roll.</li>
+  </ol>
+  <div class="key">
+    <b>Labels win line check.</b> When FOH says "nothing on 6" you want to be able to point at the cable on 6 in under a second &mdash; not trace it back through a nest of identical black XLR.
+  </div>
+</section>
+
+<section class="panel" id="p-inst">
+  <h2>Instruments &amp; DI</h2>
+  <p class="lede">The gear behind the kit. For each one you need to know how its signal gets to the console &mdash; a mic, a DI, or both &mdash; and which channels it uses.</p>
+
+  <h3>What a DI does</h3>
+  <div class="card L rf">
+    <h4>Direct Injection box</h4>
+    <p>An instrument puts out an <b>unbalanced, high-impedance</b> signal on a &frac14;&Prime; cable. That cannot travel far without hum and loss. A DI turns it into a <b>balanced, low-impedance, mic-level</b> signal on XLR that runs a hundred feet to the console cleanly.</p>
+  </div>
+  <div class="chain">
+    <span class="node">Bass / keys</span><span class="arrow a-rf">→ &frac14;&Prime; →</span>
+    <span class="node">DI IN</span><span class="arrow a-rf">→</span>
+    <span class="node">THRU &rarr; amp (player still hears their rig)</span>
+  </div>
+  <div class="chain">
+    <span class="node">DI</span><span class="arrow a-audio">→ XLR OUT →</span>
+    <span class="node">Drum sub / stage box</span><span class="arrow a-audio">→</span>
+    <span class="node">Console</span>
+  </div>
+  <div class="grid">
+    <div class="card L rf"><h4>Passive DI</h4><p>A transformer, no power needed. Rugged and simple. Great on bass and hot keyboard outputs. Radial JDI, ProDI.</p></div>
+    <div class="card L video"><h4>Active DI <span class="pill p-video">48 V</span></h4><p>Electronics inside, powered by phantom or a battery. Better for weak or very high-impedance sources like piezo acoustic pickups. Radial J48, BSS AR-133.</p></div>
+    <div class="card L power"><h4>Ground lift</h4><p>A switch on the DI that breaks pin 1 at the XLR side. The first move on a hum. <b>It never means lifting the safety ground on an amp's power cord</b> &mdash; that one stays connected, always.</p></div>
+  </div>
+
+  <h3>The instruments</h3>
+  <div class="grid">
+    <div class="card L rf"><h4>Bass guitar</h4><p><b>DI first</b>, often an amp mic as well. The DI sits between the bass and the amp, using THRU to feed the amp. Bass rig is usually stage left of the kit.</p></div>
+    <div class="card L audio"><h4>Electric guitar</h4><p><b>SM57 on the cab.</b> 1&ndash;2&Prime; off the grille, aimed at the cone: centre is brighter, toward the edge is warmer. Modelers and direct outs get a DI instead.</p></div>
+    <div class="card L rf"><h4>Keys &amp; synths</h4><p><b>Stereo &mdash; two DIs, two channels, always adjacent</b> (L then R). Two keyboards = four channels. Patch only one side and half the instrument disappears.</p></div>
+    <div class="card L rf"><h4>Acoustic guitar</h4><p>Pickup into a DI (after the player's pedals), or a small condenser about 6&ndash;8&Prime; off the 12th fret. The input list says which.</p></div>
+  </div>
+
+  <h2>A typical 4-piece input list</h2>
+  <table class="tbl">
+    <tr><th>Ch</th><th>Source</th><th>Mic / DI</th><th>Notes</th></tr>
+    <tr><td>1&ndash;10</td><td>Drums</td><td>see Drum Kit</td><td>Kick in through OH R on the drum sub</td></tr>
+    <tr><td>11</td><td>Bass DI</td><td>Passive DI</td><td>THRU to the bass amp</td></tr>
+    <tr><td>12</td><td>Bass mic</td><td>Dynamic</td><td>On the cab, slightly off centre</td></tr>
+    <tr><td>13</td><td>Gtr 1</td><td>SM57</td><td>On the grille, aimed at the cone</td></tr>
+    <tr><td>14</td><td>Gtr 2</td><td>SM57</td><td>Second amp or second position</td></tr>
+    <tr><td>15</td><td>Keys L</td><td>Active DI</td><td>Stereo pair &mdash; adjacent channels</td></tr>
+    <tr><td>16</td><td>Keys R</td><td>Active DI</td><td>Stereo pair &mdash; adjacent channels</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-xlr">
+  <h2>XLR Runs</h2>
+  <p class="lede">Running cable cleanly is the core physical skill of backline. A bad run is noise, hum, a dead channel, or a trip hazard.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 150" role="img" aria-label="XLR pinout">
+      <circle cx="110" cy="72" r="52" fill="#0d1117" stroke="#8b98a5" stroke-width="2.5"/>
+      <circle cx="88" cy="56" r="8" class="met"/><circle cx="132" cy="56" r="8" class="met"/><circle cx="110" cy="98" r="8" class="met"/>
+      <text class="cap" x="88" y="44" text-anchor="middle">1</text>
+      <text class="cap" x="132" y="44" text-anchor="middle">2</text>
+      <text class="cap" x="110" y="122" text-anchor="middle">3</text>
+      <text class="lbl" x="200" y="50" style="font-size:12px"><tspan style="fill:#e6edf3;font-weight:800">Pin 1</tspan> shield / ground</text>
+      <text class="lbl f-audio" x="200" y="76" style="font-size:12px;font-weight:700">Pin 2 hot (+)</text>
+      <text class="lbl f-power" x="200" y="102" style="font-size:12px;font-weight:700">Pin 3 cold (&minus;)</text>
+    </svg>
+    <div class="figcap"><b>Balanced:</b> the same signal on pins 2 and 3 in opposite polarity. Noise picked up along the run lands on both equally, and the console takes the difference &mdash; the noise cancels. Phantom rides on pins 2 and 3 together.</div>
+  </div>
+
+  <h3>Phantom power, 48 V</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Needs it</h4><p>Condensers (hi-hat, overheads, Beta 91A, room mics), active DIs without a battery.</p></div>
+    <div class="card L audio"><h4>Doesn't care</h4><p>Dynamics &mdash; SM57, Beta 52A, e604. Phantom on or off, they work the same.</p></div>
+    <div class="card L power"><h4>Careful</h4><p>Ribbon mics, especially vintage ones, can be damaged by phantom if a cable is miswired or shorted. Flag every ribbon to FOH and let them decide.</p></div>
+  </div>
+  <div class="key"><b>Your role:</b> you do not switch phantom &mdash; FOH does. But you know which channels need it, and you say so before line check, not after a condenser comes up dead.</div>
+
+  <h3>Cable discipline</h3>
+  <ul class="chk">
+    <li><b>Coil over-under.</b> Alternating loops lie flat and throw out straight. Coiling one way twists the cable and kills it over a season.</li>
+    <li><b>Excess at the mic end</b>, never a loop in the middle of a walkway.</li>
+    <li><b>Lock the latch</b> at the mic. A bump or a tug should not pull it out mid-show.</li>
+    <li><b>Seat both ends fully</b> before you call ready. 80% in will pass line check and drop out in the second song.</li>
+    <li><b>Keep audio away from power</b> &mdash; cross at 90&deg; if you must, never run parallel to feeder, Soca or stingers.</li>
+    <li><b>No kinks, no tight bends.</b> Gentle curves only.</li>
+    <li><b>Tape flat, ramp across traffic,</b> and label both ends of long runs.</li>
+  </ul>
+
+  <h3>Troubleshoot fast</h3>
+  <div class="grid">
+    <div class="card L power"><h4>Dead channel</h4><p>Seat both ends &rarr; swap to a known-good cable &rarr; condenser? ask about phantom &rarr; DI? check the &frac14;&Prime; and the instrument's volume &rarr; move it to a spare channel to split mic/cable/input.</p></div>
+    <div class="card L power"><h4>Cuts in and out</h4><p>Wiggle each connector while FOH listens. If the fault follows the cable, bin the cable and tag it. If it stays on the channel, it's the input.</p></div>
+    <div class="card L power"><h4>Hum or buzz</h4><p>Ground lift on the DI first. Then get the cable away from power. Then put the amp on the same power as the audio system. <b>Never</b> lift the safety ground on a power cord.</p></div>
+    <div class="card L power"><h4>Wrong source on a channel</h4><p>A mis-patch. Trace it back, compare to the list, swap it. This is why both ends get labels.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-sim">
+  <h2>Patch the Drum Sub</h2>
+  <p class="lede">You get a real input list. Tap a mic, then the channel it belongs on. When it's patched, tell FOH which channels need phantom. Every show's list is different &mdash; read it, don't assume.</p>
+  <div class="sim" id="patchSim">
+    <div class="ldbrief" id="psBrief"></div>
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="psStatus"></span>
+      <button class="btn" id="psNext" style="margin-left:auto">Next show</button>
+    </div>
+    <div id="psList"></div>
+    <p class="banklab">Mics on the riser</p>
+    <div class="camrow" id="psMics"></div>
+    <p class="banklab" style="margin-top:14px">Drum sub inputs</p>
+    <div class="camrow" id="psChans"></div>
+    <div id="psCallRow"></div>
+    <div id="psFeed"></div>
+  </div>
+  <div class="key">
+    <b>What it's drilling.</b> Reading the list instead of patching from memory, kick-on-1 as a convention not a rule, and knowing which mics are condensers before FOH has to ask.
+  </div>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly — "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer — including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Signal Chain Builder</h2>
+  <p class="lede">Tap the pieces in the correct order. Wrong piece and it tells you immediately.</p>
+  <div id="chainHost"></div>
+</section>
+
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>
+<footer>
+  Backline Field Guide · Reference and drill tool for live event technicians<br>
+  Gear illustrations are simplified diagrams for identification, not manufacturer specifications.
+</footer>
+</div>
+
+<script>
+/* ═══════════ call sheet — shared brief + clock for every sim ═══════════ */
+window.CallSheet=(function(){
+  var reg={};
+  function fmt(s){
+    var m=Math.floor(s/60), r=s%60;
+    return m+":"+(r<10?"0":"")+r;
+  }
+  function render(hostId,b){
+    var el=document.getElementById(hostId); if(!el) return;
+    var st=reg[hostId];
+    if(st&&st.iv) clearInterval(st.iv);
+    st=reg[hostId]={brief:b,elapsed:0,iv:null,stopped:false};
+
+    el.className="callsheet";
+    el.innerHTML=
+      '<div class="cshead">'+
+        '<span class="csshow">'+b.show+'</span>'+
+        '<span class="csven">'+b.venue+'</span>'+
+        '<span class="csclock"><span class="csdoors">'+b.clock+'</span>'+
+        '<span class="cstime" id="'+hostId+'_t">0:00</span></span>'+
+      '</div>'+
+      '<div class="csbody">'+
+        '<p class="csrole">YOU ARE <b>'+b.role+'</b> &nbsp;&middot;&nbsp; TARGET <b>'+b.target+' min</b></p>'+
+        '<div class="cswho"><span class="nm">'+b.boss+'</span><span class="mn">'+b.manner+'</span></div>'+
+        '<p class="cssay">&ldquo;'+b.say+'&rdquo;</p>'+
+        '<ul class="csreqs">'+b.reqs.map(function(r){return "<li>"+r+"</li>"}).join("")+'</ul>'+
+      '</div>';
+
+    st.iv=setInterval(function(){
+      if(st.stopped) return;
+      st.elapsed++;
+      var t=document.getElementById(hostId+"_t");
+      if(!t){ clearInterval(st.iv); return }
+      t.textContent=fmt(st.elapsed);
+      if(st.elapsed>b.target*60) t.className="cstime over";
+    },1000);
+  }
+  function stop(hostId){
+    var st=reg[hostId]; if(!st) return 0;
+    st.stopped=true; return st.elapsed;
+  }
+  /* returns a grade block to append to feedback, plus a verdict string */
+  function grade(hostId){
+    var st=reg[hostId]; if(!st) return {html:"",late:false,mins:0};
+    var mins=st.elapsed/60, t=st.brief.target;
+    var late = mins>t;
+    var cls = mins<=t*0.75 ? "good" : (late ? "bad" : "warn");
+    var note = mins<=t*0.75
+        ? "Ahead of the call."
+        : (!late ? "Inside the window." : "Over the window by "+Math.ceil(mins-t)+" min.");
+    return {
+      late:late, mins:mins,
+      html:'<div class="csgrade">'+
+        '<div class="csg '+cls+'"><span>YOUR TIME</span><b>'+fmt(st.elapsed)+'</b></div>'+
+        '<div class="csg"><span>THE CALL ALLOWED</span><b>'+t+':00</b></div>'+
+        '<div class="csg '+cls+'"><span>PACE</span><b>'+note+'</b></div>'+
+      '</div>'
+    };
+  }
+  return {render:render, stop:stop, grade:grade, fmt:fmt};
+})();
+
+
+(function(){
+"use strict";
+var STORE="backline";
+var TABS=[["p-start","Start"],["p-kit","Drum Kit"],["p-sub","Drum Sub"],["p-inst","Instruments & DI"],["p-xlr","XLR Runs"],["p-sim","Simulator"],["p-drills","Drills"],["p-scen","Scenarios"]];
+
+var CARDS=[
+["What channel does kick usually go on?","<b>Channel 1.</b> It is the near-universal touring convention and the rest of the kit works outward from it. But the <b>input list</b> is the authority — if it says otherwise, it wins."],
+["Standard 10-channel drum order?","1 Kick In · 2 Kick Out · 3 Snare Top · 4 Snare Bottom · 5 Hi-Hat · 6 Tom 1 · 7 Tom 2 · 8 Floor Tom · 9 OH L · 10 OH R."],
+["What is a Veam box / drum sub?","A box of <b>numbered female XLR inputs</b> on or near the riser. Every drum mic lands in it and one <b>multipin</b> carries them all to the stage rack or FOH."],
+["Inputs vs returns on a drum sub?","<b>Inputs are female</b> — mics plug in. <b>Returns are male</b> — they send signal back out to a drum fill or IEM pack."],
+["What does a DI do?","Turns an instrument's <b>unbalanced, high-impedance ¼″</b> signal into a <b>balanced, low-impedance, mic-level XLR</b> signal that runs long distances cleanly."],
+["The three connections on a DI?","<b>¼″ IN</b> from the instrument, <b>¼″ THRU</b> to the amp, <b>XLR OUT</b> to the stage box."],
+["Passive vs active DI?","<b>Passive:</b> transformer, no power, rugged — bass, hot keys. <b>Active:</b> electronics, needs phantom or a battery — weak or piezo sources like acoustic pickups."],
+["What does phantom power do and who needs it?","48 V DC from the console down pins 2 and 3. <b>Condensers and active DIs need it.</b> Dynamics don't care either way."],
+["Is the Beta 91A a dynamic?","<b>No — it's a boundary condenser.</b> It needs phantom. People forget because it lives inside the kick."],
+["Why flag ribbon mics to FOH?","Ribbons — especially vintage ones — can be damaged by phantom if a cable is miswired or shorted. Tell FOH and let them decide."],
+["XLR pinout?","<b>Pin 1</b> shield/ground · <b>Pin 2</b> hot (+) · <b>Pin 3</b> cold (−). The console takes the difference of 2 and 3, so noise picked up on the run cancels."],
+["Why is the snare bottom mic polarity-flipped?","It faces up while the top mic faces down, so they're in opposite polarity. Flipping the bottom (FOH does it) makes them add instead of cancel."],
+["Overheads must be equidistant from what?","<b>The snare.</b> Unequal distance puts the two overheads out of time with each other on the snare and it goes thin and phasey. Measure it."],
+["Why do keys need two channels?","Most keyboards are <b>stereo</b>. L and R each need a DI and a channel, always <b>adjacent</b>. Patch one side and half the sound is gone."],
+["How do you mic a guitar cab?","<b>SM57</b>, 1–2″ off the grille, aimed at the cone. Centre = brighter and more bite; toward the edge = warmer."],
+["First move on a hum from a DI'd instrument?","<b>Ground lift on the DI.</b> It breaks pin 1 on the XLR side. Never lift the safety ground on a power cord."],
+["How do you coil XLR?","<b>Over-under.</b> Alternating loops lie flat and throw out straight. Coiling one direction twists the conductors and kills the cable."],
+["Where does excess cable go?","<b>At the mic end.</b> Never as a loop in the middle of a walkway."],
+["Line check finds a dead channel. Cheapest first?","Seat both ends → swap to a known-good cable → condenser? phantom on? → DI? ¼″ cable and instrument volume → move to a spare channel to split mic / cable / input."],
+["A channel cuts in and out. What is it?","Almost always a <b>partly seated connector or a broken conductor</b>. Wiggle each end while FOH listens. If the fault follows the cable, bin and tag it."],
+["Who sets gain, EQ and phantom?","<b>FOH / the audio department.</b> Your job ends at the stage box — but you tell them which channels need phantom."],
+["Most common live tom mic?","<b>Sennheiser e604 / e904</b> clip-ons. Fast, no stand, stay in place. No phantom needed."]
+];
+
+var QS=[
+{q:"The tour's input list puts Kick In on channel 2 and Kick Out on 1. What do you patch?",
+  o:["Kick In on 1 — kick in always goes first","Exactly what the list says: Kick Out on 1, Kick In on 2","Whatever is quicker, then tell FOH","Both kicks on 1 with a Y-cable"],a:1,
+  e:"<b>The input list is the law.</b> Kick-on-1 is a convention, and the order of the two kick mics varies tour to tour. FOH's console file is built on <i>their</i> list — patch to anything else and every channel is wrong."},
+{q:"Hi-hat and both overheads come up dead at line check. Everything else works. Most likely?",
+  o:["Three bad cables","Phantom is off on those channels","The drum sub has failed","The multipin is unseated"],a:1,
+  e:"<b>Those are your three condensers.</b> A shared cause across exactly the mics that need 48 V points straight at phantom. A failed sub or multipin would take every channel, and three bad cables at once is unlikely. Tell FOH: “5, 9 and 10 are condensers — is phantom on?”"},
+{q:"Which drum-sub connection is male?",
+  o:["The inputs","The returns","Both","Neither — drum subs use TRS"],a:1,
+  e:"<b>Returns are male</b> because they send signal <i>out</i>. Inputs are female so a mic cable's male end plugs into them."},
+{q:"The bass player wants to hear their amp and FOH wants a DI. How is it cabled?",
+  o:["Bass → amp → DI","Bass → DI IN, DI THRU → amp, DI XLR OUT → stage box","Bass → DI, amp gets an SM57 only","A Y-cable from the bass to both"],a:1,
+  e:"<b>THRU exists for exactly this.</b> The DI sits between the instrument and the amp, the THRU passes the untouched signal on to the amp, and the balanced XLR goes to FOH."},
+{q:"A DI'd keyboard has a steady hum. FOH asks you to sort it. First move?",
+  o:["Lift the ground pin on the keyboard's power cord","Flip the ground lift switch on the DI","Swap the keyboard","Turn the channel down"],a:1,
+  e:"<b>Ground lift on the DI</b> breaks the loop on the audio side and is safe. Defeating the safety ground on a power cord removes the fault path for the whole instrument — never do it."},
+{q:"Snare sounds thin and hollow out front. Placement looks right. What do you ask FOH?",
+  o:["Is the hi-hat mic too close?","Is the snare bottom polarity flipped?","Is the kick gated?","Is the snare mic a condenser?"],a:1,
+  e:"<b>Top and bottom snare mics face opposite ways</b>, so un-flipped they cancel. The flip is FOH's job, but asking the question is yours. Also check the overheads are equidistant from the snare."},
+{q:"Why must the two overheads be the same distance from the snare?",
+  o:["So they look symmetrical on camera","So the snare arrives at both mics at the same time and doesn't cancel","Because condensers need matched cable lengths","So both share a mic stand"],a:1,
+  e:"Sound travels about a foot per millisecond. If one overhead is further from the snare, its arrival is late relative to the other and frequencies cancel when they're summed. <b>Measure it.</b>"},
+{q:"A keyboard player has one stereo keyboard. How many DIs and channels?",
+  o:["One DI, one channel","Two DIs, two adjacent channels","One stereo DI, one channel","Two DIs, any two free channels"],a:1,
+  e:"<b>Stereo means two.</b> L and R each need a DI and a channel, and they go on adjacent channels so FOH can link them as a pair."},
+{q:"Which of these needs phantom power?",
+  o:["SM57","Beta 52A","Beta 91A","e604"],a:2,
+  e:"The <b>Beta 91A</b> is a boundary <b>condenser</b>. The other three are dynamics and don't need it."},
+{q:"A channel crackles every time the drummer hits the floor tom. Most likely?",
+  o:["The floor tom mic is overloading","A loose connector or damaged cable being knocked","Phantom is fluctuating","The multipin is too long"],a:1,
+  e:"A fault that tracks <b>physical movement</b> is mechanical. Re-seat and lock both ends, and swap the cable if it continues. Then dress it so the drummer can't knock it."},
+{q:"Where should spare XLR length be left?",
+  o:["Coiled at the stage box","Coiled at the mic end","In a loop mid-run so it's easy to grab","Under the drum rug"],a:1,
+  e:"<b>At the mic end.</b> Mid-run loops are trip hazards and snag points, and slack at the mic lets the drum tech move a stand without re-running cable."},
+{q:"You're about to call ready for line check. What do you tell FOH first?",
+  o:["Nothing — they'll find any problems","Which channels are condensers or active DIs and need phantom","Which cables are new","How long the multipin is"],a:1,
+  e:"<b>Phantom first.</b> It saves the most common line-check failure before it happens and shows you know your patch."}
+];
+
+var CHAINS=[
+{t:"Drum mic to console",
+  s:["Mic on the drum","XLR (male end at the box)","Drum sub input","Multipin","Stage rack / splitter","Console channel"],
+  w:"Every link is a place a fault can live. Line check walks this path one channel at a time."},
+{t:"Bass with DI and amp",
+  s:["Bass guitar","¼″ cable","DI IN","DI THRU → bass amp","DI XLR OUT","Stage box channel"],
+  w:"The THRU keeps the player's rig working; the XLR gives FOH a clean balanced feed."},
+{t:"Cabling a drum sub",
+  s:["Get the input list","Find the box position","Place mics and DIs","Run XLR to the box","Patch to the list","Label the box end","Tell FOH which need phantom","Call ready for line check"],
+  w:"Mics first, then cable, then patch — and phantom is called out before the check, not discovered during it."},
+{t:"Dead channel — cheapest check first",
+  s:["Seat both ends","Swap to a known-good cable","Condenser? Ask about phantom","DI? Check the ¼″ and instrument volume","Move to a spare channel","Swap the mic"],
+  w:"Every step costs more than the one before it. Swapping hardware confirms a diagnosis; it doesn't make one."}
+];
+
+var CK=[];
+
+var SCN=[
+{w:"Club show · line check in 10 minutes",
+  q:"You've patched the drum sub from memory using the standard order. The A1 hands you their input list: no hi-hat mic, a ride on 5, and two floor toms on 8 and 9 with overheads on 10 and 11. What now?",
+  a:"<b>Re-patch to their list before line check — not during it.</b><br><br><b>1.</b> Ride goes on 5, so the hi-hat mic stand comes out entirely (ask before you strike it — sometimes it stays for a later act).<br><b>2.</b> Floor tom 2 lands on 9, so the overheads move up to 10 and 11. On a 10-input sub that means one overhead has to go on the next box or a spare snake line — <b>ask the A1 where they want 11</b>.<br><b>3.</b> Re-label the box end. Old labels on moved channels are worse than no labels.<br><b>4.</b> Tell FOH: “Ride on 5 and overheads on 10 and 11 are condensers.”<br><br><b>The lesson:</b> the standard order is where you start when there's no list. When there is one, it's the only thing that matters."},
+{w:"Festival changeover · 15 minutes",
+  q:"The kit rolls on a riser pre-mic'd from the side stage. Line check: 1 through 4 fine, 6 dead, everything else fine. FOH is staring at you.",
+  a:"<b>One channel dead with neighbours alive means the fault is on that one path.</b><br><br><b>1. Look at it.</b> Rolling risers knock connectors loose. Re-seat both ends of the cable on 6 and lock the latch at the mic.<br><b>2. Still dead? Swap the cable</b> for a known-good one — have spares coiled at the riser before every changeover.<br><b>3. Still dead?</b> Plug the tom mic into a spare input. If it works there, input 6 on the sub is the problem — tell FOH it's moved and tape over the bad input.<br><b>4. Dead everywhere?</b> It's the mic — swap it.<br><br><b>Talk while you work:</b> “Re-seating 6… swapping cable on 6…” keeps FOH from guessing and lets them check other channels meanwhile."},
+{w:"Corporate band · hotel ballroom",
+  q:"The keyboard player shows up with two keyboards. The input list has Keys on 15 and 16. You have four DIs. What do you check before you patch?",
+  a:"<b>Two keyboards that are each stereo is four channels, not two.</b><br><br>Ask the A1 straight away: <b>“Two boards — do you want both in stereo, or are they summed on a sub-mixer on stage?”</b><br><br>• If the player brought a <b>small keys mixer</b>, it outputs one stereo pair — two DIs on 15 and 16 as listed.<br>• If not, you need <b>four adjacent channels</b>: Keys 1 L/R and Keys 2 L/R. That means the A1 has to free up two inputs, and they'll want to know now, not at line check.<br><br>Either way, patch L before R on adjacent channels so FOH can link them."},
+{w:"Rock show · doors in an hour",
+  q:"Soundcheck: FOH reports a 60-cycle hum on the bass DI that goes away when the player touches the strings.",
+  a:"<b>Classic ground loop between the bass rig and the audio system.</b><br><br><b>1. Ground lift on the DI.</b> Breaks pin 1 on the XLR side — safe, and usually the fix.<br><b>2. Check the bass amp's power.</b> If it's on a different circuit or a lighting stinger, move it to the audio power drop.<br><b>3. Re-route the XLR</b> away from any power runs — cross at 90°.<br><br><b>What you never do:</b> cheat the safety ground on the amp's power cord with a ground-lift adapter. That removes the fault path for the whole amp, and the player is holding metal strings connected to it."}
+];
+
+
+/* ═══════════ safe storage ═══════════ */
+var mem={};
+var store={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return mem[k]||null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+};
+
+/* ═══════════ tabs ═══════════ */
+var nav=document.getElementById("nav");
+TABS.forEach(function(t,i){
+  var b=document.createElement("button");
+  b.textContent=t[1]; b.setAttribute("role","tab");
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.onclick=function(){go(t[0])};
+  b.dataset.target=t[0];
+  nav.appendChild(b);
+});
+function go(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  nav.querySelectorAll("button").forEach(function(b){
+    b.setAttribute("aria-selected", b.dataset.target===id?"true":"false");
+    if(b.dataset.target===id && b.scrollIntoView){
+      try{b.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"})}catch(e){}
+    }
+  });
+  try{window.scrollTo({top:0,behavior:"smooth"})}catch(e){window.scrollTo(0,0)}
+  store.set(STORE+"_tab",id);
+}
+var saved=store.get(STORE+"_tab");
+if(saved && document.getElementById(saved)) go(saved);
+
+/* ═══════════ flashcards ═══════════ */
+var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
+function fcInit(sh){
+  fcQueue=CARDS.map(function(c,i){return i});
+  if(sh) fcQueue.sort(function(){return Math.random()-.5});
+  fcIdx=0;fcRender();
+}
+function fcRender(){
+  fcCard.classList.remove("flip");
+  var n=document.getElementById("fcCount");
+  if(!fcQueue.length){
+    document.getElementById("fcQ").innerHTML="All clear.";
+    document.getElementById("fcA").innerHTML="You've worked through the whole deck. Shuffle to run it again cold.";
+    n.textContent="0 left";return;
+  }
+  if(fcIdx>=fcQueue.length) fcIdx=0;
+  var c=CARDS[fcQueue[fcIdx]];
+  document.getElementById("fcQ").innerHTML=c[0];
+  document.getElementById("fcA").innerHTML=c[1];
+  n.textContent=fcQueue.length+" card"+(fcQueue.length===1?"":"s")+" left";
+}
+fcCard.onclick=function(){fcCard.classList.toggle("flip")};
+document.getElementById("fcGot").onclick=function(){
+  if(!fcQueue.length)return;
+  fcQueue.splice(fcIdx,1);fcRender();
+};
+document.getElementById("fcAgain").onclick=function(){
+  if(!fcQueue.length)return;
+  fcIdx=(fcIdx+1)%fcQueue.length;fcRender();
+};
+document.getElementById("fcShuffle").onclick=function(){fcInit(true)};
+document.getElementById("fcReset").onclick=function(){fcInit(false)};
+fcInit(true);
+
+/* ═══════════ quiz ═══════════ */
+var qi=0,qScore=0,qHost=document.getElementById("quizHost");
+function qRender(){
+  if(qi>=QS.length){
+    var pct=Math.round(qScore/QS.length*100);
+    var msg = pct>=90?"Dialed in. You could run this material for someone else.":
+              pct>=75?"Solid. Clean up the misses and you're gig-ready.":
+              pct>=50?"Foundation's there. Run the flashcards, then come back.":
+                      "Go back through the reference tabs — then run this cold.";
+    qHost.innerHTML='<div class="qbox" style="text-align:center">'+
+      '<div class="score" style="color:'+(pct>=75?"var(--audio)":pct>=50?"var(--warn)":"var(--power)")+'">'+pct+'%</div>'+
+      '<p style="margin:0 0 4px;font-size:15px">'+qScore+' of '+QS.length+' correct</p>'+
+      '<p style="color:var(--dim);font-size:14px;margin:0 0 18px">'+msg+'</p>'+
+      '<button class="btn pri" id="qAgain">Run it again</button></div>';
+    document.getElementById("qAgain").onclick=function(){qi=0;qScore=0;QS.sort(function(){return Math.random()-.5});qRender()};
+    return;
+  }
+  var q=QS[qi];
+  var h='<div class="qbox"><div class="bar"><i style="width:'+(qi/QS.length*100)+'%"></i></div>'+
+        '<p style="color:var(--dim);font-size:12px;margin:10px 0 0;letter-spacing:.5px">QUESTION '+(qi+1)+' OF '+QS.length+'</p>'+
+        '<p class="qtext">'+q.q+'</p>';
+  q.o.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='<div id="qFoot"></div></div>';
+  qHost.innerHTML=h;
+  qHost.querySelectorAll(".opt").forEach(function(b){
+    b.onclick=function(){
+      var pick=+b.dataset.i;
+      qHost.querySelectorAll(".opt").forEach(function(x,i){
+        x.disabled=true;
+        if(i===q.a)x.classList.add("right");
+        else if(i===pick)x.classList.add("wrong");
+      });
+      if(pick===q.a)qScore++;
+      document.getElementById("qFoot").innerHTML=
+        '<p class="expl">'+q.e+'</p>'+
+        '<div class="row"><button class="btn pri" id="qNext" style="margin-left:auto">'+
+        (qi===QS.length-1?"See results":"Next")+'</button></div>';
+      document.getElementById("qNext").onclick=function(){qi++;qRender()};
+    };
+  });
+}
+qRender();
+
+/* ═══════════ chain builder ═══════════ */
+var ci=0,cHost=document.getElementById("chainHost");
+function cRender(){
+  var c=CHAINS[ci];
+  var shuffled=c.s.map(function(s,i){return {s:s,i:i}}).sort(function(){return Math.random()-.5});
+  var h='<div class="qbox"><p style="color:var(--dim);font-size:12px;margin:0;letter-spacing:.5px">CHAIN '+(ci+1)+' OF '+CHAINS.length+'</p>'+
+        '<p class="qtext" style="margin:8px 0 0">'+c.t+'</p>'+
+        '<div class="slots" id="cSlots"></div><div id="cToks">';
+  shuffled.forEach(function(o){h+='<button class="tok" data-i="'+o.i+'">'+o.s+'</button>'});
+  h+='</div><div class="row" id="cFoot"><button class="btn" id="cClear">Clear</button>'+
+     '<button class="btn" id="cSkip" style="margin-left:auto">Next chain</button></div></div>';
+  cHost.innerHTML=h;
+  var next=0;
+  cHost.querySelectorAll(".tok").forEach(function(b){
+    b.onclick=function(){
+      var want=+b.dataset.i;
+      if(want===next){
+        b.classList.add("used");
+        var n=document.createElement("span");
+        n.className="tok ok";n.textContent=b.textContent;
+        var sl=document.getElementById("cSlots");
+        if(next>0){var ar=document.createElement("span");ar.className="arrow";ar.textContent="→";sl.appendChild(ar)}
+        sl.appendChild(n);
+        next++;
+        if(next===c.s.length){
+          document.getElementById("cFoot").insertAdjacentHTML("afterbegin",
+            '<span style="color:var(--audio);font-weight:600;font-size:14px">Chain complete.</span>');
+          if(c.w) document.getElementById("cFoot").insertAdjacentHTML("afterend",'<p class="expl">'+c.w+'</p>');
+        }
+      } else {
+        b.classList.add("no");
+        setTimeout(function(){b.classList.remove("no")},450);
+      }
+    };
+  });
+  document.getElementById("cClear").onclick=cRender;
+  document.getElementById("cSkip").onclick=function(){ci=(ci+1)%CHAINS.length;cRender()};
+}
+cRender();
+
+/* ═══════════ pre-doors checklist ═══════════ */
+var ckHost=document.getElementById("ckHost");
+if(ckHost){
+  var ckState={};
+  try{ckState=JSON.parse(store.get(STORE+"_ck")||"{}")}catch(e){ckState={}}
+  var ckCount=document.getElementById("ckCount");
+  function ckSave(){store.set(STORE+"_ck",JSON.stringify(ckState))}
+  function ckTally(){
+    var n=CK.filter(function(_,i){return ckState[i]}).length;
+    ckCount.textContent=n+" of "+CK.length+" complete";
+    ckCount.style.color = n===CK.length ? "var(--audio)" : "var(--dim)";
+  }
+  CK.forEach(function(t,i){
+    var d=document.createElement("div");
+    d.className="ckitem";
+    d.style.cssText="text-align:left;display:flex;gap:11px;align-items:flex-start;padding:11px 13px;margin-bottom:7px";
+    var vc = /VIDEO CALL|NO BLUE MIX/.test(t);
+    d.innerHTML='<span class="ckbox" style="flex:0 0 auto;width:19px;height:19px;border-radius:5px;'+
+      'border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:1px"></span>'+
+      '<span class="cktxt" style="font-size:13.5px;line-height:1.5'+(vc?';color:var(--warn);font-weight:600':'')+'">'+t+'</span>';
+    function paint(){
+      var on=!!ckState[i];
+      var box=d.querySelector(".ckbox"), tx=d.querySelector(".cktxt");
+      box.textContent = on?"✓":"";
+      box.style.background = on?"var(--audio)":"transparent";
+      box.style.borderColor = on?"var(--audio)":"var(--line)";
+      box.style.color = on?"#08130b":"transparent";
+      tx.style.opacity = on?".45":"1";
+      tx.style.textDecoration = on?"line-through":"none";
+      d.style.borderColor = on?"var(--line)":(vc?"rgba(227,179,65,.35)":"var(--line)");
+    }
+    d.onclick=function(){ckState[i]=!ckState[i];paint();ckSave();ckTally()};
+    paint();
+    ckHost.appendChild(d);
+  });
+  ckTally();
+  document.getElementById("ckReset").onclick=function(){
+    ckState={};ckSave();
+    ckHost.querySelectorAll(".ckitem").forEach(function(d){
+      var b=d.querySelector(".ckbox"),t=d.querySelector(".cktxt");
+      b.textContent="";b.style.background="transparent";b.style.borderColor="var(--line)";
+      t.style.opacity="1";t.style.textDecoration="none";
+    });
+    ckTally();
+  };
+}
+
+/* ═══════════ connector ID drill ═══════════ */
+document.querySelectorAll(".idgrid .idcard").forEach(function(c){
+  var nm=c.querySelector(".nm");
+  if(!nm) return;
+  c.onclick=function(){
+    var on=c.classList.toggle("open");
+    nm.textContent = on ? "" : "?";
+    nm.style.display = on ? "none" : "block";
+  };
+});
+
+/* ═══════════ scenarios ═══════════ */
+var sh=document.getElementById("scnHost");
+SCN.forEach(function(s,i){
+  var d=document.createElement("div");
+  d.className="scn";
+  d.innerHTML='<div class="setting">'+s.w+'</div><p class="q">'+s.q+'</p>'+
+    '<button class="btn" data-i="'+i+'">How would you work it?</button>'+
+    '<div class="reveal">'+s.a+'</div>';
+  sh.appendChild(d);
+  var btn=d.querySelector("button"),rev=d.querySelector(".reveal");
+  btn.onclick=function(){
+    var on=rev.classList.toggle("on");
+    btn.textContent=on?"Hide":"How would you work it?";
+  };
+});
+
+
+})();
+
+/* ═══════════ backline · drum sub figure inputs ═══════════ */
+(function(){
+  var g=document.getElementById("vsInputs"); if(!g) return;
+  var NS="http://www.w3.org/2000/svg";
+  for(var i=0;i<10;i++){
+    var x=56+i*44, c=document.createElementNS(NS,"circle");
+    c.setAttribute("cx",x);c.setAttribute("cy",66);c.setAttribute("r",14);
+    c.setAttribute("fill","#0d1117");c.setAttribute("stroke",[0,4,8,9].indexOf(i)>=0?"#58a6ff":"#3fb950");
+    c.setAttribute("stroke-width","2.5");g.appendChild(c);
+    var t=document.createElementNS(NS,"text");
+    t.setAttribute("x",x);t.setAttribute("y",70);t.setAttribute("text-anchor","middle");
+    t.setAttribute("class","lbl");t.setAttribute("style","font-size:10px;font-weight:800;fill:#e6edf3");
+    t.textContent=i+1;g.appendChild(t);
+  }
+})();
+
+/* ═══════════ backline · drum kit map ═══════════ */
+(function(){
+  var svg=document.getElementById("kitSvg"); if(!svg) return;
+  var NS="http://www.w3.org/2000/svg";
+  function m(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+  var DR=[
+   {k:"kick",x:320,y:250,r:62,cym:false,lab:"KICK",n:"Kick drum",ch:"1 (in) · 2 (out)",
+    mic:"Beta 91A boundary condenser inside (48 V) · Beta 52A / D112 / D6 dynamic outside",
+    pl:"Inside: flat on the pillow or shell aimed at the beater. Outside: at the port, angled toward the beater impact.",
+    note:"Two mics blended at the console: inside for click, outside for body."},
+   {k:"snare",x:228,y:178,r:34,cym:false,lab:"SNARE",n:"Snare",ch:"3 (top) · 4 (bottom)",
+    mic:"SM57 top · SM57 or e604 bottom",
+    pl:"Top: 1–2″ above the head, 2″ in from the rim, about 45°, back of the mic toward the hi-hat. Bottom: under the drum aimed at the wires.",
+    note:"Bottom mic faces the other way — FOH flips its polarity."},
+   {k:"hat",x:136,y:150,r:30,cym:true,lab:"HI-HAT",n:"Hi-hat",ch:"5",
+    mic:"Small condenser — C451 / SM81 / e614 (48 V)",
+    pl:"About 4″ above the top cymbal between bell and edge, angled away from the snare.",
+    note:"Keep the stand clear of the drummer's left foot and the clutch."},
+   {k:"t1",x:270,y:96,r:28,cym:false,lab:"TOM 1",n:"Rack tom 1",ch:"6",
+    mic:"Clip-on dynamic — e604 / e904 / D2",
+    pl:"Clipped to the rim, 1–2″ above the head, aimed toward the centre.",note:"Keep the capsule out of the stick path."},
+   {k:"t2",x:370,y:96,r:30,cym:false,lab:"TOM 2",n:"Rack tom 2",ch:"7",
+    mic:"Clip-on dynamic — e604 / e904 / D4",
+    pl:"Same as tom 1.",note:"Bigger drum, more low end, same technique."},
+   {k:"ft",x:450,y:200,r:40,cym:false,lab:"FLOOR",n:"Floor tom",ch:"8",
+    mic:"Dynamic — e604 / MD421 / D4",
+    pl:"Clip or short boom from the side, 1–2″ up, aimed at the centre.",note:"Watch the drummer's right hand on fills."},
+   {k:"crash",x:170,y:62,r:36,cym:true,lab:"CRASH",n:"Crash",ch:"Overheads",
+    mic:"Usually no close mic — the overheads cover it",pl:"—",note:"Only close-mic it if the input list asks."},
+   {k:"ride",x:520,y:110,r:42,cym:true,lab:"RIDE",n:"Ride",ch:"Overheads, sometimes its own",
+    mic:"If listed: small condenser (48 V)",pl:"6–8″ above, between bell and edge.",note:"Common on jazz and some pop lists."},
+   {k:"ohl",x:110,y:290,r:20,cym:false,oh:true,lab:"OH L",n:"Overhead left",ch:"9",
+    mic:"Condenser — C451 / SM81 / C414 (48 V), matched pair",
+    pl:"Roughly 3–4 ft above the kit, stage-right side from the drummer's view.",
+    note:"Same distance from the snare as OH R. Measure it."},
+   {k:"ohr",x:530,y:290,r:20,cym:false,oh:true,lab:"OH R",n:"Overhead right",ch:"10",
+    mic:"Condenser — matched to OH L (48 V)",pl:"Mirror of OH L.",
+    note:"Even 6″ of difference to the snare makes it thin and phasey."}
+  ];
+  var sel=null, info=document.getElementById("kitInfo");
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.appendChild(m("text",{x:320,y:322,"text-anchor":"middle",class:"lbl",style:"font-size:9px"},"DRUMMER'S SEAT ↓  ·  audience is up the page"));
+    DR.forEach(function(d){
+      var on=sel===d.k, col=d.oh?"#58a6ff":(d.cym?"#e3b341":"#3fb950");
+      var g=m("g",{class:"fx",style:"cursor:pointer"});
+      g.appendChild(m("circle",{cx:d.x,cy:d.y,r:d.r,fill:on?"#16241a":(d.cym?"#211d10":"#1c2430"),
+        stroke:on?"#e6edf3":col,"stroke-width":on?3:2,"stroke-dasharray":d.oh?"4 3":""}));
+      g.appendChild(m("text",{x:d.x,y:d.y+4,"text-anchor":"middle",style:"font-size:10px;font-weight:800;fill:"+col},d.lab));
+      g.onclick=function(){sel=d.k;draw();show(d)};
+      svg.appendChild(g);
+    });
+  }
+  function show(d){
+    info.className="verdict ok";
+    info.innerHTML='<b>'+d.n+' · ch '+d.ch+'</b>'+
+      '<div><span style="color:var(--dim)">Mic:</span> '+d.mic+'</div>'+
+      '<div><span style="color:var(--dim)">Placement:</span> '+d.pl+'</div>'+
+      '<div style="color:var(--dim);margin-top:6px">'+d.note+'</div>';
+  }
+  draw();
+})();
+
+/* ═══════════ backline · patch the drum sub ═══════════ */
+(function(){
+  var host=document.getElementById("patchSim"); if(!host) return;
+  var MIC={
+    kin:{n:"Kick In",t:"Beta 91A",c:true}, kout:{n:"Kick Out",t:"Beta 52A",c:false},
+    snt:{n:"Snare Top",t:"SM57",c:false}, snb:{n:"Snare Btm",t:"SM57",c:false},
+    hat:{n:"Hi-Hat",t:"SM81",c:true}, t1:{n:"Tom 1",t:"e604",c:false}, t2:{n:"Tom 2",t:"e604",c:false},
+    ft:{n:"Floor Tom",t:"e604",c:false}, ft2:{n:"Floor Tom 2",t:"e604",c:false},
+    ride:{n:"Ride",t:"C451",c:true}, ohl:{n:"OH L",t:"C414",c:true}, ohr:{n:"OH R",t:"C414",c:true},
+    kd:{n:"Kick Sub",t:"Subkick",c:false}
+  };
+  var SHOWS=[
+   {cs:{show:"Rock concert",venue:"Theatre, house PA, tour A1",boss:"Tour A1",manner:"has done 200 of these",clock:"Line check in 20 min"},
+    say:"Standard list, nothing clever. Patch it, label it, and tell me what needs phantom before I ask.",
+    list:["kin","kout","snt","snb","hat","t1","t2","ft","ohl","ohr"]},
+   {cs:{show:"Jazz trio",venue:"Hotel ballroom, corporate gala",boss:"House A1",manner:"quiet room, client nearby",clock:"Doors in 45 min"},
+    say:"No kick in, no hat mic. The ride matters on this one. Follow my list, not your habits.",
+    list:["kout","snt","ride","t1","ft","ohl","ohr"]},
+   {cs:{show:"Pop · arena support act",venue:"Arena, festival-style changeover",boss:"Tour A1",manner:"changeover clock running",clock:"Changeover 15 min"},
+    say:"Kick out on one, kick in on two on this tour. Two floors. Overheads at the end. Don't patch from memory.",
+    list:["kout","kin","snt","snb","hat","t1","ft","ft2","ohl","ohr"]},
+   {cs:{show:"Hip-hop · live band",venue:"Club, low stage",boss:"House A1",manner:"wants the low end huge",clock:"Soundcheck in 30 min"},
+    say:"Subkick on three, after both kicks. Single rack tom. I'll take the hat on its own.",
+    list:["kin","kout","kd","snt","snb","hat","t1","ft","ohl","ohr"]}
+  ];
+  var si=0, S, patched, pickMic, phase, wrong, chosen;
+  function reset(){
+    S=SHOWS[si]; patched={}; pickMic=null; phase="patch"; wrong=0; chosen={};
+    CallSheet.render("psBrief",{show:S.cs.show,venue:S.cs.venue,role:"Backline hand",boss:S.cs.boss,
+      manner:S.cs.manner,clock:S.cs.clock,target:3,say:S.say,
+      reqs:["Patch every mic to the channel on <b>this</b> list.","Then call out every channel that needs <b>phantom</b>.","Nothing patched from memory."]});
+    document.getElementById("psFeed").innerHTML="";
+    render();
+  }
+  function listHtml(){
+    var h='<table class="tbl" style="margin:0 0 10px"><tr><th>Ch</th><th>Source</th><th>Mic</th></tr>';
+    S.list.forEach(function(k,i){h+='<tr><td>'+(i+1)+'</td><td>'+MIC[k].n+'</td><td>'+MIC[k].t+'</td></tr>'});
+    return h+'</table>';
+  }
+  function render(){
+    var n=Object.keys(patched).length, tot=S.list.length;
+    document.getElementById("psStatus").textContent = phase==="patch"
+      ? "Patched "+n+" / "+tot+(pickMic?" · holding "+MIC[pickMic].n:"")
+      : "Tap every channel that needs phantom, then call it";
+    document.getElementById("psList").innerHTML=listHtml();
+    var mh="";
+    /* riser mics: the list's mics plus one decoy that isn't on it */
+    var pool=S.list.slice(); if(pool.indexOf("hat")<0) pool.push("hat"); else if(pool.indexOf("ride")<0) pool.push("ride");
+    pool.sort();
+    pool.forEach(function(k){
+      var done=Object.keys(patched).some(function(c){return patched[c]===k});
+      mh+='<div class="camb'+(done?" done":"")+'" data-m="'+k+'" style="'+(pickMic===k?"border-color:#e3b341":"")+'">'+
+        '<span class="dot" style="border-color:'+(MIC[k].c?"#58a6ff":"#3fb950")+'"></span>'+MIC[k].n+'<small>'+MIC[k].t+'</small></div>';
+    });
+    document.getElementById("psMics").innerHTML=phase==="patch"?mh:'<p style="color:var(--dim);font-size:13px">All patched.</p>';
+    var ch="";
+    for(var c=1;c<=Math.max(10,tot);c++){
+      var k=patched[c], on=!!chosen[c];
+      ch+='<div class="camb" data-c="'+c+'" style="'+(phase==="phantom"&&on?"border-color:#58a6ff;background:rgba(88,166,255,.12)":"")+'">'+
+        '<span class="dot" style="border-color:'+(k?"#3fb950":"#30363d")+'"></span>IN '+c+'<small>'+(k?MIC[k].n:"empty")+'</small></div>';
+    }
+    document.getElementById("psChans").innerHTML=ch;
+    document.getElementById("psCallRow").innerHTML = phase==="phantom"
+      ? '<div class="row"><button class="btn pri" id="psCall" style="margin-left:auto">Call phantom to FOH</button></div>' : "";
+    host.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){pickMic=b.dataset.m;render()}});
+    host.querySelectorAll("[data-c]").forEach(function(b){b.onclick=function(){chan(+b.dataset.c)}});
+    var call=document.getElementById("psCall"); if(call) call.onclick=grade;
+  }
+  function fb(cls,h,msg){document.getElementById("psFeed").innerHTML='<div class="fb '+cls+'"><b class="h">'+h+'</b>'+msg+'</div>'}
+  function chan(c){
+    if(phase==="phantom"){ chosen[c]=!chosen[c]; render(); return; }
+    if(!pickMic){ fb("no","“Pick up a mic first”","Tap a mic on the riser, then the input it belongs on."); return; }
+    var want=S.list.indexOf(pickMic)+1;
+    if(want===0){ wrong++; fb("no","“That one's not on my list”","<b>"+MIC[pickMic].n+"</b> isn't on this show's input list. Leave it unpatched — ask before you strike the stand."); pickMic=null; render(); return; }
+    if(c!==want){ wrong++; fb("no","“Check the list”","<b>"+MIC[pickMic].n+"</b> is on <b>"+want+"</b> on this list, not "+c+". Read the list, don't patch from habit."); return; }
+    patched[c]=pickMic; pickMic=null; document.getElementById("psFeed").innerHTML="";
+    if(Object.keys(patched).length===S.list.length){ phase="phantom"; fb("ok","“Good. Now what needs phantom?”","Tap every input that has a condenser on it, then call it."); }
+    render();
+  }
+  function grade(){
+    var need=[],miss=[],extra=[];
+    S.list.forEach(function(k,i){ if(MIC[k].c) need.push(i+1) });
+    need.forEach(function(c){ if(!chosen[c]) miss.push(c) });
+    Object.keys(chosen).forEach(function(c){ if(chosen[c] && need.indexOf(+c)<0) extra.push(+c) });
+    CallSheet.stop("psBrief");
+    var g=CallSheet.grade("psBrief");
+    if(!miss.length && !extra.length){
+      fb(wrong?"warn":"ok", wrong?"“Right in the end”":"“That's a clean patch”",
+        "Phantom on <b>"+need.join(", ")+"</b>. "+(wrong?wrong+" mis-patch"+(wrong>1?"es":"")+" on the way — run it again cold.":"No mis-patches.")+g.html);
+    } else {
+      fb("no","“Line check would have caught that”",
+        (miss.length?"Missed phantom on <b>"+miss.join(", ")+"</b> — those are condensers and will come up dead. ":"")+
+        (extra.length?"<b>"+extra.join(", ")+"</b> "+(extra.length>1?"are":"is")+" dynamic or empty — no phantom needed. ":"")+
+        "Phantom belongs on <b>"+need.join(", ")+"</b>."+g.html);
+    }
+  }
+  document.getElementById("psNext").onclick=function(){si=(si+1)%SHOWS.length;reset()};
+  reset();
+})();
+</script>
+</body>
+</html>

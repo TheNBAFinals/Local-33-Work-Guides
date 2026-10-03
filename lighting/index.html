@@ -3442,6 +3442,9 @@ SCN.forEach(function(s,i){
 })();
 
 /* ═══════════ electric · cam-lok sequence ═══════════ */
+/* Locked field standard: hook-up = GROUND first, NEUTRAL second, then the hot legs
+   in whatever order they sit on the distro. Strike = hots (any order), neutral, GROUND LAST.
+   Black/red/blue is a colour code, never a required sequence. */
 (function(){
   var host=document.getElementById("camSim"); if(!host) return;
   var NS="http://www.w3.org/2000/svg", svg=document.getElementById("cmSvg");
@@ -3460,22 +3463,39 @@ SCN.forEach(function(s,i){
     {k:"LOCK",  n:"Lock and tag",    s:"your lock, your key"},
     {k:"VERIFY",n:"Verify dead",     s:"meter it, live-dead-live"}
   ];
+  var HOTS=["A","B","C"];
 
-  var ON=["KILL","LOCK","VERIFY","GND","NEU","A","B","C"];
-  var OFF=["KILL","LOCK","VERIFY","C","B","A","NEU","GND"];
+  /* Each step is a group; members of a group may be done in any order. */
+  var ON =[["KILL"],["LOCK"],["VERIFY"],["GND"],["NEU"],HOTS];
+  var OFF=[["KILL"],["LOCK"],["VERIFY"],HOTS,["NEU"],["GND"]];
 
-  var mode="on", done=[], score=0, tries=0, failed=false;
+  var mode="on", done=[], score=0, tries=0, failed=false, layout=HOTS.slice();
 
   function seq(){ return mode==="on"?ON:OFF }
+  function item(k){ return PREP.concat(CON).filter(function(x){return x.k===k})[0] }
+  function allowed(){
+    var g=seq();
+    for(var i=0;i<g.length;i++){
+      var left=g[i].filter(function(k){return done.indexOf(k)<0});
+      if(left.length) return left;
+    }
+    return [];
+  }
+  function shuffleLayout(){
+    layout=HOTS.slice().sort(function(){return Math.random()-.5});
+  }
+  function layoutText(){
+    return layout.map(function(k){return item(k).t}).join(", ");
+  }
 
   var CMSHOWS=[
    {show:"Rock concert", venue:"Arena loading dock, 400 A company switch",
     boss:"Head Electrician", manner:"watching you the whole time", clock:"Load-in, doors in 5 hrs"},
-   {show:"Festival \u00b7 outdoor", venue:"Site power, genset feed",
+   {show:"Festival · outdoor", venue:"Site power, genset feed",
     boss:"Site Power Tech", manner:"rain coming in an hour", clock:"Gates in 3 hrs"},
-   {show:"Corporate \u00b7 general session", venue:"Hotel ballroom, house company switch",
+   {show:"Corporate · general session", venue:"Hotel ballroom, house company switch",
     boss:"Head Electrician", manner:"quiet room, client nearby", clock:"Set in 4 hrs"},
-   {show:"Sports \u00b7 broadcast", venue:"Arena, house service",
+   {show:"Sports · broadcast", venue:"Arena, house service",
     boss:"House Electrician", manner:"does this every week and still checks", clock:"Truck arrives in 2 hrs"}
   ];
   var cmShow=0;
@@ -3485,15 +3505,16 @@ SCN.forEach(function(s,i){
       show:S.show, venue:S.venue, role:"Electric hand", boss:S.boss, manner:S.manner,
       clock:S.clock, target:2,
       say: mode==="on"
-        ? "Tie the distro in. I am watching, so do it properly \u2014 and do the two steps everybody forgets before you touch a single connector."
-        : "Strike it. Same discipline going out as coming in, and remember the order reverses.",
+        ? "Tie the distro in. I am watching, so do it properly — and do the two steps everybody forgets before you touch a single connector. Tails on this one sit "+layoutText()+"."
+        : "Strike it. Same discipline going out as coming in.",
       reqs: mode==="on"
         ? ["Make the source safe <b>before</b> anything else.",
-           "<b>Ground on first.</b> Phases on last.",
+           "<b>Ground first, neutral second.</b> Those two are not negotiable.",
+           "Then the hot legs in the order they sit on <b>this</b> distro — any order is fine.",
            "Seat every connector and turn the collar."]
         : ["Source dead and locked <b>first</b>, always.",
-           "<b>Phases off first.</b> Ground off last.",
-           "The equipment stays bonded until the very last move."]
+           "<b>Hot legs off first</b>, any order. Then neutral.",
+           "<b>Ground last.</b> The equipment stays bonded until the very last move."]
     });
   }
 
@@ -3508,7 +3529,9 @@ SCN.forEach(function(s,i){
     svg.appendChild(m("text",{x:62,y:122,"text-anchor":"middle",
       style:"font-size:8.5px;fill:#8b98a5"},done.indexOf("LOCK")>=0?"locked + tagged":"not locked"));
 
-    CON.forEach(function(c,i){
+    /* ground and neutral on top; hot legs in this distro's layout */
+    var rows=[CON[0],CON[1]].concat(layout.map(item));
+    rows.forEach(function(c,i){
       var y=26+i*36, on=done.indexOf(c.k)>=0;
       svg.appendChild(m("path",{d:"M110 "+y+" H"+(on?496:300),
         stroke:on?c.c:"#21262d","stroke-width":on?4:2,"stroke-linecap":"round",
@@ -3528,17 +3551,24 @@ SCN.forEach(function(s,i){
   }
 
   function panel(){
-    var el=document.getElementById("cmPanel"), s=seq(), nxt=s[done.length];
+    var el=document.getElementById("cmPanel");
     document.getElementById("cmPhase").textContent =
       mode==="on" ? "Connecting — step "+(done.length+1)+" of 8"
                   : "Disconnecting — step "+(done.length+1)+" of 8";
     document.getElementById("cmScore").textContent="Clean runs "+score+" / "+tries;
 
-    var h='<div class="steps">';
-    s.forEach(function(k,i){
-      var all=PREP.concat(CON).filter(function(x){return x.k===k})[0];
-      h+='<span class="stepc'+(i<done.length?" ok":"")+'">'+(i+1)+' · '+
-         (all.n||all.k)+'</span>';
+    /* step chips: groups in order; the hot group shows what you actually did */
+    var h='<div class="steps">', n=0;
+    seq().forEach(function(g){
+      if(g.length===1){
+        n++; h+='<span class="stepc'+(done.indexOf(g[0])>=0?" ok":"")+'">'+n+' · '+item(g[0]).n+'</span>';
+      } else {
+        var did=done.filter(function(k){return g.indexOf(k)>=0});
+        did.forEach(function(k){ n++; h+='<span class="stepc ok">'+n+' · '+item(k).n+'</span>' });
+        for(var j=did.length;j<g.length;j++){
+          n++; h+='<span class="stepc">'+n+' · Hot leg (any order)</span>';
+        }
+      }
     });
     h+='</div>';
 
@@ -3546,7 +3576,7 @@ SCN.forEach(function(s,i){
       el.innerHTML=h+'<div class="row" style="margin:14px 0 0"><button class="btn pri" id="cmNext" style="margin-left:auto">'+
         (mode==="on"?"Now strike it →":"Run it again →")+'</button></div>';
       document.getElementById("cmNext").onclick=function(){
-        if(mode==="off") cmShow=(cmShow+1)%CMSHOWS.length;
+        if(mode==="off"){ cmShow=(cmShow+1)%CMSHOWS.length; shuffleLayout(); }
         mode = mode==="on" ? "off" : "on"; done=[]; failed=false;
         brief(); draw(); panel(); document.getElementById("cmFeed").innerHTML="";
       };
@@ -3572,55 +3602,54 @@ SCN.forEach(function(s,i){
     KILL:"You reached for a connector with the source still live. <b>Everything else is irrelevant if this step is missed.</b> Feeder current does not give you a second chance — a connector made up live can arc, and at service level that arc is an explosion, not a spark.",
     LOCK:"The source is off but nothing is stopping anyone from turning it back on while your hands are in it. <b>Your lock, your key.</b> A disconnect that somebody else can close is not a safe source.",
     VERIFY:"You locked it out but never confirmed it is actually dead. Disconnects get mislabelled, and a rig can be fed from somewhere you did not expect. <b>Meter it — test the meter on a known live source first and again after</b>, because a dead meter reads zero on a live conductor and that is how people die confident.",
-    GND:"<b>Ground goes on first and comes off last.</b> Every intermediate state of this connection must have the equipment bonded. Connect a phase before the ground and the distro chassis is floating with voltage on it — the ground path becomes whoever touches it next.",
-    NEU:"Neutral goes on after ground and before any phase. It is the return path; without it a fault has nowhere to go but through the equipment.",
-    A:"Phases go on last, after ground and neutral are both made up and locked.",
-    B:"Phases go on last, after ground and neutral are both made up and locked.",
-    C:"Phases go on last, after ground and neutral are both made up and locked."
+    GND:"<b>Ground goes on first.</b> Every intermediate state of this connection must have the equipment bonded. Land anything before the ground and the distro chassis has no fault path — the ground path becomes whoever touches it next.",
+    NEU:"<b>Neutral goes on second</b> — after ground, before any hot leg. It is the return path; without it a fault has nowhere to go but through the equipment.",
+    HOT:"Hot legs go on <b>only after ground and neutral are both made up and locked</b>. Once they are, land the hots in whatever order they sit on the distro — there is no required black/red/blue order."
   };
   var WHYOFF={
-    GND:"<b>Ground comes off last.</b> You pulled it while phases were still connected — the exact moment the equipment most needs a bond is while conductors are still landed on it.",
-    NEU:"Neutral comes off after the phases and before the ground.",
-    C:"Phases come off first, in reverse order. C, then B, then A.",
-    B:"Phases come off first, in reverse order. C, then B, then A.",
-    A:"Phases come off first, in reverse order. C, then B, then A."
+    GND:"<b>Ground comes off last.</b> You pulled it while other conductors were still landed — the exact moment the equipment most needs a bond.",
+    NEU:"<b>Neutral comes off after every hot leg</b> and before the ground. Pull it with a hot still landed and the return path is gone while voltage can still reach the gear."
   };
 
   function pick(k){
-    var s=seq(), want=s[done.length], f=document.getElementById("cmFeed");
-    if(k===want){
+    var ok=allowed(), f=document.getElementById("cmFeed");
+    if(ok.indexOf(k)>=0){
       done.push(k);
       if(done.length===8){
+        var hotOrder=done.filter(function(x){return HOTS.indexOf(x)>=0})
+                         .map(function(x){return item(x).t}).join(", ");
         tries++; if(!failed) score++;
         CallSheet.stop("cmBrief");
         f.innerHTML='<div class="fb '+(failed?"warn":"ok")+'"><b class="h">'+
           (failed?"“Got there — but you had to be told”":"“That’s how it’s done”")+'</b>'+
           (mode==="on"
-            ? "Source killed, locked, verified dead. Ground on first, then neutral, then the three phases. <b>Every connector seated and collared.</b>"
-            : "Source killed and locked before anything came apart. Phases off first, then neutral, ground last. <b>The distro stayed bonded until the final move.</b>")+
+            ? "Source killed, locked, verified dead. <b>Ground first, neutral second</b>, then the hot legs ("+hotOrder+") — any order is right as long as it follows the distro. <b>Every connector seated and collared.</b>"
+            : "Source killed and locked before anything came apart. Hot legs off ("+hotOrder+"), then neutral, <b>ground last</b>. <b>The distro stayed bonded until the final move.</b>")+
           (failed?"<br><br>Run it again clean before you call it learned." : "")+'</div>';
       } else f.innerHTML="";
       draw(); panel(); return;
     }
     failed=true;
-    var lib = mode==="on" ? WHY : (WHYOFF[k]?WHYOFF:WHY);
-    var msg = (mode==="on"?WHY:(WHYOFF[k]||WHY[k]));
-    if(typeof msg!=="string") msg=WHY[k];
-    var head = (k==="KILL"||k==="LOCK"||k==="VERIFY")
-      ? "“Stop — the source isn’t safe yet”" : "“Wrong order”";
-    if(done.indexOf("KILL")<0 && k!=="KILL")
-      { head="“STOP.”"; msg=WHY.KILL; }
+    var want=ok[0], head, msg;
+    if(done.indexOf("KILL")<0 && k!=="KILL"){ head="“STOP.”"; msg=WHY.KILL; }
+    else if(want==="LOCK"||want==="VERIFY"){ head="“Stop — the source isn’t safe yet”"; msg=WHY[want]; }
+    else {
+      head="“Wrong order”";
+      if(mode==="on") msg = HOTS.indexOf(k)>=0 ? WHY.HOT : WHY[want];
+      else msg = WHYOFF[k] || WHY[k];
+    }
+    var nextTxt = ok.length>1 ? "any hot leg ("+ok.map(function(x){return item(x).t}).join(", ")+")"
+                              : item(want).n;
     f.innerHTML='<div class="fb no"><b class="h">'+head+'</b>'+msg+
-      '<br><br><b>The correct next step:</b> '+
-      PREP.concat(CON).filter(function(x){return x.k===want})[0].n+'.</div>';
+      '<br><br><b>The correct next step:</b> '+nextTxt+'.</div>';
     panel();
   }
 
   document.getElementById("cmReset").onclick=function(){
-    mode="on"; done=[]; failed=false; brief(); draw(); panel();
+    mode="on"; done=[]; failed=false; shuffleLayout(); brief(); draw(); panel();
     document.getElementById("cmFeed").innerHTML="";
   };
-  brief(); draw(); panel();
+  shuffleLayout(); brief(); draw(); panel();
 })();
 
 /* ═══════════ electric · phase balance ═══════════ */
@@ -4170,7 +4199,7 @@ SCN.forEach(function(s,i){
    {n:"Cam-Lok E1016",v:"up to 400 A · single pole",
     d:"One fat conductor per connector, colour-coded, twist collar.",
     use:"Feeder only — service or generator to distro.",
-    tell:"<b>One conductor each.</b> Green ground, white neutral, black/red/blue phases. Ground on first and off last. Never made up live.",
+    tell:"<b>One conductor each.</b> Green ground, white neutral, black/red/blue phases. Ground first, neutral second, then hots in the order the distro is laid out; strike hots, neutral, ground last. Never made up live.",
     draw:function(){
       svg.appendChild(m("rect",{x:110,y:54,width:80,height:64,rx:12,fill:"#0d1117",stroke:"#f85149","stroke-width":3}));
       svg.appendChild(m("circle",{cx:150,cy:86,r:19,fill:"none",stroke:"#f85149","stroke-width":3}));
