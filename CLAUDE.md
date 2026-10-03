@@ -42,7 +42,9 @@ Clone the repo INTO this folder (keep this CLAUDE.md and inbox/), log in with `g
   NEUTRAL second to last, GROUND LAST. (Updated Oct 2026 — replaces "hot legs in any order".)
 - Never teach a fixed phase order (Black/Red/Blue or Blue/Red/Black) as a rule; the panel layout sets it.
 
-## FIRST FIX TASK
+## ✅ FIRST FIX TASK — DONE Oct 2, 2026 (commits 4a3c864, 97313fa)
+Kept for the record; nothing left to do. The fix follows the updated LOCKED FIELD STANDARD above
+(hots in distro order, strike right to left), not the older "hots in any order" wording below.
 - electric/index.html (GitHub) — the Cam-Lok sequence trainer, quiz answers and flashcards force
   "ground, neutral, A, B, C". Rewrite so: ground first + neutral second are graded strictly, hot legs are
   accepted in any order (follow the distro), and strike = hots (any order) → neutral → ground last.
@@ -56,7 +58,9 @@ Clone the repo INTO this folder (keep this CLAUDE.md and inbox/), log in with `g
 3. Update hub + README.
 4. Show changes → commit → push → confirm the live site loads.
 
-## Inbox contents (staged Oct 2026) — first sync plan
+## ✅ Inbox contents (staged Oct 2026) — first sync plan — DONE Oct 2, 2026
+All merged: backline 4a3c864 · rigging a4c7e6a · lighting 1acb956 · video a4d663e · av 4ecd836.
+Don't re-merge these files if they're still sitting in ./inbox/.
 - local33-backline-guide-v1.html → new backline/ guide (rebuild on the shared template)
 - rigging-parts/ (3rd-ed parts 1–9 HTML + MASTER 3rd ed PDF) → new rigging/ guide
   4th-ed master app: public link https://claude.ai/public/artifacts/3301f079-fea7-4714-859e-d3bd0156bc20
