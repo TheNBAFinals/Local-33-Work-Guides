@@ -805,7 +805,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
       </g>
 
       <path class="s" style="stroke:#e3b341;stroke-width:1.5" d="M262 30 H550"/>
-      <text class="lbl f-warn" x="406" y="24" text-anchor="middle" style="font-size:8.5px">3 &middot; HOT LEGS &mdash; ANY ORDER, FOLLOW THE DISTRO</text>
+      <text class="lbl f-warn" x="406" y="24" text-anchor="middle" style="font-size:8.5px">3 &middot; HOT LEGS &mdash; LEFT TO RIGHT, AS THEY SIT ON THE DISTRO</text>
 
       <g>
         <circle cx="294" cy="66" r="26" fill="#0d1117" stroke="#6e7681" stroke-width="4"/>
@@ -825,12 +825,12 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
         <text class="lbl" x="518" y="110" text-anchor="middle" style="font-size:9.5px;font-weight:800">PHASE C</text>
       </g>
 
-      <text class="lbl" x="406" y="128" text-anchor="middle" style="font-size:8px;fill:#8b98a5">colour code only &mdash; not a sequence</text>
+      <text class="lbl" x="406" y="128" text-anchor="middle" style="font-size:8px;fill:#8b98a5">layout varies by distro &mdash; read the panel, not the colours</text>
 
-      <text class="lbl" x="12" y="152" style="font-size:9px;font-weight:800;fill:#e3b341">STRIKE: hot legs off (any order) &rarr; neutral &rarr; GROUND LAST</text>
+      <text class="lbl" x="12" y="152" style="font-size:9px;font-weight:800;fill:#e3b341">STRIKE, RIGHT TO LEFT: hot legs &rarr; neutral &rarr; GROUND LAST</text>
       <text class="lbl" x="12" y="168" style="font-size:9px;fill:#8b98a5">Source dead and locked out before anything is touched, both ways.</text>
     </svg>
-    <div class="figcap"><b>Ground first, neutral second, then the hot legs in whatever order they sit on the distro you are actually tying into.</b> Strike is hots off (any order), then neutral, then <b>ground last</b>. Those are the only two strict rules, and the reason is simple: at every intermediate step, the equipment must already have a path to ground. Black/red/blue tells you <i>which</i> leg is A, B or C &mdash; it is not an order to land them in.</div>
+    <div class="figcap"><b>Hook up left to right: ground first, neutral second, then the hot legs in the order they sit on the distro you are actually tying into.</b> Strike is the reverse, right to left: hot legs off, then neutral, then <b>ground last</b>. The reason is simple: at every intermediate step, the equipment must already have a path to ground. Black/red/blue tells you <i>which</i> leg is A, B or C &mdash; the panel layout, not the colour code, sets the order.</div>
   </div>
 
   <div class="card L power">
@@ -1162,7 +1162,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   </div>
 
   <div class="key">
-    <b>What it's drilling.</b> The only two strict rules &mdash; <b>ground first, neutral second</b> on the way in, and <b>hots, then neutral, then ground last</b> on the way out. Hot legs are graded in any order: follow the distro. Plus the two steps most people skip entirely &mdash; killing the source and locking it out before anything is touched, and verifying it is actually dead. The order is the safety system.
+    <b>What it's drilling.</b> Left to right on the way in &mdash; <b>ground, neutral, then the hot legs as they sit on the panel</b> &mdash; and right to left on the way out: <b>hots, then neutral, then ground last</b>. The hot-leg layout changes every run, so read the distro instead of memorising colours. Plus the two steps most people skip entirely &mdash; killing the source and locking it out before anything is touched, and verifying it is actually dead. The order is the safety system.
   </div>
 
   <h2>Phase Balance</h2>
@@ -1486,8 +1486,8 @@ var CARDS=[
 ["Balance target across legs?","Within about <b>10%</b> of each other. Read the distro meters when you energise and again when the rig is fully up."],
 ["What does an unbalanced wye do to the neutral?","Pushes current down it. The neutral is sized assuming the legs mostly cancel \u2014 so imbalance heats <b>a conductor with no breaker watching it</b>."],
 ["Cam-Lok colour code?","<b>Green</b> ground, <b>white</b> neutral, <b>black</b> phase A, <b>red</b> phase B, <b>blue</b> phase C."],
-["Cam-Lok connection order?","Source dead and locked, then <b>ground first, neutral second</b>, then the hot legs in whatever order they sit on the distro. Strike: <b>hots off (any order), neutral, ground last</b>."],
-["Is Black \u2192 Red \u2192 Blue (or Blue \u2192 Red \u2192 Black) the required order for the hot legs?","<b>No.</b> The colours identify phase A, B and C. Once ground and neutral are on, land the hots in whatever order they sit on the actual distro. Only ground-first/neutral-second (and ground-last on strike) are strict."],
+["Cam-Lok connection order?","Source dead and locked, then left to right: <b>ground, neutral, then the hot legs in the order they sit on the distro</b>. Strike right to left: <b>hots, neutral, ground last</b>."],
+["Is Black \u2192 Red \u2192 Blue (or Blue \u2192 Red \u2192 Black) the required order for the hot legs?","<b>No.</b> The colours identify phase A, B and C. Once ground and neutral are on, land the hots left to right in the order they sit on the actual distro. Strike is the reverse, right to left, with ground last."],
 ["Why does ground go on first and off last?","So the equipment is <b>bonded at every intermediate state</b> of the connection. Land a phase before the ground and the chassis is floating with voltage on it \u2014 the ground path becomes whoever touches it."],
 ["What happens to a half-seated cam-lok under load?","It <b>arcs</b>, carbonises the contact face instantly and destroys both halves. Seat it, turn the collar, pull-test it."],
 ["Standard feeder cable type?","<b>Type W</b> \u2014 heavy rubber insulation and jacket, built for repeated coiling and outdoor use. <b>SOOW</b> is similar with added oil resistance, common up to about 2/0."],
@@ -1599,10 +1599,10 @@ var QS=[
   e:"<b>It is built for portable abuse.</b> Type W has heavy rubber insulation on each conductor plus a heavy rubber jacket, and it tolerates being coiled, dragged, driven over and rained on repeatedly. Plenty of cable can carry the current \u2014 very little of it survives a touring season."},
 {q:"You are disconnecting feeder at the end of the night. Which comes off last?",
   o:["Phase C","Neutral","Ground","Whichever is easiest to reach"],a:2,
-  e:"<b>Ground comes off last.</b> On the way out: hot legs first, in any order, then neutral, then ground. The equipment stays bonded until the very last move, so at no point is there a conductor landed on an ungrounded chassis."},
+  e:"<b>Ground comes off last.</b> On the way out you work right to left: hot legs first, then neutral, then ground. The equipment stays bonded until the very last move, so at no point is there a conductor landed on an ungrounded chassis."},
 {q:"Ground and neutral are landed. The distro's hot-leg tails sit Blue, Red, Black left to right. What next?",
-  o:["Black first \u2014 phase A always goes on before B and C","Land the hots in the order they sit on the distro \u2014 any order is correct","Blue, Red, Black is the only legal order","Pull the neutral and start again"],a:1,
-  e:"<b>Follow the distro.</b> The only strict hook-up rules are <b>ground first, neutral second</b>. After that the hot legs go on in whatever order they sit on the gear in front of you. Black/red/blue tells you which leg is A, B or C \u2014 it is a colour code, not a sequence."}
+  o:["Black first \u2014 phase A always goes on before B and C","Keep going left to right: Blue, then Red, then Black","Any order \u2014 once neutral is on it doesn't matter","Pull the neutral and start again"],a:1,
+  e:"<b>Follow the distro, left to right.</b> Hook-up starts with ground, then neutral, then the hot legs in the order they sit on the gear in front of you \u2014 here Blue, Red, Black. Black/red/blue tells you which leg is A, B or C \u2014 it is a colour code, not a sequence."}
 ];
 var qi=0,qScore=0,qHost=document.getElementById("quizHost");
 function qRender(){
@@ -1652,11 +1652,11 @@ var CHAINS=[
   s:["Company switch","Feeder on cam-lok","Main distro","Sub-feed","Dimmer or relay rack","Socapex multi","Breakout box","Jumper","Fixture"],
   w:"Every layer exists to divide power into smaller, individually protected pieces. A small show skips the middle \u2014 distro straight to fixtures \u2014 but the sequence never reverses."},
 {t:"Cam-lok connection \u2014 the full sequence",
-  s:["Kill the source","Lock and tag","Verify dead with a meter","Ground (green)","Neutral (white)","Hot legs \u2014 in the order they sit on the distro"],
-  w:"The first three steps are the ones people skip and the ones that hurt them. Ground on first so the equipment is bonded before any voltage can reach it, neutral second, then the hots however the distro is laid out \u2014 there is no required black/red/blue order."},
+  s:["Kill the source","Lock and tag","Verify dead with a meter","Ground (green)","Neutral (white)","Hot legs \u2014 left to right, as they sit on the distro"],
+  w:"The first three steps are the ones people skip and the ones that hurt them. Ground on first so the equipment is bonded before any voltage can reach it, neutral second, then the hots left to right as the distro is laid out \u2014 the panel sets the order, not the black/red/blue colour code."},
 {t:"Cam-lok strike \u2014 the full sequence",
-  s:["Kill the source","Lock and tag","Verify dead with a meter","Hot legs off \u2014 any order","Neutral (white)","Ground (green) \u2014 last"],
-  w:"Hots first, neutral next, ground last. The equipment stays bonded until the very last move."},
+  s:["Kill the source","Lock and tag","Verify dead with a meter","Hot legs off \u2014 right to left","Neutral (white)","Ground (green) \u2014 last"],
+  w:"Hook-up in reverse, right to left: hots first, neutral second to last, ground last. The equipment stays bonded until the very last move."},
 {t:"Troubleshooting a dead circuit \u2014 cheapest first",
   s:["Look at the connector faces","Check the multi is seated at both ends","Read the breakers at the rack","Flex the cable and watch","Move the fixture to a known-good circuit","Swap the multi","Climb and swap the fixture"],
   w:"Every step down this list costs more time than the one above it. Swapping hardware confirms a diagnosis \u2014 it does not make one."},
@@ -1777,7 +1777,7 @@ var SCN=[
   a:"<b>Answer the question honestly and give them useful information.</b> This is a common and legitimate suspicion, not an accusation.<br><br><b>What actually causes it:</b><br>\u2022 <b>Shared service</b> \u2014 dimmers chopping the waveform put noise back on the line, and audio picks it up.<br>\u2022 <b>Ground loops</b> \u2014 audio and lighting grounded at different points, and now there is a voltage difference between them that the audio path hears.<br>\u2022 <b>Generators</b> \u2014 cheap or overloaded gensets are a genuine suspect.<br>\u2022 <b>Dimmers specifically.</b> LEDs on constant power are much quieter neighbours than tungsten on dimmers.<br><br><b>What you can tell them:</b> which service you are on, whether you are dimming or running constant, and whether anything changed just before the buzz started.<br><br><b>What you should not do:</b> lift a ground to make the buzz go away. It works, and it removes a safety system to fix an audio problem. <b>That is never your call and it is rarely the right fix.</b><br><br><b>The real answer</b> is usually isolated technical power for audio, which is a design decision made long before you arrived. But being the electric hand who <i>helps diagnose</i> instead of getting defensive is worth a lot on a small crew."},
 {w:"Strike \u00b7 end of a long day",
   q:"It is 1 a.m., everyone is tired, and the head says strike the feeder. What is the sequence and what is the thing most likely to go wrong?",
-  a:"<b>The sequence:</b> kill the source, lock it out, verify dead, then <b>the hot legs (any order), then neutral, ground last</b>.<br><br><b>What actually goes wrong at 1 a.m.:</b><br><br><b>1. Somebody skips the lockout</b> because \u201cit is obviously off.\u201d The disconnect is across the room, everyone is tired, and the assumption feels safe. Verify it. Meter it. Test the meter before and after \u2014 a dead meter reads zero on a live conductor.<br><br><b>2. Somebody pulls the ground early</b> because it is the most accessible connector. The whole point is that the equipment stays bonded until the last conductor is off.<br><br><b>3. Cable gets coiled badly</b> because it is the end of the day. That damage does not show up tonight \u2014 it shows up as a broken conductor on somebody else\u2019s call in three months.<br><br><b>The honest bit:</b> fatigue is when the sequence matters most and when people most want to skip it. <b>The discipline is not for when you are sharp. It is for exactly this moment.</b><br><br>Say the order out loud if you have to. Nobody at 1 a.m. thinks that is strange."}
+  a:"<b>The sequence:</b> kill the source, lock it out, verify dead, then right to left: <b>the hot legs, then neutral, ground last</b>.<br><br><b>What actually goes wrong at 1 a.m.:</b><br><br><b>1. Somebody skips the lockout</b> because \u201cit is obviously off.\u201d The disconnect is across the room, everyone is tired, and the assumption feels safe. Verify it. Meter it. Test the meter before and after \u2014 a dead meter reads zero on a live conductor.<br><br><b>2. Somebody pulls the ground early</b> because it is the most accessible connector. The whole point is that the equipment stays bonded until the last conductor is off.<br><br><b>3. Cable gets coiled badly</b> because it is the end of the day. That damage does not show up tonight \u2014 it shows up as a broken conductor on somebody else\u2019s call in three months.<br><br><b>The honest bit:</b> fatigue is when the sequence matters most and when people most want to skip it. <b>The discipline is not for when you are sharp. It is for exactly this moment.</b><br><br>Say the order out loud if you have to. Nobody at 1 a.m. thinks that is strange."}
 ];
 var sh=document.getElementById("scnHost");
 SCN.forEach(function(s,i){
@@ -3403,9 +3403,10 @@ SCN.forEach(function(s,i){
 })();
 
 /* ═══════════ electric · cam-lok sequence ═══════════ */
-/* Locked field standard: hook-up = GROUND first, NEUTRAL second, then the hot legs
-   in whatever order they sit on the distro. Strike = hots (any order), neutral, GROUND LAST.
-   Black/red/blue is a colour code, never a required sequence. */
+/* Locked field standard: hook-up runs LEFT TO RIGHT across the distro — GROUND first,
+   NEUTRAL second, then the hot legs in the order they sit on the panel. Strike runs
+   RIGHT TO LEFT — hot legs, then NEUTRAL second to last, GROUND LAST.
+   Black/red/blue is a colour code; the panel layout sets the hot-leg order. */
 (function(){
   var host=document.getElementById("camSim"); if(!host) return;
   var NS="http://www.w3.org/2000/svg", svg=document.getElementById("cmSvg");
@@ -3426,13 +3427,18 @@ SCN.forEach(function(s,i){
   ];
   var HOTS=["A","B","C"];
 
-  /* Each step is a group; members of a group may be done in any order. */
-  var ON =[["KILL"],["LOCK"],["VERIFY"],["GND"],["NEU"],HOTS];
-  var OFF=[["KILL"],["LOCK"],["VERIFY"],HOTS,["NEU"],["GND"]];
+  /* Each step is a group of one. The hot legs follow this distro's layout:
+     left to right going on, right to left coming off. */
 
   var mode="on", done=[], score=0, tries=0, failed=false, layout=HOTS.slice();
 
-  function seq(){ return mode==="on"?ON:OFF }
+  function seq(){
+    var prep=[["KILL"],["LOCK"],["VERIFY"]];
+    function one(k){return [k]}
+    return mode==="on"
+      ? prep.concat([["GND"],["NEU"]], layout.map(one))
+      : prep.concat(layout.slice().reverse().map(one), [["NEU"],["GND"]]);
+  }
   function item(k){ return PREP.concat(CON).filter(function(x){return x.k===k})[0] }
   function allowed(){
     var g=seq();
@@ -3466,15 +3472,15 @@ SCN.forEach(function(s,i){
       show:S.show, venue:S.venue, role:"Electric hand", boss:S.boss, manner:S.manner,
       clock:S.clock, target:2,
       say: mode==="on"
-        ? "Tie the distro in. I am watching, so do it properly — and do the two steps everybody forgets before you touch a single connector. Tails on this one sit "+layoutText()+"."
-        : "Strike it. Same discipline going out as coming in.",
+        ? "Tie the distro in. I am watching, so do it properly — and do the two steps everybody forgets before you touch a single connector. Left to right on this panel: Green, White, "+layoutText()+"."
+        : "Strike it. Same discipline going out as coming in — right to left this time. Panel reads Green, White, "+layoutText()+".",
       reqs: mode==="on"
         ? ["Make the source safe <b>before</b> anything else.",
            "<b>Ground first, neutral second.</b> Those two are not negotiable.",
-           "Then the hot legs in the order they sit on <b>this</b> distro — any order is fine.",
+           "Then the hot legs <b>left to right</b>, in the order they sit on <b>this</b> distro.",
            "Seat every connector and turn the collar."]
         : ["Source dead and locked <b>first</b>, always.",
-           "<b>Hot legs off first</b>, any order. Then neutral.",
+           "Work <b>right to left</b>: hot legs off first, then neutral second to last.",
            "<b>Ground last.</b> The equipment stays bonded until the very last move."]
     });
   }
@@ -3509,6 +3515,8 @@ SCN.forEach(function(s,i){
       style:"stroke:#30363d;fill:none"}));
     svg.appendChild(m("text",{x:561,y:194,"text-anchor":"middle",
       style:"font-size:9px;font-weight:800;fill:#8b98a5"},"DISTRO"));
+    svg.appendChild(m("text",{x:388,y:206,"text-anchor":"middle",
+      style:"font-size:8.5px;fill:#8b98a5"},"top to bottom = panel left to right"));
   }
 
   function panel(){
@@ -3522,12 +3530,14 @@ SCN.forEach(function(s,i){
     var h='<div class="steps">', n=0;
     seq().forEach(function(g){
       if(g.length===1){
-        n++; h+='<span class="stepc'+(done.indexOf(g[0])>=0?" ok":"")+'">'+n+' · '+item(g[0]).n+'</span>';
+        var did1=done.indexOf(g[0])>=0;
+        n++; h+='<span class="stepc'+(did1?" ok":"")+'">'+n+' · '+
+          (did1||HOTS.indexOf(g[0])<0 ? item(g[0]).n : "Hot leg")+'</span>';
       } else {
         var did=done.filter(function(k){return g.indexOf(k)>=0});
         did.forEach(function(k){ n++; h+='<span class="stepc ok">'+n+' · '+item(k).n+'</span>' });
         for(var j=did.length;j<g.length;j++){
-          n++; h+='<span class="stepc">'+n+' · Hot leg (any order)</span>';
+          n++; h+='<span class="stepc">'+n+' · Hot leg</span>';
         }
       }
     });
@@ -3565,15 +3575,17 @@ SCN.forEach(function(s,i){
     VERIFY:"You locked it out but never confirmed it is actually dead. Disconnects get mislabelled, and a rig can be fed from somewhere you did not expect. <b>Meter it — test the meter on a known live source first and again after</b>, because a dead meter reads zero on a live conductor and that is how people die confident.",
     GND:"<b>Ground goes on first.</b> Every intermediate state of this connection must have the equipment bonded. Land anything before the ground and the distro chassis has no fault path — the ground path becomes whoever touches it next.",
     NEU:"<b>Neutral goes on second</b> — after ground, before any hot leg. It is the return path; without it a fault has nowhere to go but through the equipment.",
-    HOT:"Hot legs go on <b>only after ground and neutral are both made up and locked</b>. Once they are, land the hots in whatever order they sit on the distro — there is no required black/red/blue order."
+    HOT:"Hot legs go on <b>only after ground and neutral are both made up and locked</b>. Then keep working <b>left to right</b> — land the hots in the order they sit on this distro. The black/red/blue colours tell you which leg is which; the panel layout sets the order."
   };
   var WHYOFF={
+    HOT:"<b>Strike runs right to left</b> — hook-up in reverse. Start with the rightmost hot leg and work back toward the neutral, then ground last.",
     GND:"<b>Ground comes off last.</b> You pulled it while other conductors were still landed — the exact moment the equipment most needs a bond.",
     NEU:"<b>Neutral comes off after every hot leg</b> and before the ground. Pull it with a hot still landed and the return path is gone while voltage can still reach the gear."
   };
 
   function pick(k){
     var ok=allowed(), f=document.getElementById("cmFeed");
+    if(done.indexOf(k)>=0) return;
     if(ok.indexOf(k)>=0){
       done.push(k);
       if(done.length===8){
@@ -3584,8 +3596,8 @@ SCN.forEach(function(s,i){
         f.innerHTML='<div class="fb '+(failed?"warn":"ok")+'"><b class="h">'+
           (failed?"“Got there — but you had to be told”":"“That’s how it’s done”")+'</b>'+
           (mode==="on"
-            ? "Source killed, locked, verified dead. <b>Ground first, neutral second</b>, then the hot legs ("+hotOrder+") — any order is right as long as it follows the distro. <b>Every connector seated and collared.</b>"
-            : "Source killed and locked before anything came apart. Hot legs off ("+hotOrder+"), then neutral, <b>ground last</b>. <b>The distro stayed bonded until the final move.</b>")+
+            ? "Source killed, locked, verified dead. Left to right: <b>ground first, neutral second</b>, then the hot legs as they sit on the panel ("+hotOrder+"). <b>Every connector seated and collared.</b>"
+            : "Source killed and locked before anything came apart. Right to left: hot legs off ("+hotOrder+"), neutral second to last, <b>ground last</b>. <b>The distro stayed bonded until the final move.</b>")+
           (failed?"<br><br>Run it again clean before you call it learned." : "")+'</div>';
       } else f.innerHTML="";
       draw(); panel(); return;
@@ -3597,7 +3609,7 @@ SCN.forEach(function(s,i){
     else {
       head="“Wrong order”";
       if(mode==="on") msg = HOTS.indexOf(k)>=0 ? WHY.HOT : WHY[want];
-      else msg = WHYOFF[k] || WHY[k];
+      else msg = HOTS.indexOf(k)>=0 ? WHYOFF.HOT : (WHYOFF[k] || WHY[k]);
     }
     var nextTxt = ok.length>1 ? "any hot leg ("+ok.map(function(x){return item(x).t}).join(", ")+")"
                               : item(want).n;
@@ -4160,7 +4172,7 @@ SCN.forEach(function(s,i){
    {n:"Cam-Lok E1016",v:"up to 400 A · single pole",
     d:"One fat conductor per connector, colour-coded, twist collar.",
     use:"Feeder only — service or generator to distro.",
-    tell:"<b>One conductor each.</b> Green ground, white neutral, black/red/blue phases. Ground first, neutral second, then hots in the order the distro is laid out; strike hots, neutral, ground last. Never made up live.",
+    tell:"<b>One conductor each.</b> Green ground, white neutral, black/red/blue phases. Hook up left to right: ground, neutral, then hots as the distro is laid out. Strike right to left: hots, neutral, ground last. Never made up live.",
     draw:function(){
       svg.appendChild(m("rect",{x:110,y:54,width:80,height:64,rx:12,fill:"#0d1117",stroke:"#f85149","stroke-width":3}));
       svg.appendChild(m("circle",{cx:150,cy:86,r:19,fill:"none",stroke:"#f85149","stroke-width":3}));

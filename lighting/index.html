@@ -3442,9 +3442,10 @@ SCN.forEach(function(s,i){
 })();
 
 /* ═══════════ electric · cam-lok sequence ═══════════ */
-/* Locked field standard: hook-up = GROUND first, NEUTRAL second, then the hot legs
-   in whatever order they sit on the distro. Strike = hots (any order), neutral, GROUND LAST.
-   Black/red/blue is a colour code, never a required sequence. */
+/* Locked field standard: hook-up runs LEFT TO RIGHT across the distro — GROUND first,
+   NEUTRAL second, then the hot legs in the order they sit on the panel. Strike runs
+   RIGHT TO LEFT — hot legs, then NEUTRAL second to last, GROUND LAST.
+   Black/red/blue is a colour code; the panel layout sets the hot-leg order. */
 (function(){
   var host=document.getElementById("camSim"); if(!host) return;
   var NS="http://www.w3.org/2000/svg", svg=document.getElementById("cmSvg");
@@ -3465,13 +3466,18 @@ SCN.forEach(function(s,i){
   ];
   var HOTS=["A","B","C"];
 
-  /* Each step is a group; members of a group may be done in any order. */
-  var ON =[["KILL"],["LOCK"],["VERIFY"],["GND"],["NEU"],HOTS];
-  var OFF=[["KILL"],["LOCK"],["VERIFY"],HOTS,["NEU"],["GND"]];
+  /* Each step is a group of one. The hot legs follow this distro's layout:
+     left to right going on, right to left coming off. */
 
   var mode="on", done=[], score=0, tries=0, failed=false, layout=HOTS.slice();
 
-  function seq(){ return mode==="on"?ON:OFF }
+  function seq(){
+    var prep=[["KILL"],["LOCK"],["VERIFY"]];
+    function one(k){return [k]}
+    return mode==="on"
+      ? prep.concat([["GND"],["NEU"]], layout.map(one))
+      : prep.concat(layout.slice().reverse().map(one), [["NEU"],["GND"]]);
+  }
   function item(k){ return PREP.concat(CON).filter(function(x){return x.k===k})[0] }
   function allowed(){
     var g=seq();
@@ -3505,15 +3511,15 @@ SCN.forEach(function(s,i){
       show:S.show, venue:S.venue, role:"Electric hand", boss:S.boss, manner:S.manner,
       clock:S.clock, target:2,
       say: mode==="on"
-        ? "Tie the distro in. I am watching, so do it properly — and do the two steps everybody forgets before you touch a single connector. Tails on this one sit "+layoutText()+"."
-        : "Strike it. Same discipline going out as coming in.",
+        ? "Tie the distro in. I am watching, so do it properly — and do the two steps everybody forgets before you touch a single connector. Left to right on this panel: Green, White, "+layoutText()+"."
+        : "Strike it. Same discipline going out as coming in — right to left this time. Panel reads Green, White, "+layoutText()+".",
       reqs: mode==="on"
         ? ["Make the source safe <b>before</b> anything else.",
            "<b>Ground first, neutral second.</b> Those two are not negotiable.",
-           "Then the hot legs in the order they sit on <b>this</b> distro — any order is fine.",
+           "Then the hot legs <b>left to right</b>, in the order they sit on <b>this</b> distro.",
            "Seat every connector and turn the collar."]
         : ["Source dead and locked <b>first</b>, always.",
-           "<b>Hot legs off first</b>, any order. Then neutral.",
+           "Work <b>right to left</b>: hot legs off first, then neutral second to last.",
            "<b>Ground last.</b> The equipment stays bonded until the very last move."]
     });
   }
@@ -3548,6 +3554,8 @@ SCN.forEach(function(s,i){
       style:"stroke:#30363d;fill:none"}));
     svg.appendChild(m("text",{x:561,y:194,"text-anchor":"middle",
       style:"font-size:9px;font-weight:800;fill:#8b98a5"},"DISTRO"));
+    svg.appendChild(m("text",{x:388,y:206,"text-anchor":"middle",
+      style:"font-size:8.5px;fill:#8b98a5"},"top to bottom = panel left to right"));
   }
 
   function panel(){
@@ -3561,12 +3569,14 @@ SCN.forEach(function(s,i){
     var h='<div class="steps">', n=0;
     seq().forEach(function(g){
       if(g.length===1){
-        n++; h+='<span class="stepc'+(done.indexOf(g[0])>=0?" ok":"")+'">'+n+' · '+item(g[0]).n+'</span>';
+        var did1=done.indexOf(g[0])>=0;
+        n++; h+='<span class="stepc'+(did1?" ok":"")+'">'+n+' · '+
+          (did1||HOTS.indexOf(g[0])<0 ? item(g[0]).n : "Hot leg")+'</span>';
       } else {
         var did=done.filter(function(k){return g.indexOf(k)>=0});
         did.forEach(function(k){ n++; h+='<span class="stepc ok">'+n+' · '+item(k).n+'</span>' });
         for(var j=did.length;j<g.length;j++){
-          n++; h+='<span class="stepc">'+n+' · Hot leg (any order)</span>';
+          n++; h+='<span class="stepc">'+n+' · Hot leg</span>';
         }
       }
     });
@@ -3604,15 +3614,17 @@ SCN.forEach(function(s,i){
     VERIFY:"You locked it out but never confirmed it is actually dead. Disconnects get mislabelled, and a rig can be fed from somewhere you did not expect. <b>Meter it — test the meter on a known live source first and again after</b>, because a dead meter reads zero on a live conductor and that is how people die confident.",
     GND:"<b>Ground goes on first.</b> Every intermediate state of this connection must have the equipment bonded. Land anything before the ground and the distro chassis has no fault path — the ground path becomes whoever touches it next.",
     NEU:"<b>Neutral goes on second</b> — after ground, before any hot leg. It is the return path; without it a fault has nowhere to go but through the equipment.",
-    HOT:"Hot legs go on <b>only after ground and neutral are both made up and locked</b>. Once they are, land the hots in whatever order they sit on the distro — there is no required black/red/blue order."
+    HOT:"Hot legs go on <b>only after ground and neutral are both made up and locked</b>. Then keep working <b>left to right</b> — land the hots in the order they sit on this distro. The black/red/blue colours tell you which leg is which; the panel layout sets the order."
   };
   var WHYOFF={
+    HOT:"<b>Strike runs right to left</b> — hook-up in reverse. Start with the rightmost hot leg and work back toward the neutral, then ground last.",
     GND:"<b>Ground comes off last.</b> You pulled it while other conductors were still landed — the exact moment the equipment most needs a bond.",
     NEU:"<b>Neutral comes off after every hot leg</b> and before the ground. Pull it with a hot still landed and the return path is gone while voltage can still reach the gear."
   };
 
   function pick(k){
     var ok=allowed(), f=document.getElementById("cmFeed");
+    if(done.indexOf(k)>=0) return;
     if(ok.indexOf(k)>=0){
       done.push(k);
       if(done.length===8){
@@ -3623,8 +3635,8 @@ SCN.forEach(function(s,i){
         f.innerHTML='<div class="fb '+(failed?"warn":"ok")+'"><b class="h">'+
           (failed?"“Got there — but you had to be told”":"“That’s how it’s done”")+'</b>'+
           (mode==="on"
-            ? "Source killed, locked, verified dead. <b>Ground first, neutral second</b>, then the hot legs ("+hotOrder+") — any order is right as long as it follows the distro. <b>Every connector seated and collared.</b>"
-            : "Source killed and locked before anything came apart. Hot legs off ("+hotOrder+"), then neutral, <b>ground last</b>. <b>The distro stayed bonded until the final move.</b>")+
+            ? "Source killed, locked, verified dead. Left to right: <b>ground first, neutral second</b>, then the hot legs as they sit on the panel ("+hotOrder+"). <b>Every connector seated and collared.</b>"
+            : "Source killed and locked before anything came apart. Right to left: hot legs off ("+hotOrder+"), neutral second to last, <b>ground last</b>. <b>The distro stayed bonded until the final move.</b>")+
           (failed?"<br><br>Run it again clean before you call it learned." : "")+'</div>';
       } else f.innerHTML="";
       draw(); panel(); return;
@@ -3636,7 +3648,7 @@ SCN.forEach(function(s,i){
     else {
       head="“Wrong order”";
       if(mode==="on") msg = HOTS.indexOf(k)>=0 ? WHY.HOT : WHY[want];
-      else msg = WHYOFF[k] || WHY[k];
+      else msg = HOTS.indexOf(k)>=0 ? WHYOFF.HOT : (WHYOFF[k] || WHY[k]);
     }
     var nextTxt = ok.length>1 ? "any hot leg ("+ok.map(function(x){return item(x).t}).join(", ")+")"
                               : item(want).n;
@@ -4199,7 +4211,7 @@ SCN.forEach(function(s,i){
    {n:"Cam-Lok E1016",v:"up to 400 A · single pole",
     d:"One fat conductor per connector, colour-coded, twist collar.",
     use:"Feeder only — service or generator to distro.",
-    tell:"<b>One conductor each.</b> Green ground, white neutral, black/red/blue phases. Ground first, neutral second, then hots in the order the distro is laid out; strike hots, neutral, ground last. Never made up live.",
+    tell:"<b>One conductor each.</b> Green ground, white neutral, black/red/blue phases. Hook up left to right: ground, neutral, then hots as the distro is laid out. Strike right to left: hots, neutral, ground last. Never made up live.",
     draw:function(){
       svg.appendChild(m("rect",{x:110,y:54,width:80,height:64,rx:12,fill:"#0d1117",stroke:"#f85149","stroke-width":3}));
       svg.appendChild(m("circle",{cx:150,cy:86,r:19,fill:"none",stroke:"#f85149","stroke-width":3}));

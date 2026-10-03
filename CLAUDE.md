@@ -31,9 +31,11 @@ Clone the repo INTO this folder (keep this CLAUDE.md and inbox/), log in with `g
 - Never push anything personal (IDs, pay stubs, account info).
 
 ## LOCKED FIELD STANDARD — Cam-lok (verified by CJ, Oct 2026)
-- Only two strict rules. Hook-up: GROUND (green) first, NEUTRAL (white) second, then the hot legs in
-  whatever order they sit on the actual distro. Strike: hot legs first (any order), neutral, GROUND LAST.
-- Never teach a fixed phase order (Black/Red/Blue or Blue/Red/Black) as a rule.
+- Hook-up runs LEFT TO RIGHT across the distro: GROUND (green) first, NEUTRAL (white) second, then the
+  hot legs in the colour order they sit on that distro, left to right.
+- Strike runs RIGHT TO LEFT (hook-up in reverse): hot legs first, starting from the rightmost, then
+  NEUTRAL second to last, GROUND LAST. (Updated Oct 2026 — replaces "hot legs in any order".)
+- Never teach a fixed phase order (Black/Red/Blue or Blue/Red/Black) as a rule; the panel layout sets it.
 
 ## FIRST FIX TASK
 - electric/index.html (GitHub) — the Cam-Lok sequence trainer, quiz answers and flashcards force
