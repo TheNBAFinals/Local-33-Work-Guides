@@ -12,7 +12,7 @@ Interactive study guides for live event production. Built to drill, not to read.
 | Audio | `/audio/` | Cables, mics, wireless, consoles, gain structure |
 | Video | `/video/` | HDMI/SDI, switchers, converters, displays |
 | LED Wall | `/ledwall/` | Panels, processors, data and power runs |
-| Lighting | `/lighting/` | Fixtures, DMX, consoles, truss cabling |
+| Lighting | `/lighting/` | Fixtures with real-gear photos, DMX, consoles, truss cabling |
 | Electric | `/electric/` | Distro, feeder, cam-lok, Socapex, phase balance |
 | Backline | `/backline/` | Drum mics, drum sub, DI boxes, XLR runs, input lists |
 | Rigging | `/rigging/` | Hardware, arena points and motors, bridle math, fly systems, truss, inspection |
