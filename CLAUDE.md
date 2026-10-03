@@ -36,15 +36,18 @@ Clone the repo INTO this folder (keep this CLAUDE.md and inbox/), log in with `g
 - Never push anything personal (IDs, pay stubs, account info).
 
 ## LOCKED FIELD STANDARD — Cam-lok (verified by CJ, Oct 2026)
-- Hook-up runs LEFT TO RIGHT across the distro: GROUND (green) first, NEUTRAL (white) second, then the
-  hot legs in the colour order they sit on that distro, left to right.
-- Strike runs RIGHT TO LEFT (hook-up in reverse): hot legs first, starting from the rightmost, then
-  NEUTRAL second to last, GROUND LAST. (Updated Oct 2026 — replaces "hot legs in any order".)
+- Hook-up STARTS AT THE GROUND END of the panel and works across: GROUND (green) first, NEUTRAL (white)
+  second, then the hot legs in the colour order they sit on that distro, going away from ground.
+- Strike works BACK TOWARD THE GROUND (hook-up in reverse): the hot leg farthest from ground first, then
+  NEUTRAL second to last, GROUND LAST.
+- Ground is usually on the left (so hook-up is left to right), but some panels have it on the right —
+  e.g. the rack distro photo in electric/ reads black, red, blue, white, green. Then hook-up is right to left.
+  (Confirmed by CJ, Oct 3 2026 — replaces "hot legs in any order" and the fixed "left to right" wording.)
 - Never teach a fixed phase order (Black/Red/Blue or Blue/Red/Black) as a rule; the panel layout sets it.
 
 ## ✅ FIRST FIX TASK — DONE Oct 2, 2026 (commits 4a3c864, 97313fa)
 Kept for the record; nothing left to do. The fix follows the updated LOCKED FIELD STANDARD above
-(hots in distro order, strike right to left), not the older "hots in any order" wording below.
+(start at the ground end, strike back toward it), not the older "hots in any order" wording below.
 - electric/index.html (GitHub) — the Cam-Lok sequence trainer, quiz answers and flashcards force
   "ground, neutral, A, B, C". Rewrite so: ground first + neutral second are graded strictly, hot legs are
   accepted in any order (follow the distro), and strike = hots (any order) → neutral → ground last.
