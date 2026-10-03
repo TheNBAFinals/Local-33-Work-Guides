@@ -534,6 +534,8 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   <div class="card L video">
     <h4>Video switcher <span class="pill p-video">Chooses</span></h4>
     <p>Multiple inputs in, <b>you choose which one goes out</b>. One or more outputs depending on size. ATEM Mini Pro is the common small-format box.</p>
+    <p><b>ATEM Mini Pro:</b> four HDMI inputs, one HDMI output. The output can be set to <b>program</b> or to a <b>multiview</b> of every input.</p>
+    <p><b>Know which mode it's in.</b> Out of the box it runs in <b>cut bus</b> mode &mdash; press a source button and it is <b>on air immediately</b>. In <b>program/preview</b> mode (set in ATEM Software Control) the button only loads preview, and nothing goes live until you hit <b>CUT</b> or <b>AUTO</b>. Ask the V1 which mode the show runs in before you touch a button.</p>
   </div>
 
   <div class="card L sdi">
@@ -670,6 +672,26 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
     <li><b>Factory reset the mixer</b> and label channels to match your inputs</li>
     <li><b>Don't rush the system.</b> Take your time and make it right the first time — a fast wrong setup costs more than a slow right one</li>
   </ul>
+
+  <h2>Setup Checklist &mdash; corporate room</h2>
+  <p class="lede">The full order for a one-switcher room, from walking in to first test. Tap each step as you go.</p>
+  <div class="row">
+    <span class="counter" id="ckCount"></span>
+    <button class="btn" id="ckReset" style="margin-left:auto">Reset</button>
+  </div>
+  <div id="ckHost"></div>
+
+  <h2>Trace the Chain</h2>
+  <p class="lede">Every fault lives somewhere in the chain. Start from what the symptom tells you, check the cheapest thing first, and tell the V1 what you found.</p>
+  <table class="tbl">
+    <tr><th>Symptom</th><th>Where to start</th><th>Then</th></tr>
+    <tr><td><b>Nothing on any display</b></td><td>The switcher: is a source on program, and is that source actually outputting?</td><td>HDMI out of the switcher seated &rarr; first converter powered &rarr; SDI twist-locked at both ends &rarr; swap the switcher-to-converter HDMI</td></tr>
+    <tr><td><b>One display dead, others fine</b></td><td>That display only &mdash; its <b>input selection</b></td><td>Its HDMI from the converter &rarr; that converter's USB power &rarr; the SDI feeding it</td></tr>
+    <tr><td><b>Projector on, no image</b></td><td>The projector's <b>input source</b> &mdash; the most common miss on a gig</td><td>HDMI seated at the projector &rarr; far-end converter powered and locked &rarr; signal lights on the converter</td></tr>
+    <tr><td><b>One switcher input dead</b></td><td>Reseat that source's HDMI; check the laptop is actually sending video</td><td>Swap the cable &rarr; try another input to see if the port is bad</td></tr>
+    <tr><td><b>Image there but wrong &mdash; stretched, flickering, cropped</b></td><td>Resolution or frame-rate mismatch</td><td>What the source sends vs what the converter and display accept. <b>Tell the V1</b> &mdash; it's a configuration fix, not a cable fix</td></tr>
+  </table>
+  <div class="key"><b>Cables fail more than gear.</b> After the input selection and the power, swapping a cable is the fastest test you have.</div>
 </section>
 
 <section class="panel" id="p-crew">
@@ -791,6 +813,9 @@ var CARDS=[
 ["Single most important principle when planning a setup?","<b>KEEP IT SIMPLE.</b> The simplest system that does the job fails least and strikes fastest."],
 ["Video signal flow, source to display?","Sources → Switcher → Converter (HDMI→SDI) → long SDI run → Converter (SDI→HDMI) → Display."],
 ["Why does a switcher have a multiview output?","So the operator can see <b>every feed at once</b> and choose which becomes program — without cutting to it blind."],
+["ATEM Mini Pro out of the box \u2014 what happens when you press a source button?","It goes <b>on air immediately</b>. The default is <b>cut bus</b> mode. Program/preview mode (set in ATEM Software Control) makes you press CUT or AUTO to take it."],
+["Display on but no picture \u2014 first check?","<b>The display's input selection.</b> It's the most common miss on a gig, and it takes five seconds to check."],
+["Image is there but stretched or flickering?","A <b>resolution or frame-rate mismatch</b> between source, converter and display. Configuration, not cabling \u2014 tell the V1."],
 ["What is a confidence monitor?","A display facing the presenter so they can see their own slides without turning around to look at the main screen."],
 ["Front projection vs. rear projection?","<b>Front</b> — projector in the audience side, throws onto the front of the screen. <b>Rear</b> — projector behind, throws through the material. Rear keeps the beam out of the presenter's eyes and off the walk path but needs room behind the screen."],
 ["Client wants different content on two displays. What gear do you need?","A <b>switcher with multiple outputs</b> (or a second signal path). A splitter physically cannot do it — every output is identical."],
@@ -865,7 +890,10 @@ var QS=[
   a:1,e:"Place the things you can't easily move first — displays and screens — then work backward to the tech table and the cable path between them. Same shape as the audio room."},
 {q:"How many people should set a fast-fold screen?",
   o:["One is fine","Minimum two","Three or more always","Depends on the frame"],
-  a:1,e:"Minimum two, and normally with a dress kit. Fast-folds are large, awkward, and the frame under tension is how people get hurt."}
+  a:1,e:"Minimum two, and normally with a dress kit. Fast-folds are large, awkward, and the frame under tension is how people get hurt."},
+{q:"The ATEM Mini Pro is still in its default mode. You press input 3 to check the presenter's laptop. What happens?",
+  o:["It loads into preview; nothing changes on screen","It goes straight to the program output \u2014 on the screens","It shows on the multiview only","Nothing until you press AUTO"],a:1,
+  e:"<b>Cut bus is the default</b>: whatever you press goes live. To check a source without taking it, look at the <b>multiview</b>, or have the switcher set to <b>program/preview</b> mode in ATEM Software Control so a button only loads preview until CUT or AUTO."}
 ];
 var qi=0,qScore=0,qHost=document.getElementById("quizHost");
 function qRender(){
@@ -957,7 +985,20 @@ function cRender(){
 cRender();
 
 /* ═══════════ pre-doors checklist ═══════════ */
-var CK=[];
+var CK=[
+"Check in with the V1 \u2014 get the plot, the room layout and which displays are in play",
+"Inventory the gear \u2014 nothing broken or missing before any cable gets pulled",
+"Place the projector and screen, or the TVs, in their final positions",
+"Confirm power at every display position and at the tech table",
+"Set the tech table \u2014 switcher, converters, input sources",
+"Sources into the switcher over HDMI",
+"Switcher HDMI out into the HDMI-to-SDI converter",
+"Plan the cleanest cable path before you pull anything",
+"Run SDI to each display \u2014 label BOTH ends before you walk away",
+"SDI into the splitter if there are multiple displays, then an SDI-to-HDMI converter at each display",
+"Power up the displays and set each one to the right HDMI input",
+"Send test content and confirm a clean image on EVERY display"
+];
 var ckHost=document.getElementById("ckHost");
 if(ckHost){
   var ckState={};
@@ -1028,7 +1069,16 @@ var SCN=[
   a:"<b>Power down in reverse order</b> — amps and powered speakers off before sources, so you don't send a thump through the system.<br><br><b>Coil cable properly</b> (over-under) and keep your labels on. The next crew — possibly you — inherits whatever you do here. A snake coiled wrong is a snake with a broken conductor in six months.<br><br><b>Account for every piece.</b> Small converters, IR sync windows, antenna mounts, and power bricks are what go missing. They're also the exact items whose absence kills a load-in.<br><br><b>The principle from the deck applies in reverse:</b> don't rush your system. Rushing strike is how gear goes missing and how you get hurt at the end of a fourteen-hour day."},
 {w:"Breakout room · 20 min to doors",
   q:"You have one laptop, one camera, a switcher with two outputs, a main screen and two confidence monitors. The client wants slides on all three — but wants to cut to camera on the main screen only, during Q&A.",
-  a:"<b>Main screen gets its own output</b> — that's the one you'll be switching. <b>The two confidence monitors share the second output</b> through a splitter, locked to the laptop.<br><br>Route: switcher OUT 1 → main screen (program, switchable). Switcher OUT 2 → splitter → both confidence monitors (laptop only).<br><br><b>Why this works:</b> the splitter's limitation stops being a limitation once you only ask it to do one job — copy one unchanging signal. You spend your switchable output where the switching actually happens.<br><br><b>The trap:</b> putting the main screen on the splitter. Then cutting to camera sends camera to the presenter's confidence monitors too, and they lose their slides mid-sentence."}
+  a:"<b>Main screen gets its own output</b> — that's the one you'll be switching. <b>The two confidence monitors share the second output</b> through a splitter, locked to the laptop.<br><br>Route: switcher OUT 1 → main screen (program, switchable). Switcher OUT 2 → splitter → both confidence monitors (laptop only).<br><br><b>Why this works:</b> the splitter's limitation stops being a limitation once you only ask it to do one job — copy one unchanging signal. You spend your switchable output where the switching actually happens.<br><br><b>The trap:</b> putting the main screen on the splitter. Then cutting to camera sends camera to the presenter's confidence monitors too, and they lose their slides mid-sentence."},
+{w:"Terranea Resort \u00b7 first call as V2",
+  q:"Corporate session in a resort ballroom. The V1 hands you the plot: a projector and screen at the front, two TVs downstage as confidence monitors, an ATEM Mini Pro at the tech table at the back of the room. Where do you start, and what do you not do?",
+  a:"<b>Displays first, then work back to the table.</b><br><br><b>1.</b> Check in with the V1, then inventory the gear before pulling a single cable.<br><b>2.</b> Projector, screen and TVs into final position; confirm power at each one and at the table.<br><b>3.</b> Tech table: sources into the ATEM, ATEM out to the HDMI-to-SDI converter. It's well past HDMI distance to the front, so the run is SDI.<br><b>4.</b> SDI into the splitter, one run to each display, a micro converter at every display end \u2014 each needs USB power. <b>Label both ends.</b><br><b>5.</b> Test content to every display.<br><br><b>Don't:</b> take requests from the client directly. Friendly, then route them to the V1."},
+{w:"Terranea Resort \u00b7 10 minutes to doors",
+  q:"Both TVs show the deck. The projector is on but shows a blue \u2018no signal\u2019 screen. The V1 is with the client. What's your order?",
+  a:"<b>One display dead, others fine \u2014 start at that display.</b><br><br><b>1.</b> Projector input source. The projector may have powered up on a different input. Most common miss, five seconds to check.<br><b>2.</b> HDMI from the micro converter fully seated in the projector.<br><b>3.</b> The micro converter at the projector end: USB power in, lights on, SDI twist-locked.<br><b>4.</b> The SDI from the splitter to that converter \u2014 seated at the splitter end too.<br><br>Find it, fix it, then tell the V1 in one sentence what it was. Don't pull the V1 away from the client for something on this list."},
+{w:"Terranea Resort \u00b7 during the show",
+  q:"You're operating the ATEM. The presenter's laptop just came back from a reboot and you want to make sure it's outputting before the next cue. You go to press input 2 to look at it. Stop \u2014 what do you need to know first?",
+  a:"<b>Which switching mode the ATEM is in.</b><br><br>In the default <b>cut bus</b> mode, pressing input 2 puts the laptop on every screen instantly \u2014 desktop, notifications and all. In <b>program/preview</b> mode it only loads preview.<br><br><b>Check it on the multiview instead</b> if the output is set that way, or confirm the mode with the V1 before the show starts so you never have to wonder mid-session."}
 ];
 var sh=document.getElementById("scnHost");
 SCN.forEach(function(s,i){
