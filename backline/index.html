@@ -535,6 +535,31 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
 #lbox img{max-width:100%;max-height:80vh;border-radius:8px}
 #lbox p{color:#c9d1d9;font-size:14px;line-height:1.5;max-width:640px;margin:12px 0 0;text-align:center}
 
+/* ---------- labelled photos ---------- */
+.anngal{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));margin:14px 0;align-items:start}
+.anngal.one{grid-template-columns:minmax(0,540px)}
+.ann{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:0}
+.annimg{position:relative;line-height:0;background:#090d12}
+.annimg img{display:block;width:100%;height:auto;cursor:zoom-in}
+.pin{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;border:2px solid #0d1117;
+  background:#e3b341;color:#0d1117;font:800 12px/20px var(--f);text-align:center;padding:0;cursor:pointer;
+  box-shadow:0 0 0 2px rgba(227,179,65,.5),0 2px 6px rgba(0,0,0,.6)}
+.pin.on{background:#fff;box-shadow:0 0 0 3px #e3b341,0 2px 8px rgba(0,0,0,.7);z-index:2}
+@media (max-width:480px){.pin{width:22px;height:22px;margin:-11px 0 0 -11px;font-size:11px;line-height:18px}}
+.ann figcaption{padding:12px 14px 14px;font-size:13.5px;line-height:1.5;color:var(--dim)}
+.ann figcaption h4{margin:0 0 4px;font-size:15px;color:var(--txt)}
+.ann figcaption p{margin:0}
+.annkey{list-style:none;margin:10px 0 0;padding:0}
+.annkey li{display:flex;gap:9px;padding:6px;border-radius:7px;cursor:pointer;align-items:flex-start}
+.annkey li.on{background:rgba(227,179,65,.13)}
+.annkey .n{flex:0 0 22px;height:22px;border-radius:50%;background:#e3b341;color:#0d1117;font:800 11.5px/22px var(--f);text-align:center}
+.annkey li b{color:var(--txt)}
+
+/* ---------- flashcard photos ---------- */
+.fcimg{display:block;max-width:100%;max-height:230px;width:auto;height:auto;object-fit:contain;
+  border-radius:8px;margin:12px auto 0;background:#090d12}
+.fcq .fcimg,.fcface:not(.fcback) .fcimg{max-height:210px}
+
 /* ---------- backline ---------- */
 ol.steps{display:block}
 .fb.warn{border-left-color:var(--warn)} .fb.warn b.h{color:var(--warn)}
@@ -1055,8 +1080,20 @@ function fcRender(){
   }
   if(fcIdx>=fcQueue.length) fcIdx=0;
   var c=CARDS[fcQueue[fcIdx]];
-  document.getElementById("fcQ").innerHTML=c[0];
-  document.getElementById("fcA").innerHTML=c[1];
+  var qEl=document.getElementById("fcQ"), aEl=document.getElementById("fcA");
+  qEl.innerHTML=c[0]; aEl.innerHTML=c[1];
+  var ph=c[2]?document.querySelector('img[data-ph="'+c[2]+'"]'):null;
+  function fcFit(){
+    var need=Math.max(qEl.offsetHeight,aEl.offsetHeight)+90;
+    fcCard.style.minHeight=Math.max(190,need)+"px";
+  }
+  if(ph){
+    var im=document.createElement("img"); im.className="fcimg"; im.alt=ph.alt||""; im.src=ph.src;
+    (c[3]==="q"?qEl:aEl).appendChild(im);
+    im.onload=fcFit;
+    if(c[3]==="q"){ var im2=im.cloneNode(); aEl.appendChild(im2); im2.onload=fcFit; }
+  }
+  fcFit();
   n.textContent=fcQueue.length+" card"+(fcQueue.length===1?"":"s")+" left";
 }
 fcCard.onclick=function(){fcCard.classList.toggle("flip")};

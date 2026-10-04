@@ -75,8 +75,20 @@ Don't re-merge these files if they're still sitting in ./inbox/.
 ## Finder tags (where else source files live)
 - Blue tag = study-guide material. Blue + Red = Local 33-related study-guide material.
 - Find them with: mdfind "kMDItemUserTags == 'Blue'"  — check these alongside ./inbox/ when syncing.
-- As of Oct 3 2026 the tagged files were the two Qu-16 PDFs and the two Datavideo KAFL PDFs (all merged).
+- As of Oct 3 2026 the files literally tagged Blue/Red were the two Qu-16 PDFs and the two Datavideo KAFL PDFs (all merged).
+- Oct 4 2026: the 223 photos in "New 2 Add" carry two tags NAMED "Study Guides" and "Local 33 NFO" (likely what CJ means
+  by "blue and red": study-guide + Local 33 related). Treat files with both tags as approved source material.
+  Other tagged files in "Local 33 Docs:NFO" (rigging PDFs, Dispatch rules, CA_UP47_*.pdf, D000036320.PDF, WB Lot - Stage 31.pdf)
+  have NOT been opened or used — check with CJ before using anything that looks personal or paperwork-like.
 
 ## Photo library (do NOT copy into the repo wholesale)
-iCloud Drive › "Local 33 Docs:NFO" › "New 2 Add" — ~230 gear photos (HEIC) from Aug–Sep 2026 gigs.
+iCloud Drive › "Local 33 Docs:NFO" › "New 2 Add" — 223 files (221 HEIC + 2 JPG) from Aug–Sep 2026 gigs; roughly half
+are gear photos, the rest are class-slide screenshots and show paperwork.
 When building guides: review, pick the useful ones, convert to compressed JPG/WebP, embed only what's needed.
+- Always re-encode through a tool that strips metadata (no GPS/camera/date); crop out faces and personal details.
+- Lighting plots/key/universe plan from past shows ARE allowed for teaching (CJ, Oct 4 2026 — "the show is over"),
+  but mask designer initials. Used so far: IMG_1494 (fixture label), 1503 (Chauvet Rogue panel), 1789 (SkyPanel),
+  1759 + 1763 (DMX node), 1527 (LED dimmer), 1512 + 1510 (racks), 1769 + 1782 (PRG S400 + plate), 1574 + 1576 (stage pin),
+  1508 (LEX outlets), 1587 (plot), 1589 (fixture key), 1753 (universe plan). Skipped: cluttered leko shots (1581–1585).
+- Labelled photos: numbered pins + key (the .ann figures). Flashcards take an optional 3rd item (photo key = an
+  img[data-ph]) and 4th "q" (photo on the question side too).
