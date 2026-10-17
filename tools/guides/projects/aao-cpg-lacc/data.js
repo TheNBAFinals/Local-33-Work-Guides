@@ -1,8 +1,9 @@
 var TABS=[["p-start","Start"],["p-lib","Gear"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
 
 var CARDS=[
-["Which projectors are in the breakout rooms?","The sheet gives <b>brightness only</b>: 3k small rooms, 6k big EDU rooms and Concourse, 8k Petree, 10k Theater 411. <b>No brand or model is listed.</b> Read the label on the unit."],
-["Projector is on but the screen is blank. Check what first?","<b>Lens cover, A/V mute, then input source</b> (Epson: Source Search), then HDMI at both ends and the DA's power."],
+["What projector is in the breakout rooms?","Seen on site: <b>Epson EB-L265F</b> (4,600 lm, laser, 1080p). The sheet only gives brightness classes: 3k, 6k, 8k, 10k. Check the label in each room."],
+["Epson is on but the screen is black. Check what first?","<b>The A/V Mute slider on top</b> (slide to Open), then <b>Source Search</b>, then HDMI at both ends and the DA's power."],
+["Which mic jack on the EPM6 is for the DSan laptop DI?","A <b>mic (XLR) input</b> — the LSP-1 gives a mic-level balanced signal. In the room photo it was taped <b>DI</b>."],
 ["Cam-lok hook-up order?","<b>Ground (green) first, neutral (white) second</b>, then the hot legs in the order they sit on that distro, working away from ground."],
 ["Cam-lok strike order?","<b>Hot legs first, then neutral, ground last.</b> It's the hook-up in reverse."],
 ["Why can't you teach a fixed cam-lok phase order?","The <b>panel layout sets it.</b> Ground is usually on the left but some panels have it on the right. Follow the distro, not a rhyme."],
