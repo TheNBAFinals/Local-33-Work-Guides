@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AAO / CPG · LACC Field Guide</title>
+<meta name="description" content="Project guide for the AAO / CPG convention at LA Convention Center, October 2026: GS West Hall video, lighting, audio, comms, rigging and power, plus the breakout-room kits.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1117">
+<style>
+
+:root{
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2430; --line:#2b3440;
+  --txt:#e6edf3; --dim:#8b98a5; --dimmer:#5c6773;
+  /* signal color code — used everywhere, consistently */
+  --audio:#3fb950;    /* XLR / analog audio — GREEN */
+  --rf:#f0883e;       /* RF / wireless / coax — ORANGE */
+  --video:#58a6ff;    /* HDMI / video — BLUE */
+  --sdi:#bc8cff;      /* SDI / BNC — PURPLE */
+  --power:#f85149;    /* IEC / power — RED */
+  --data:#39d0d8;     /* CAT / Dante / network — CYAN */
+  --warn:#e3b341;
+  --radius:14px;
+  font-synthesis:none;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+a{color:var(--video)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(160deg,#161b22 0%,#0d1117 100%);
+  border-bottom:1px solid var(--line);padding:28px 16px 22px;
+}
+header .inner{max-width:900px;margin:0 auto}
+h1{margin:0 0 6px;font-size:26px;letter-spacing:-.5px;line-height:1.2}
+.sub{color:var(--dim);font-size:14px;margin:0}
+.badge{display:inline-block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--rf);border:1px solid var(--rf);border-radius:99px;padding:3px 10px;margin-bottom:10px;font-weight:600}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav .navinner{display:flex;gap:4px;max-width:900px;margin:0 auto;padding:8px 12px}
+nav button{
+  flex:0 0 auto;background:transparent;border:1px solid transparent;color:var(--dim);
+  font:600 13px/1 inherit;padding:9px 13px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+nav button:hover{color:var(--txt);background:var(--bg2)}
+nav button[aria-selected="true"]{background:var(--bg3);color:var(--txt);border-color:var(--line)}
+
+/* ---------- panels ---------- */
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:30px 0 4px;letter-spacing:-.3px}
+h2:first-child{margin-top:26px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--txt)}
+.lede{color:var(--dim);margin:0 0 18px;font-size:14.5px}
+
+/* ---------- cards ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin:12px 0}
+.card h4{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card p{margin:0;color:var(--dim);font-size:14.5px}
+.card p+p{margin-top:8px}
+.card.L{border-left:3px solid var(--line)}
+.card.audio{border-left-color:var(--audio)} .card.rf{border-left-color:var(--rf)}
+.card.video{border-left-color:var(--video)} .card.sdi{border-left-color:var(--sdi)}
+.card.power{border-left-color:var(--power)} .card.data{border-left-color:var(--data)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.p-audio{background:rgba(63,185,80,.15);color:var(--audio)}
+.p-rf{background:rgba(240,136,62,.15);color:var(--rf)}
+.p-video{background:rgba(88,166,255,.15);color:var(--video)}
+.p-sdi{background:rgba(188,140,255,.15);color:var(--sdi)}
+.p-power{background:rgba(248,81,73,.15);color:var(--power)}
+.p-data{background:rgba(57,208,216,.15);color:var(--data)}
+
+/* ---------- key callout ---------- */
+.key{background:rgba(227,179,65,.08);border:1px solid rgba(227,179,65,.3);
+  border-radius:10px;padding:12px 14px;margin:14px 0;font-size:14px}
+.key b{color:var(--warn)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.legend span{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:6px}
+
+/* ---------- signal chain visual ---------- */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0}
+.node{background:var(--bg3);border:1px solid var(--line);border-radius:9px;
+  padding:8px 12px;font-size:13px;font-weight:600}
+.arrow{color:var(--dimmer);font-size:14px;font-weight:700}
+.arrow.a-audio{color:var(--audio)} .arrow.a-rf{color:var(--rf)}
+.arrow.a-video{color:var(--video)} .arrow.a-sdi{color:var(--sdi)}
+
+/* ---------- figures ---------- */
+.fig{background:#090d12;border:1px solid var(--line);border-radius:11px;
+  padding:16px 12px 12px;margin:14px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:430px;margin:0 auto}
+.figcap{font-size:12px;color:var(--dimmer);text-align:center;margin-top:10px;line-height:1.55}
+.figcap b{color:var(--dim)}
+svg .s{fill:none;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg .sf{fill:#1c2430;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round}
+svg .sd{fill:#0d1117;stroke:#5c6773;stroke-width:1.5}
+svg .met{fill:#3f4a57;stroke:#8b98a5;stroke-width:1.5}
+svg .gold{fill:#c9a227}
+svg .hl{fill:none;stroke-width:2;stroke-dasharray:5 4}
+svg .lead{stroke-width:1.4;fill:none}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+svg .lbl{font-size:11px;font-weight:600;fill:#8b98a5}
+svg .num{font-size:10px;font-weight:700;fill:#0d1117}
+svg .tag{font-size:11.5px;font-weight:800;letter-spacing:.5px}
+svg .cap{font-size:12px;font-weight:700;fill:#e6edf3}
+.c-audio{stroke:#3fb950} .f-audio{fill:#3fb950}
+.c-rf{stroke:#f0883e} .f-rf{fill:#f0883e}
+.c-video{stroke:#58a6ff} .f-video{fill:#58a6ff}
+.c-sdi{stroke:#bc8cff} .f-sdi{fill:#bc8cff}
+.c-power{stroke:#f85149} .f-power{fill:#f85149}
+.c-data{stroke:#39d0d8} .f-data{fill:#39d0d8}
+.c-warn{stroke:#e3b341} .f-warn{fill:#e3b341}
+
+/* ---------- connector ID drill ---------- */
+.idgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.idcard{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:12px;
+  cursor:pointer;text-align:center;transition:.15s}
+.idcard:hover{border-color:var(--dimmer)}
+.idcard svg{width:100%;height:auto;max-width:130px}
+.idcard .nm{font-size:12.5px;font-weight:700;margin-top:8px}
+.idcard .rv{font-size:11.5px;color:var(--dim);margin-top:5px;display:none;line-height:1.5}
+.idcard.open .rv{display:block}
+.idcard.open{border-color:var(--rf)}
+.ckitem{background:var(--bg2);border:1px solid var(--line);border-radius:11px;cursor:pointer;transition:.15s}
+.ckitem:hover{border-color:var(--dimmer)}
+
+/* ---------- ordered steps ---------- */
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 48px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14.5px}
+ol.steps li::before{content:counter(s);position:absolute;left:14px;top:11px;
+  width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);
+  color:var(--rf);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+ul.chk{list-style:none;padding:0;margin:12px 0}
+ul.chk li{padding:9px 12px 9px 32px;position:relative;font-size:14.5px;color:var(--dim);
+  border-bottom:1px solid var(--line)}
+ul.chk li:last-child{border-bottom:none}
+ul.chk li::before{content:"▸";position:absolute;left:12px;color:var(--audio);font-weight:700}
+
+/* ---------- table ---------- */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;display:block;overflow-x:auto}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{color:var(--dim);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px}
+
+/* ---------- buttons ---------- */
+.btn{background:var(--bg3);border:1px solid var(--line);color:var(--txt);
+  font:600 14px/1 inherit;padding:11px 18px;border-radius:9px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--dimmer)}
+.btn.pri{background:var(--audio);border-color:var(--audio);color:#08130b}
+.btn.pri:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+
+/* ---------- flashcards ---------- */
+.fcstage{perspective:1200px;margin:16px 0}
+.fc{position:relative;min-height:190px;cursor:pointer;transition:transform .5s;
+  transform-style:preserve-3d}
+.fc.flip{transform:rotateY(180deg)}
+.fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);border:1px solid var(--line);background:var(--bg2);
+  padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fcback{transform:rotateY(180deg);background:var(--bg3)}
+.fcq{font-size:18px;font-weight:600;line-height:1.4}
+.fca{font-size:15px;color:var(--dim);line-height:1.6}
+.fchint{position:absolute;bottom:12px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--dimmer);letter-spacing:.5px;text-transform:uppercase}
+.counter{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- quiz ---------- */
+.qbox{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:16px 0}
+.qtext{font-size:16.5px;font-weight:600;margin:0 0 16px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--line);
+  color:var(--txt);font:15px/1.45 inherit;padding:13px 15px;border-radius:10px;margin-bottom:9px;
+  cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--dimmer)}
+.opt.right{border-color:var(--audio);background:rgba(63,185,80,.12)}
+.opt.wrong{border-color:var(--power);background:rgba(248,81,73,.12)}
+.opt:disabled{cursor:default}
+.expl{font-size:14px;color:var(--dim);border-left:3px solid var(--rf);
+  padding:2px 0 2px 12px;margin:14px 0 0}
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--audio);width:0;transition:width .3s}
+.score{font-size:44px;font-weight:800;letter-spacing:-2px;margin:6px 0}
+
+/* ---------- chain builder ---------- */
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;
+  background:var(--bg2);border:1px dashed var(--line);border-radius:12px;margin:12px 0;align-items:center}
+.slots:empty::before{content:"Tap the pieces below in order…";color:var(--dimmer);font-size:13.5px}
+.tok{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 13px;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+.tok:hover{border-color:var(--dimmer)}
+.tok.used{opacity:.25;pointer-events:none}
+.tok.ok{border-color:var(--audio);color:var(--audio)}
+.tok.no{border-color:var(--power);color:var(--power)}
+
+/* ---------- scenario ---------- */
+.scn{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:var(--radius);padding:18px;margin:14px 0}
+.scn .setting{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--rf);
+  font-weight:700;margin-bottom:8px}
+.scn .q{font-size:15px;margin:0 0 12px;line-height:1.55}
+.reveal{display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;
+  font-size:14.5px;color:var(--dim);line-height:1.65}
+.reveal.on{display:block}
+.reveal b{color:var(--txt)}
+
+footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
+  color:var(--dimmer);font-size:12.5px;text-align:center;line-height:1.7}
+@media(max-width:520px){
+  h1{font-size:22px} .wrap{padding:0 13px 70px} .card{padding:14px 15px}
+  .score{font-size:38px}
+}
+
+/* ---------- simulators ---------- */
+.sim{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0}
+.simrow{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.simmeters{display:flex;gap:16px;flex:0 0 auto}
+.mtr{width:64px;text-align:center;position:relative}
+.mtrbar{position:relative;height:230px;width:34px;margin:0 auto;border-radius:5px;
+  overflow:hidden;background:#05080b;border:1px solid var(--line)}
+.mzone{position:absolute;left:0;right:0}
+.mclip{top:0;height:26%;background:rgba(248,81,73,.16)}
+.mgood{top:26%;height:52%;background:rgba(63,185,80,.12)}
+.mnoise{bottom:0;height:22%;background:rgba(92,103,115,.16)}
+.mfill{position:absolute;left:3px;right:3px;bottom:0;border-radius:3px;
+  background:linear-gradient(180deg,#3fb950,#2a7f38);transition:height .12s}
+.mfill.room{background:linear-gradient(180deg,#58a6ff,#2b6cb8)}
+.mfill.hot{background:linear-gradient(180deg,#f85149,#a4322c)}
+.mtick{position:absolute;left:0;right:0;height:1px;background:rgba(230,237,243,.45)}
+.mtick span{position:absolute;right:-24px;top:-7px;font-size:9.5px;color:var(--dim);font-weight:700}
+.mlbl{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--dim);margin-top:9px;line-height:1.5}
+.mlbl span{color:var(--txt);font-size:13px;font-variant-numeric:tabular-nums}
+.pkled{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;
+  padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--dimmer);letter-spacing:.5px}
+.pkled.on{background:var(--power);border-color:var(--power);color:#fff}
+.simctl{flex:1 1 250px;min-width:230px}
+.slab{display:block;font-size:11px;font-weight:700;letter-spacing:.7px;color:var(--dim);margin-bottom:7px}
+.slab b{float:right;color:var(--txt);font-variant-numeric:tabular-nums;letter-spacing:0}
+.simctl input[type=range]{width:100%;accent-color:var(--audio);height:26px}
+.srange{display:flex;justify-content:space-between;font-size:10px;color:var(--dimmer);margin-top:-2px}
+.srcnote{margin-top:10px;font-size:12px;color:var(--dimmer)}
+.verdict{margin-top:16px;border-left:3px solid var(--line);padding:11px 14px;
+  background:var(--bg3);border-radius:0 9px 9px 0;font-size:14px;line-height:1.6}
+.verdict b{display:block;margin-bottom:4px;font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.verdict.ok{border-left-color:var(--audio)} .verdict.ok b{color:var(--audio)}
+.verdict.warn{border-left-color:var(--warn)} .verdict.warn b{color:var(--warn)}
+.verdict.bad{border-left-color:var(--power)} .verdict.bad b{color:var(--power)}
+@media(max-width:520px){.simrow{gap:16px}.mtrbar{height:180px;width:30px}.mtr{width:56px}}
+
+/* ---------- rig builder ---------- */
+.rigwrap{background:#05080b;border:1px solid var(--line);border-radius:11px;padding:8px;overflow-x:auto}
+.rigwrap svg{width:100%;min-width:520px;height:auto;display:block}
+.fx{cursor:pointer}
+.fxbody{fill:#1c2430;stroke:#5c6773;stroke-width:2}
+.fx.sel .fxbody{stroke:#3fb950;stroke-width:2.5}
+.fx.dead .fxbody{stroke:#f85149;fill:#2a1416}
+.fx.flick .fxbody{stroke:#e3b341;stroke-dasharray:4 3}
+.fxlbl{font-size:10px;font-weight:700;fill:#8b98a5}
+.fxnum{font-size:11px;font-weight:800;fill:#e6edf3}
+.dxline{fill:none;stroke:#bc8cff;stroke-width:2.5;stroke-linecap:round}
+.dxline.bad{stroke:#f85149;stroke-dasharray:5 4}
+.uni{height:26px;border-radius:5px;background:#05080b;border:1px solid var(--line);
+  position:relative;overflow:hidden;margin-bottom:10px}
+.uni i{position:absolute;top:0;bottom:0;border-right:1px solid rgba(13,17,23,.8)}
+.addrlist{font-size:12px;color:var(--dim);line-height:1.9;font-variant-numeric:tabular-nums;
+  max-height:190px;overflow-y:auto}
+.addrlist b{color:var(--txt)}
+.addrlist .over{color:var(--power)}
+
+/* ---------- wall sim ---------- */
+.pn{cursor:pointer}
+.pnb{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.pn.on .pnb{fill:#16241a;stroke:#3fb950;stroke-width:2}
+.pn.p1 .pnb{stroke:#3fb950} .pn.p2 .pnb{stroke:#58a6ff}
+.pn.p3 .pnb{stroke:#f0883e} .pn.p4 .pnb{stroke:#bc8cff}
+.pn.dead .pnb{fill:#2a1416;stroke:#f85149}
+.pnn{font-size:10px;font-weight:700;fill:#8b98a5}
+.lwline{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.lwline.c1{stroke:#3fb950}.lwline.c2{stroke:#58a6ff}.lwline.c3{stroke:#f0883e}.lwline.c4{stroke:#bc8cff}
+.lwline.bk{stroke:#39d0d8;stroke-dasharray:5 4;stroke-width:2}
+.wallprev{background:#05080b;border:1px solid var(--line);border-radius:9px;padding:10px;
+  display:grid;gap:2px;margin-bottom:12px;min-height:110px;align-content:center}
+.wallprev span{background:#1c2430;border:1px solid #2b3440;border-radius:2px;aspect-ratio:1}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.statgrid div{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.statgrid b{display:block;font-size:10px;letter-spacing:.6px;color:var(--dimmer);text-transform:uppercase}
+.statgrid span{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ---------- patch challenge ---------- */
+.fixcard{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:11px;padding:15px 17px;margin-bottom:14px}
+.fixcard h4{margin:0 0 6px;font-size:16px;letter-spacing:-.2px}
+.fixcard p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.6}
+.fixcard .brief{margin-top:9px;font-size:12.5px;color:var(--warn);font-weight:600}
+.slots4{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:9px;margin-bottom:14px}
+.slot{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  cursor:pointer;transition:.15s}
+.slot:hover{border-color:var(--dimmer)}
+.slot.active{border-color:var(--warn);background:rgba(227,179,65,.07)}
+.slot.ok{border-color:var(--audio)} .slot.no{border-color:var(--power)}
+.slot b{display:block;font-size:9.5px;letter-spacing:.7px;color:var(--dimmer);margin-bottom:5px}
+.slot .pick{font-size:13px;font-weight:600;color:var(--dim)}
+.slot.filled .pick{color:var(--txt)}
+.banklab{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--dimmer);
+  text-transform:uppercase;margin:0 0 7px}
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.opt2{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;
+  font-size:12.5px;font-weight:600;cursor:pointer;color:var(--txt);transition:.15s}
+.opt2:hover{border-color:var(--dimmer)}
+.opt2.on{border-color:var(--warn);background:rgba(227,179,65,.12)}
+.fb{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-top:9px;font-size:13.5px;line-height:1.65}
+.fb b.h{display:block;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.fb.ok{border-left-color:var(--audio)} .fb.ok b.h{color:var(--audio)}
+.fb.no{border-left-color:var(--power)} .fb.no b.h{color:var(--power)}
+
+/* ---------- run the call ---------- */
+.callbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px;font-size:13.5px;line-height:1.65;color:var(--dim)}
+.callbrief b{color:var(--txt)}
+.callbrief table{width:100%;margin-top:10px;font-size:12.5px;border-collapse:collapse}
+.callbrief td{padding:3px 0;border-bottom:1px solid var(--line)}
+.callbrief td:last-child{text-align:right;color:var(--txt);font-variant-numeric:tabular-nums}
+.prog{height:5px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--warn);width:0;transition:width .3s}
+.cbq{font-size:16px;font-weight:600;line-height:1.5;margin:0 0 14px}
+.report{margin-top:16px}
+.rline{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-bottom:9px;font-size:13.5px;line-height:1.65}
+.rline b.h{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px}
+.rline.good{border-left-color:var(--audio)} .rline.good b.h{color:var(--audio)}
+.rline.bad{border-left-color:var(--power)} .rline.bad b.h{color:var(--power)}
+.rline.warn{border-left-color:var(--warn)} .rline.warn b.h{color:var(--warn)}
+.grade{text-align:center;padding:20px;background:var(--bg3);border:1px solid var(--line);
+  border-radius:12px;margin-bottom:16px}
+.grade .g{font-size:46px;font-weight:800;letter-spacing:-2px;line-height:1}
+.grade .gs{font-size:14px;color:var(--dim);margin-top:6px}
+
+/* ---------- fixture menu trainer ---------- */
+.fixpanel{background:#0a0d11;border:1px solid var(--line);border-radius:13px;padding:18px;
+  max-width:340px;margin:0 auto}
+.lcd{background:#0d2818;border:2px solid #1f3a2a;border-radius:6px;padding:14px 12px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#5dfba0;
+  text-shadow:0 0 8px rgba(93,251,160,.4);min-height:76px;margin-bottom:16px}
+.lcd .l1{font-size:15px;font-weight:700;letter-spacing:1px}
+.lcd .l2{font-size:20px;font-weight:700;letter-spacing:1.5px;margin-top:7px}
+.lcd .l3{font-size:11px;opacity:.6;margin-top:7px;letter-spacing:.5px}
+.lcd.saved{border-color:#3fb950;box-shadow:0 0 14px rgba(63,185,80,.25)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fkey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:8px;
+  padding:13px 4px;font:700 12px/1 inherit;cursor:pointer;transition:.1s}
+.fkey:hover{border-color:var(--dimmer)}
+.fkey:active{background:var(--warn);color:#1a1206;border-color:var(--warn)}
+.keyhint{font-size:10.5px;color:var(--dimmer);text-align:center;margin-top:11px;line-height:1.5}
+
+/* ---------- eos trainer ---------- */
+.cmdline{background:#05080b;border:1px solid var(--line);border-radius:8px;padding:13px 15px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;color:#e6edf3;
+  margin-bottom:14px;min-height:48px;letter-spacing:.5px}
+.cmdprompt{color:var(--dimmer)}
+.caret{color:var(--video);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.eokeys{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.eokey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:7px;
+  padding:11px 4px;font:700 11.5px/1 inherit;cursor:pointer;transition:.1s}
+.eokey:hover{border-color:var(--dimmer)}
+.eokey:active{background:var(--video);color:#06121f;border-color:var(--video)}
+.eokey.num{color:var(--warn)}
+.eokey.mod{color:var(--video)}
+
+/* ---------- truss trainer ---------- */
+.ldbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px}
+.ldbrief .who{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--rf);
+  font-weight:700;margin-bottom:7px}
+.ldbrief p{margin:0 0 8px;font-size:14px;line-height:1.65;color:var(--txt)}
+.ldbrief ul{margin:8px 0 0;padding-left:18px;color:var(--dim);font-size:13px;line-height:1.8}
+.ldbrief li::marker{color:var(--rf)}
+.fxt{cursor:pointer}
+.fxt .b{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.fxt.pick .b{stroke:#e3b341;stroke-width:2.5}
+.fxt.done .b{fill:#121f16;stroke:#3fb950}
+.fxt.err .b{fill:#2a1416;stroke:#f85149}
+.fxt t{pointer-events:none}
+.ckt{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:8px;margin-top:12px}
+.ck{background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;transition:.15s}
+.ck:hover{border-color:var(--dimmer)}
+.ck.sel{border-color:var(--warn);background:rgba(227,179,65,.08)}
+.ck.over{border-color:var(--power);background:rgba(248,81,73,.08)}
+.ck b{display:block;font-size:11px;letter-spacing:.6px;color:var(--dimmer)}
+.ck .amp{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:3px}
+.ck .who2{font-size:10.5px;color:var(--dim);margin-top:3px;min-height:13px}
+.legendrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:11px;color:var(--dim)}
+.legendrow span{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+
+/* eos trainer v2 */
+.lvltabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.lvltab{background:#0d1117;border:1px solid var(--line);color:#8b98a5;border-radius:6px;
+  padding:6px 13px;font:700 11.5px/1 var(--f);cursor:pointer;letter-spacing:.04em}
+.lvltab.on{background:rgba(88,166,255,.12);border-color:var(--video);color:#cfe3ff}
+.keybank{margin:10px 0 0}
+.keybank>span{display:block;font:800 9.5px/1 var(--f);letter-spacing:.13em;
+  color:#5c6773;margin:0 0 5px;text-transform:uppercase}
+.keybank .eokeys{margin:0}
+.topictag{display:inline-block;font:800 9px/1 var(--f);letter-spacing:.1em;
+  padding:3px 7px;border-radius:4px;background:#131a22;color:#8b98a5;
+  border:1px solid var(--line);margin:0 0 7px}
+
+/* electric sims */
+.camrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin:12px 0 0}
+.camb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px 8px;
+  cursor:pointer;text-align:center;font:700 11px/1.35 var(--f);color:#c9d1d9;transition:.12s}
+.camb:hover{border-color:#484f58}
+.camb.done{opacity:.4;pointer-events:none;border-color:#3fb950}
+.camb .dot{display:block;width:20px;height:20px;border-radius:50%;margin:0 auto 6px;border:3px solid}
+.camb small{display:block;color:#5c6773;font-size:9px;font-weight:600;margin-top:3px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.stepc{background:#131a22;border:1px solid var(--line);border-radius:20px;
+  padding:5px 11px;font:700 10px/1 var(--f);color:#8b98a5}
+.stepc.ok{border-color:#3fb950;color:#3fb950}
+.stepc.bad{border-color:#f85149;color:#f85149}
+.loadrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0 0}
+.lditem{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:10px}
+.lditem b{display:block;font-size:11.5px;color:#c9d1d9;margin-bottom:3px}
+.lditem .amps{font:800 14px/1 var(--f);color:var(--warn);margin:4px 0}
+.legbtns{display:flex;gap:5px;margin-top:7px}
+.legb{flex:1;background:#161b22;border:1px solid var(--line);border-radius:5px;
+  padding:6px 0;font:800 10px/1 var(--f);color:#8b98a5;cursor:pointer}
+.legb.on{background:rgba(227,179,65,.16);border-color:var(--warn);color:#e3b341}
+.diagrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin:12px 0 0}
+.diagb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:600 11.5px/1.4 var(--f);color:#c9d1d9;text-align:left}
+.diagb:hover{border-color:#484f58}
+.diagb.used{opacity:.45;pointer-events:none}
+.diagb i{display:block;font-style:normal;font-size:9px;color:#5c6773;margin-top:4px}
+.ecopt{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:12px 0 0}
+.ecb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:700 12px/1.3 var(--f);color:#c9d1d9;text-align:center}
+.ecb:hover{border-color:#484f58}
+
+/* home run trainer */
+.hrbuild{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:8px;margin:12px 0 0}
+.hrsel{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:9px}
+.hrsel label{display:block;font:800 9px/1 var(--f);letter-spacing:.12em;color:#5c6773;margin:0 0 6px}
+.hrsel select{width:100%;background:#161b22;color:#c9d1d9;border:1px solid var(--line);
+  border-radius:5px;padding:7px;font:600 11.5px/1 var(--f)}
+.runlist{margin:12px 0 0;display:flex;flex-direction:column;gap:6px}
+.runrow{display:flex;align-items:center;gap:9px;background:#0d1117;border:1px solid var(--line);
+  border-left:3px solid var(--dimmer);border-radius:7px;padding:9px 11px;font:600 11.5px/1.3 var(--f)}
+.runrow .x{margin-left:auto;cursor:pointer;color:#5c6773;font-weight:800;padding:0 4px}
+.runrow .x:hover{color:var(--power)}
+.runrow .cb{font-size:10px;color:#8b98a5}
+.runrow.pw{border-left-color:var(--power)} .runrow.dt{border-left-color:var(--sdi)}
+.poscol{display:grid;grid-template-columns:repeat(auto-fit,minmax(206px,1fr));gap:10px;margin:12px 0 0}
+.posbox{background:#0d1117;border:1px solid var(--line);border-radius:9px;padding:11px}
+.posbox>b{display:block;font-size:12px;color:#c9d1d9;margin:0 0 3px}
+.posbox>i{display:block;font-style:normal;font-size:9.5px;color:#5c6773;margin:0 0 9px}
+.fxrow{display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid #161b22}
+.fxrow .nm{flex:1;font:600 11px/1.3 var(--f);color:#c9d1d9}
+.fxrow .nm em{display:block;font-style:normal;font-size:9px;color:#5c6773}
+.ckpick{display:flex;gap:3px}
+.ckb{width:22px;height:22px;background:#161b22;border:1px solid var(--line);border-radius:4px;
+  font:800 9.5px/1 var(--f);color:#8b98a5;cursor:pointer}
+.ckb.on{background:rgba(227,179,65,.18);border-color:var(--warn);color:#e3b341}
+.ckb.full{border-color:var(--power);color:var(--power)}
+
+/* ── call sheet: the shared brief header for every sim ── */
+.callsheet{background:linear-gradient(180deg,#0e141b,#0b1016);border:1px solid var(--line);
+  border-radius:11px;overflow:hidden;margin:0 0 14px}
+.cshead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 13px;
+  background:#11181f;border-bottom:1px solid var(--line)}
+.csshow{font:800 10px/1 var(--f);letter-spacing:.09em;text-transform:uppercase;
+  padding:5px 9px;border-radius:5px;background:rgba(88,166,255,.14);color:#8cc2ff;
+  border:1px solid rgba(88,166,255,.3)}
+.csven{font:600 10.5px/1 var(--f);color:#8b98a5}
+.csclock{margin-left:auto;display:flex;align-items:center;gap:8px}
+.csdoors{font:700 10px/1 var(--f);color:var(--warn)}
+.cstime{font:800 15px/1 var(--f);color:#c9d1d9;font-variant-numeric:tabular-nums;
+  background:#0d1117;border:1px solid var(--line);border-radius:5px;padding:5px 9px}
+.cstime.over{color:var(--power);border-color:rgba(248,81,73,.4)}
+.csbody{padding:12px 14px}
+.csrole{font:700 10px/1.4 var(--f);color:#5c6773;margin:0 0 9px}
+.csrole b{color:#8b98a5}
+.cswho{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin:0 0 6px}
+.cswho .nm{font:800 12px/1.3 var(--f);color:var(--warn)}
+.cswho .mn{font:400 10.5px/1.3 var(--f);color:#5c6773;font-style:italic}
+.cssay{margin:0 0 10px;font:400 14px/1.6 var(--f);color:#d5dde5}
+.csreqs{margin:0;padding:0 0 0 17px;list-style:none}
+.csreqs li{position:relative;font:400 12.5px/1.55 var(--f);color:#a8b3bd;margin:0 0 4px}
+.csreqs li:before{content:"";position:absolute;left:-14px;top:7px;width:5px;height:5px;
+  border-radius:50%;background:var(--warn)}
+.csgrade{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:10px 0 0;
+  border-top:1px solid var(--line)}
+.csg{flex:1;min-width:104px;background:#0d1117;border:1px solid var(--line);
+  border-radius:7px;padding:8px 10px}
+.csg span{display:block;font:800 8.5px/1 var(--f);letter-spacing:.11em;color:#5c6773;margin:0 0 4px}
+.csg b{font:800 14px/1 var(--f);color:#c9d1d9}
+.csg.good b{color:var(--audio)} .csg.warn b{color:var(--warn)} .csg.bad b{color:var(--power)}
+@media(max-width:560px){.cstime{font-size:13px}.cssay{font-size:13px}}
+
+.homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
+  text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
+  border-radius:99px;transition:.15s}
+.homelink:hover{color:var(--txt);border-color:var(--dimmer)}
+
+/* ---------- real gear photos ---------- */
+.rgal{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));margin:14px 0}
+.rph{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:0;cursor:zoom-in}
+.rph img{display:block;width:100%;height:230px;object-fit:cover;background:#090d12}
+.rph figcaption{padding:10px 12px;font-size:13px;line-height:1.5;color:var(--dim)}
+.rph figcaption b{color:var(--txt)}
+#lbox{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.9);display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
+#lbox.on{display:flex}
+#lbox img{max-width:100%;max-height:80vh;border-radius:8px}
+#lbox p{color:#c9d1d9;font-size:14px;line-height:1.5;max-width:640px;margin:12px 0 0;text-align:center}
+
+/* ---------- labelled photos ---------- */
+.anngal{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));margin:14px 0;align-items:start}
+.anngal.one{grid-template-columns:minmax(0,540px)}
+.ann{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:0}
+.annimg{position:relative;line-height:0;background:#090d12}
+.annimg img{display:block;width:100%;height:auto;cursor:zoom-in}
+.pin{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;border:2px solid #0d1117;
+  background:#e3b341;color:#0d1117;font:800 12px/20px var(--f);text-align:center;padding:0;cursor:pointer;
+  box-shadow:0 0 0 2px rgba(227,179,65,.5),0 2px 6px rgba(0,0,0,.6)}
+.pin.on{background:#fff;box-shadow:0 0 0 3px #e3b341,0 2px 8px rgba(0,0,0,.7);z-index:2}
+@media (max-width:480px){.pin{width:22px;height:22px;margin:-11px 0 0 -11px;font-size:11px;line-height:18px}}
+.ann figcaption{padding:12px 14px 14px;font-size:13.5px;line-height:1.5;color:var(--dim)}
+.ann figcaption h4{margin:0 0 4px;font-size:15px;color:var(--txt)}
+.ann figcaption p{margin:0}
+.annkey{list-style:none;margin:10px 0 0;padding:0}
+.annkey li{display:flex;gap:9px;padding:6px;border-radius:7px;cursor:pointer;align-items:flex-start}
+.annkey li.on{background:rgba(227,179,65,.13)}
+.annkey .n{flex:0 0 22px;height:22px;border-radius:50%;background:#e3b341;color:#0d1117;font:800 11.5px/22px var(--f);text-align:center}
+.annkey li b{color:var(--txt)}
+
+/* ---------- flashcard photos ---------- */
+.fcimg{display:block;max-width:100%;max-height:230px;width:auto;height:auto;object-fit:contain;
+  border-radius:8px;margin:12px auto 0;background:#090d12}
+.fcq .fcimg,.fcface:not(.fcback) .fcimg{max-height:210px}
+
+/* ---------- projects/aao-cpg-lacc ---------- */
+.tbl.w{display:table}
+.tbl.w td,.tbl.w th{white-space:normal;vertical-align:top}
+.tbl.w td:first-child{font-weight:600}
+#rfSel{appearance:auto;text-align:left;font-size:15px}
+.rfitem{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.rfitem:last-child{border-bottom:none}
+.rfqty{flex:0 0 36px;font-weight:700;color:var(--data);text-align:right}
+.rfnote{margin-top:12px;color:var(--warn);font-size:13.5px}
+.specs{font-size:13px;color:var(--dim);margin-top:8px!important;line-height:1.7}
+.specs b{color:var(--txt)}
+a.mfr{display:inline-block;margin:10px 8px 0 0;font-size:12.5px;font-weight:600;padding:5px 10px;border:1px solid var(--line);border-radius:7px;text-decoration:none;color:var(--video)}
+a.mfr:hover{border-color:var(--video)}
+.verified{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:5px;background:rgba(63,185,80,.15);color:var(--audio)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="homelink" href="../../">← All guides</a>
+    <div class="badge" style="color:var(--data);border-color:var(--data)">Live Events · Project · LACC Oct 2026</div>
+    <h1>AAO / CPG · LACC Field Guide</h1>
+    <p class="sub">v1.1 · Oct 17 2026 · Gear from the AAO–CPG client list, sorted by department. Quick answers on the floor. Works offline.</p>
+  </div>
+</header>
+
+<nav role="tablist"><div class="navinner" id="nav"></div></nav>
+
+<div class="wrap">
+<section class="panel on" id="p-start">
+  <h2>AAO / CPG &middot; LA Convention Center</h2>
+  <p class="lede">Your job reference. Find the gear, learn what it does, and know what to check first when it misbehaves.</p>
+
+  <div class="key">
+    <b>Where this comes from:</b> the client's gear list (<i>AAO &ndash; CPG Gear List.xlsx</i>, emailed Oct 10). Gear names and quantities are straight from his sheet. Specs marked <span class="verified">verified</span> were read from the maker's manual or spec sheet (the link is on the card). Anything marked <span class="pill p-rf">check</span> is not on the sheet or in a manual I could find &mdash; read the label on the unit or ask.
+  </div>
+
+  <h3>Pick your department</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Video <span class="pill p-video">GS West Hall</span></h4><p>Absen LED wall, Novastar, PixelHue P20, Playback Pro, converters, confidence monitors.</p></div>
+    <div class="card L rf"><h4>Lighting <span class="pill p-rf">GS West Hall</span></h4><p>Road Hog, Ovation ellipsoidals, Maverick movers, WELL Panels, the award-winner spot.</p></div>
+    <div class="card L audio"><h4>Audio <span class="pill p-audio">GS West Hall</span></h4><p>Nexo GEO M12 system, Avantis, DX168 stage boxes, ULXD wireless, DIs.</p></div>
+    <div class="card L data"><h4>Comms</h4><p>FreeSpeak II wireless, wired 2-channel intercom, CS-702, RS-601 belts, CC-95 headsets.</p></div>
+    <div class="card L power"><h4>Rig / Power</h4><p>Motion Labs 200A distro, cam-lok rules, shackles and spansets, drape, risers.</p></div>
+    <div class="card L sdi"><h4>Breakouts</h4><p>Every room's kit: Learning Zones, 300s&ndash;500s, Concourse, Petree, South Hall, booths. Room finder inside.</p></div>
+  </div>
+
+  <h3>The schedule on the sheet</h3>
+  <p class="lede" style="margin-bottom:6px">These are listed under <b>Opening Ceremony</b> in the production notes (GS West Hall).</p>
+  <table class="tbl w">
+    <tr><th>Day</th><th>What</th></tr>
+    <tr><td>Wed Oct 14</td><td>8:00a load-in</td></tr>
+    <tr><td>Thu Oct 15</td><td>8:00a call &middot; lunch 12&ndash;1 &middot; tech rehearsal 1&ndash;2 &middot; client 2&ndash;3:30 with 2 presenters (Brown and Shaw)</td></tr>
+    <tr><td>Fri Oct 16</td><td>8:00a call &middot; 9&ndash;10 client rehearsal</td></tr>
+    <tr><td>Sat Oct 17</td><td>6:00a</td></tr>
+  </table>
+
+  <h3>Production notes from the sheet</h3>
+  <ul class="chk">
+    <li>The <b>4' riser</b>: put the confidence monitors (DSMs) on road cases to lift them as high as possible.</li>
+    <li>Need a <b>spot special for the award winner</b> from the flown movers.</li>
+    <li><b>27&Prime; multiview at FOH.</b> All of video village is backstage.</li>
+    <li>Speaker Ready Room (308AB): the sheet says <b>&ldquo;Need to order access point.&rdquo;</b></li>
+  </ul>
+
+  <h3>How to ask Claude from the floor</h3>
+  <div class="key" style="border-color:rgba(57,208,216,.3);background:rgba(57,208,216,.06)">
+    <b style="color:var(--data)">Send three things:</b> the gear name, what it's doing, and what you've already tried. Example: &ldquo;ULXD2 handheld on receiver 3, audio drops every few seconds, batteries are new.&rdquo; Cheapest fix first, every time.
+  </div>
+
+  <h3>Questions to ask the production lead</h3>
+  <ul class="chk">
+    <li>The sheet says <b>12</b> Source Four 26&deg; lens tubes, but a side note says <b>8</b>. Which is right?</li>
+    <li>Side notes sit beside gear with no label: <i>Rentex:</i>, <i>Camera w/42x lens</i>, <i>Freespeak</i>, <i>12G SDI</i>, <i>Fiber</i>. Rentex looks like a vendor. Which items does each belong to?</li>
+    <li>Room 411 (Theater) lists a 10k projector but <b>no screen</b>. Is there a house screen?</li>
+  </ul>
+
+  <h3>Changelog</h3>
+  <ul class="chk">
+    <li><b>v1.1 &middot; Oct 17 2026</b> &mdash; Manual-verified specs and setup steps added for the LED wall, P20, MX40, lights, Nexo, ULXD, DX168, FreeSpeak and V-160HD, with links. <b>Corrections:</b> Maverick movers use a discharge lamp (not LED); WELL Panels use W-DMX; the Blackmagic bidirectional converter is a USB-powered Micro unit.</li>
+    <li><b>v1.0 &middot; Oct 17 2026</b> &mdash; First build from the AAO&ndash;CPG gear list. Six departments, room finder, drills, scenarios.</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-vid">
+  <h2>Video &middot; GS West Hall</h2>
+  <p class="lede">Analogy: the P20 is the airport control tower, the Novastar boxes are the gate agents, and the tiles are the planes. Nothing lands on the wall unless all three agree.</p>
+  <p class="lede" style="margin-top:-8px"><span class="verified">verified</span> = read from the maker's manual or spec sheet. Tap the link on a card to open it (needs signal).</p>
+
+  <h3>Signal path</h3>
+  <div class="chain">
+    <span class="node">Playback Pro Mac / laptop</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">PixelHue P20-DS</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">Novastar MX40 PRO</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Cat data</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Absen tiles</span>
+  </div>
+  <p class="lede">Camera and SDI feeds come in through the SDI inputs. The exact output map belongs to the video lead &mdash; ask before re-patching anything.</p>
+
+  <div class="key">
+    <b>Look, don't touch:</b> processors and the switcher hold the show's mapping and presets. Report what you see (&ldquo;wall is black, Novastar 2 shows no input&rdquo;). Don't change settings.
+  </div>
+
+  <h3>The wall</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Absen Saturn SA2.6 tiles <span class="pill p-video">&times;112</span> <span class="verified">verified</span></h4>
+      <p>The sheet calls for <b>two</b> 13'&times;23' hanging screens. 112 &divide; 2 = 56 tiles per screen = <b>7 wide &times; 8 tall</b> = 23' &times; 13'. The math checks.</p>
+      <p class="specs"><b>Tile:</b> 1000&times;500&times;70 mm, <b>9.5 kg</b> (21 lb) &middot; <b>pixel pitch</b> 2.6 mm &middot; <b>384&times;192 px</b> per tile &middot; <b>1500 nits</b><br>
+      <b>Per screen:</b> 2688&times;1536 px &middot; about 532 kg (1,170 lb) of tiles alone<br>
+      <b>Power:</b> 510 W/m&sup2; max, 270 W/m&sup2; average = about <b>255 W max / 135 W avg per tile</b>, so roughly 14 kW max and 7.6 kW avg per screen (28.6 kW max for both)<br>
+      <b>Locking:</b> magnets snap tiles together top and bottom; angle adjustable &plusmn;2.5&deg;</p>
+      <p>Handle by the frame, never touch the LED face, carry flat. Lock every latch before it flies.</p>
+      <a class="mfr" href="https://cdn01.4wall.com/cms/rentals/files/f69654d29be40a.pdf" target="_blank" rel="noopener">Absen SA 2.6 spec sheet &#8599;</a></div>
+    <div class="card L sdi"><h4>Novastar MX40 PRO <span class="pill p-sdi">&times;2</span> <span class="verified">verified</span></h4>
+      <p>The LED processor. It slices the picture into data for the tiles. One per screen fits easily: each screen is about 4.1 million pixels and the MX40 handles up to 9 million.</p>
+      <p class="specs"><b>Outputs:</b> 20 gigabit Ethernet ports to the wall (with hot backup between ports), plus 4 optical (OPT 1&ndash;2 primary, 3&ndash;4 backup)<br>
+      <b>Inputs:</b> 3&times; HDMI 2.0, 1&times; DisplayPort 1.2, 1&times; 12G-SDI (HDMI and SDI also loop through)<br>
+      <b>Other:</b> genlock in/loop &middot; 95 W max &middot; controlled over Ethernet (VMP software)</p>
+      <p>Which input and which ports feed which screen is the video lead's patch &mdash; <span class="pill p-rf">check</span>.</p>
+      <a class="mfr" href="https://www.rentex.com/wp-content/uploads/2023/01/MX40-Pro-LED-Display-Controller-Specification.pdf" target="_blank" rel="noopener">MX40 Pro spec &#8599;</a><a class="mfr" href="https://www.rentex.com/wp-content/uploads/2023/01/MX40-Pro-LED-Display-Controller-User-Manual-V.pdf" target="_blank" rel="noopener">MX40 Pro manual &#8599;</a></div>
+    <div class="card L video"><h4>PixelHue P20-DS <span class="pill p-video">&times;1</span> <span class="verified">verified</span></h4>
+      <p>Presentation switcher and screen manager. The <b>DS</b> version adds <b>four 12G-SDI outputs</b> and <b>Dante audio</b> on top of the standard P20.</p>
+      <p class="specs"><b>Inputs:</b> 12 &mdash; 4&times; 12G-SDI and 8&times; DP 1.2/HDMI 2.0 (each DP/HDMI pair shares one input slot, so only one of the pair is live)<br>
+      <b>Outputs:</b> 8&times; HDMI 2.0, 4 AUX, <b>1 dedicated multiviewer (MVR) output</b>, 8 fiber (copy of the HDMI), 4&times; 12G-SDI<br>
+      <b>Layers:</b> 12 &middot; <b>Control:</b> front panel and 5&Prime; screen, PixelFlow software, U5 event controller, Stream Deck &middot; genlock in/loop &middot; 160 W</p>
+      <p>The MVR output is probably what feeds the <b>27&Prime; multiview at FOH</b> &mdash; <span class="pill p-rf">check</span>.</p>
+      <a class="mfr" href="https://www.rentex.com/wp-content/uploads/2026/04/P20-P20-DS-Seamless-Switchers-Specifications-V1.7.1.pdf" target="_blank" rel="noopener">P20 / P20-DS spec &#8599;</a></div>
+  </div>
+
+  <h3>Playback, laptops and converters</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Playback Pro package <span class="pill p-video">&times;2</span></h4><p>MacBook Pro 14&Prime; running Playback Pro video software. Two usually means main plus backup &mdash; <span class="pill p-rf">check</span> which is live before you touch either.</p></div>
+    <div class="card L audio"><h4>Radial USB-PRO DI <span class="pill p-audio">&times;2</span> <span class="verified">verified</span></h4><p>Turns the Mac's USB audio into balanced XLR for the console.</p><p class="specs"><b>In:</b> USB (USB-B cable included) &middot; <b>Out:</b> stereo balanced XLR, level knob, <b>ground lift</b>, mono-sum switch, 3.5 mm headphone jack &middot; shows up as a sound card (44.1/48/96 kHz)</p><p>Hum? Ground lift first. No sound? Check the Mac's output device is the USB-PRO.</p></div>
+    <div class="card L video"><h4>HP EliteBook 14&Prime; <span class="pill p-video">&times;3</span></h4><p>Presenter and slide laptops. Know where they plug into the switcher.</p></div>
+    <div class="card L sdi"><h4>Blackmagic BiDirectional SDI/HDMI 3G <span class="pill p-sdi">&times;8</span> <span class="verified">verified</span></h4>
+      <p>This is the small <b>Micro</b> converter. It converts both directions at the same time and is powered over <b>micro-USB (5 V)</b> &mdash; no light usually means no USB power. It handles SD, HD and <b>3G-SDI only</b> (about 1080p60), so it can't carry a 12G/4K feed.</p>
+      <a class="mfr" href="https://www.adorama.com/col/productManuals/BMMCSG.pdf" target="_blank" rel="noopener">Blackmagic converters manual &#8599;</a></div>
+    <div class="card L sdi"><h4>Blackmagic SDI distribution 1&times;8 <span class="pill p-sdi">&times;1</span></h4><p>One SDI in, eight copies out. The sheet doesn't give the model; Blackmagic's Mini-size units run on a 12 V DC supply &mdash; <span class="pill p-rf">check</span> the label. A dead output means that output's cable first, then the unit's power.</p></div>
+    <div class="card L video"><h4>Confidence monitors <span class="pill p-video">&times;4 + &times;2 pkg</span></h4><p>50&Prime; Sharp TVs on Medium DSM stands, in two dual packages. They face the presenters so they can see the slide and timer. On the 4' riser the sheet wants them on road cases, as high as possible.</p></div>
+    <div class="card L video"><h4>Speaker timer <span class="pill p-video">&times;1</span></h4><p>The sheet lists a &ldquo;DSan AV1000.&rdquo; I couldn't find a manual under that name &mdash; D'San's common timer is the Limitimer Pro-2000. <span class="pill p-rf">check</span> the model on the unit. Make sure the speaker can see it and it shows the right clock before client rehearsal.</p></div>
+  </div>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>Whole wall black</td><td>Is the Novastar powered and showing input?</td><td>P20 output status, then the cable between them. Tell the video lead.</td></tr>
+    <tr><td>Half a screen or everything past one tile is dead</td><td>The data cable into the first dead tile</td><td>That tile's power, then its port. Everything <i>downstream</i> of a break goes dark.</td></tr>
+    <tr><td>One tile flickers or has the wrong colour</td><td>Reseat its data and power connectors</td><td>Swap with a spare tile (ask first).</td></tr>
+    <tr><td>Converter has no picture</td><td>Its power: USB 5 V on the Micro, 12 V on a Mini</td><td>Right direction, right connector, signal within 3G.</td></tr>
+    <tr><td>Confidence monitor shows no signal</td><td>TV input is on the right HDMI</td><td>Cable at both ends, then its feed from the switcher.</td></tr>
+    <tr><td>Video plays, no sound</td><td>USB-PRO has USB in and XLR out; Mac output set to it</td><td>Console channel unmuted &mdash; tell audio.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-lx">
+  <h2>Lighting &middot; GS West Hall</h2>
+  <p class="lede">Two kinds of fixtures here: <b>ellipsoidals</b> (the Ovations, which light a spot and stay put) and <b>movers</b> (the Mavericks, which the console points).</p>
+  <p class="lede" style="margin-top:-8px"><span class="verified">verified</span> = read from the maker's manual. Tap the link on a card to open it.</p>
+
+  <div class="key">
+    <b>Before you address anything:</b> the fixture needs three things to match the console &mdash; <b>universe</b>, <b>start address</b>, and <b>mode</b>. If a light is alive but ignores the console, it's almost always one of those three, not the fixture.
+  </div>
+
+  <h3>The gear</h3>
+  <div class="grid">
+    <div class="card L rf"><h4>Road Hog console <span class="pill p-rf">&times;1</span></h4>
+      <p>The sheet says &ldquo;Road Hog,&rdquo; so this is most likely the High End <b>Road Hog 4</b> &mdash; <span class="pill p-rf">check</span> the label. The show file belongs to the programmer &mdash; never reload or reset it.</p>
+      <p class="specs"><b>Road Hog 4 (verified):</b> 4 local DMX outputs on 5-pin XLR &middot; Art-Net and sACN over Ethernet &middot; 22&Prime; touchscreen &middot; 38.6 lb (17.5 kg) &middot; 100&ndash;250 V, 80 W max</p>
+      <a class="mfr" href="https://cdn01.4wall.com/cms/rentals/files/f5bc608f4e0699.pdf" target="_blank" rel="noopener">Road Hog 4 spec &#8599;</a></div>
+    <div class="card L rf"><h4>Chauvet Ovation E-910FC <span class="pill p-rf">&times;12</span> <span class="verified">verified</span></h4>
+      <p>Full-colour LED ellipsoidal. Works like a leko: four framing shutters and a lens tube shape the beam.</p>
+      <p class="specs"><b>Light engine:</b> RGBAL (red, green, blue, amber, lime) LEDs &middot; <b>10</b> colour-temperature presets, 2800&ndash;6500 K<br>
+      <b>Power:</b> about 220 W, <b>1.79 A at 120 V</b> &middot; <b>max 6 per circuit at 120 V</b> (never over 12 A), so 12 fixtures need <b>at least 2 circuits</b><br>
+      <b>Weight:</b> 15.4 lb body; <b>19.8 lb with a 26&deg; tube</b><br>
+      <b>DMX modes:</b> 1, 3, 5, 7, 10, 12, 13 and 16 channels, plus HSV (3). Address 001&ndash;512, highest start address depends on the mode<br>
+      <b>Overhead:</b> mount with a clamp <b>and a safety cable</b>; keep 20&Prime; (50 cm) clear of surfaces</p>
+      <p><b>Fan modes:</b> Auto, On, Off, Silent. Off and Silent reduce output and run the body hotter. <b>Soft-focus filter:</b> don't use it with gobos or big shutter cuts &mdash; it can heat-damage. A display reading <b>&minus;40&deg;C or 125&deg;C</b> is a temperature-sensor fault: stop using it and report it.</p>
+      <a class="mfr" href="https://www.chauvetprofessional.com/wp-content/uploads/2015/09/Ovation_E-910FC_UM_Rev19.pdf" target="_blank" rel="noopener">Ovation E-910FC manual &#8599;</a></div>
+    <div class="card L rf"><h4>Source Four lens tube, 26&deg; <span class="pill p-rf">&times;12</span></h4><p>The sheet pairs these with the Ovations. The Ovation manual says the fixture works with industry-standard lens tubes and lists 5&deg;, 10&deg;, 14&deg;, 19&deg;, 26&deg;, 36&deg; and 50&deg; options, but it doesn't name ETC Source Four tubes. <span class="pill p-rf">check</span> that a tube seats and locks on the first fixture before the rest are built. A narrower tube throws a tighter, brighter circle. The sheet's side note says <b>8</b> tubes, not 12.</p></div>
+    <div class="card L rf"><h4>Chauvet Maverick MK1 Hybrid <span class="pill p-rf">&times;4</span> <span class="verified">verified</span></h4>
+      <p>A moving head with CMY colour mixing, two prisms, gobos and zoom. It runs on a <b>discharge lamp, not LEDs</b>. These are the <b>flown movers</b> the award-winner spot special comes from.</p>
+      <p class="specs"><b>Lamp:</b> 440 W Osram Sirius<br>
+      <b>Power:</b> 670 W, <b>5.45 A at 120 V</b> each &mdash; four is about <b>22 A</b>, so they can't all share one 20 A circuit<br>
+      <b>Weight:</b> <b>66.7 lb</b> (30.3 kg) &mdash; this is a two-person lift<br>
+      <b>DMX:</b> 27 or 30 channels &middot; <b>Pan/tilt:</b> 540&deg;/270&deg;<br>
+      <b>Mount:</b> Omega bracket included; clamps and a safety cable are sold separately &mdash; <b>every flown unit needs a safety cable</b></p>
+      <p>Discharge lamps don't like being power-cycled while hot, so leave power on and don't unplug a mover mid-show. Flown means your cable work happens before it goes up.</p>
+      <a class="mfr" href="https://chauvetprofessional.com/wp-content/uploads/pdf/en/MAVERICKMK1HYBRID.pdf" target="_blank" rel="noopener">Maverick MK1 Hybrid spec &#8599;</a><a class="mfr" href="https://chauvetprofessional.com/product/maverick-mk1-hybrid/" target="_blank" rel="noopener">Photos &amp; product page &#8599;</a></div>
+    <div class="card L rf"><h4>Chauvet WELL Panel <span class="pill p-rf">&times;6</span> <span class="verified">verified</span></h4>
+      <p>Battery-powered, wireless LED wash panel. It receives control over <b>W-DMX</b> (not D-Fi).</p>
+      <p class="specs"><b>Runtime:</b> selectable modes of 3, 5, 8 or 12 hours (the shorter modes trade brightness for runtime)<br>
+      <b>Charging:</b> about <b>4 hours</b> with the supplied charger, with the panel <b>powered off</b>; it can run while plugged in<br>
+      <b>Rating:</b> IP65 &middot; <b>22.6 lb</b> (10.3 kg) &middot; Omega bracket, clamps separate, safety cable overhead<br>
+      <b>Range:</b> up to about 300 m from the W-DMX transmitter &mdash; people and water can block it<br>
+      <b>Address:</b> 001&ndash;509 depending on mode (4, 8, 12, 13 or 21 channel)</p>
+      <p><b>Pairing:</b> set the DMX start address, then <i>Wireless Setting &rarr; Operating Mode &rarr; Receive</i>, W-DMX On, and press the transmitter's reset. To re-pair: <i>Wireless Setting &rarr; Receive Reset &rarr; Yes</i>, then hold RESET on the transmitter until its signal light is solid. A &ldquo;?&rdquo; before the signal bars means it's waiting for a connection.</p>
+      <a class="mfr" href="https://www.chauvetprofessional.com/wp-content/uploads/2020/10/WELL_Panel_UM_Rev4.pdf" target="_blank" rel="noopener">WELL Panel manual &#8599;</a></div>
+  </div>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>Fixture has power, ignores console</td><td>Mode, address and universe vs the patch</td><td>DMX cable in, then the one before it.</td></tr>
+    <tr><td>Several fixtures flicker or act wild</td><td>DMX cable and the first connector in the chain</td><td>Termination at the end of the run.</td></tr>
+    <tr><td>Everything past one fixture is dead</td><td>The cable going out of the last working one</td><td>Swap it, then that fixture's DMX out.</td></tr>
+    <tr><td>Fixture totally dead</td><td>Power cable and the circuit</td><td>Too many on one circuit? Chauvet's limit is 6 Ovations per circuit at 120 V; each Maverick draws 5.45 A.</td></tr>
+    <tr><td>Ovation shows &minus;40&deg;C or 125&deg;C</td><td>Stop using it</td><td>Report it &mdash; it's a sensor or board fault.</td></tr>
+    <tr><td>WELL Panel won't respond</td><td>Battery level and runtime mode</td><td>Transmitter on, signal bars showing, re-pair if there's a &ldquo;?&rdquo;.</td></tr>
+    <tr><td>Mover moves but won't hit the spot</td><td>Tell the programmer</td><td>Don't touch the fixture. It might need a palette update.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-aud">
+  <h2>Audio &middot; GS West Hall</h2>
+  <p class="lede">The console is the kitchen, the stage boxes are the ingredients coming in the back door, and the Nexo system is the dining room. Your job is making sure everything arrives.</p>
+  <p class="lede" style="margin-top:-8px"><span class="verified">verified</span> = read from the maker's manual or spec sheet.</p>
+
+  <div class="chain">
+    <span class="node">Mic / DI</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">DX168 stage box</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Avantis</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">NXAMP 4&times;4</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">GEO M12 / MSUB18</span>
+  </div>
+
+  <h3>PA system</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Nexo GEO M12 line array <span class="pill p-audio">14 boxes</span> <span class="verified">verified</span></h4>
+      <p><b>12&times; M1210</b> (10&deg; vertical) and <b>2&times; M1220</b> (20&deg; vertical). With two bumpers, it looks like two hangs of seven &mdash; <span class="pill p-rf">check</span> the split with the audio lead. In an array the narrow boxes go on top and the wide ones at the bottom.</p>
+      <p class="specs"><b>Weight:</b> <b>34 kg (75 lb) per box</b> &mdash; 14 boxes is 476 kg of speakers. If split 7/7, each hang is about 238 kg (525 lb) of boxes <i>before</i> the bumper, bars and hardware<br>
+      <b>Coverage:</b> 80&deg; horizontal on both &middot; <b>Array limit:</b> up to 12 boxes per array<br>
+      <b>Connectors:</b> two NL4 4-pole Speakons on the touring version<br>
+      <b>Amp rule:</b> an NXAMP4x4 drives <b>3 boxes per channel</b>, so 14 boxes need at least 5 amp channels</p>
+      <a class="mfr" href="https://www.nexo-sa.com/wp-content/uploads/GeoM12_datasheet_v1.2.pdf" target="_blank" rel="noopener">GEO M12 datasheet &#8599;</a><a class="mfr" href="https://www.nexo-sa.com/products/geo-m1210/" target="_blank" rel="noopener">M1210 page &#8599;</a><a class="mfr" href="https://www.nexo-sa.com/products/geo-m1220" target="_blank" rel="noopener">M1220 page &#8599;</a></div>
+    <div class="card L audio"><h4>Nexo MSUB18 subs <span class="pill p-audio">&times;6</span></h4><p>Arrayable subwoofers. Low end rides the floor. Keep them where nobody can bump or trip over them. Weight and wiring aren't on the sheet &mdash; <span class="pill p-rf">check</span> the label before lifting.</p></div>
+    <div class="card L audio"><h4>Nexo NXAMP 4&times;4 <span class="pill p-audio">&times;3</span> <span class="verified">verified</span></h4>
+      <p>Amp plus processor. 12 channels total across the three.</p>
+      <p class="specs"><b>Outputs:</b> 4&times; Speakon NL4 &middot; <b>Inputs:</b> 4&times; balanced XLR, with link jacks, plus an expansion slot for digital (Dante) cards<br>
+      <b>Power:</b> 1900 W per channel at 8 &Omega; &middot; <b>Size:</b> 4U rack<br>
+      <b>Front LEDs:</b> Global Power, Standby and Amp Protect, plus per-channel status</p>
+      <p>Which channel drives which cabinet is in the audio lead's plan. <b>Amp Protect lit</b> means the amp has shut a channel down to protect itself &mdash; tell the A1, then check that channel's speaker cable.</p>
+      <a class="mfr" href="https://nexo-sa.com/wp-content/uploads/nxamp4x4_datasheet_v1.0.pdf" target="_blank" rel="noopener">NXAMP4x4 datasheet &#8599;</a></div>
+    <div class="card L power"><h4>Bumpers, extension bars, shackles, spansets</h4><p>This is the rigging side of the array. Details in <b>Rig / Power</b>. <b>You hand it up; the rigging lead hangs it.</b></p></div>
+  </div>
+
+  <h3>Console and stage</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Allen &amp; Heath Avantis <span class="pill p-audio">&times;1</span></h4><p>The 64-channel digital mixer. Don't touch faders or settings unless the A1 asks.</p></div>
+    <div class="card L data"><h4>Allen &amp; Heath DX168 <span class="pill p-data">&times;2</span> <span class="verified">verified</span></h4>
+      <p>Stage boxes with remote-controlled preamps. The console controls their gain, pad and phantom.</p>
+      <p class="specs"><b>I/O:</b> 16 mic/line XLR inputs and 8 XLR line outputs<br>
+      <b>Link:</b> one <b>Cat5e (or better) shielded</b> cable, up to <b>100 m</b>, into the <b>DX A</b> EtherCon. The cable carries audio, preamp control and status<br>
+      <b>DX B</b> daisy-chains a second box or gives a redundant link<br>
+      <b>+48 V light:</b> each input has an indicator showing voltage at that socket<br>
+      <b>Power:</b> built-in 100&ndash;240 V supply on an IEC inlet &middot; keep the vents clear<br>
+      The console and box should be on the same firmware; the manual says to update the mixing system first</p>
+      <a class="mfr" href="https://support.allen-heath.com/hc/en-gb/articles/40432468352145-DX168-Getting-Started-Guide" target="_blank" rel="noopener">DX168 getting started &#8599;</a></div>
+    <div class="card L audio"><h4>Rapco laptop interface <span class="pill p-audio">&times;4</span></h4><p>Laptop audio into the system, with a <b>ground lift</b>. Hum from a laptop? Try the ground lift first.</p></div>
+  </div>
+
+  <h3>Wireless &mdash; Shure ULXD (G50)</h3>
+  <div class="grid">
+    <div class="card L rf"><h4>ULXD system <span class="pill p-rf">&times;6</span> <span class="verified">verified</span></h4>
+      <p>Six receivers (ULXD4), six bodypacks (ULXD1), six handhelds (ULXD2, SM58 capsule) and six WL185 lavs.</p>
+      <p class="specs"><b>Band G50:</b> 470&ndash;534 MHz &middot; <b>Batteries:</b> Shure SB900 rechargeable or 2 AA &middot; about <b>11+ hours</b> on an SB900, about <b>9 hours</b> on alkaline AA at 10 mW<br>
+      <b>Receiver RF lights:</b> <b>blue</b> = good link, <b>red</b> = interference, <b>off</b> = no transmitter. No blue light means no audio<br>
+      <b>RF strength lights:</b> amber = normal, red = overload<br>
+      <b>Audio lights:</b> green = signal present, yellow = normal peaks, <b>red = overload/limiter</b></p>
+      <p><b>Mute:</b> a muted transmitter's light turns <b>red</b> and the receiver says &ldquo;Tx Muted&rdquo;. A muted receiver channel says &ldquo;Rx MUTED&rdquo;.<br>
+      <b>Locked buttons:</b> the transmitter or receiver menu can be locked; unlock it from the utility menu.<br>
+      <b>IR sync</b> (matches a transmitter to its receiver): turn on the transmitter, press the receiver's sync button, line up the IR windows until the receiver's IR port lights red, and wait for the success message.<br>
+      <b>Battery type:</b> if you use AA, set the transmitter's battery type to AA so the time readout is right.</p>
+      <a class="mfr" href="https://pubs.shure.com/view/guide/ULXD/es-ES.pdf" target="_blank" rel="noopener">Shure ULX-D guide (Spanish PDF) &#8599;</a></div>
+    <div class="card L rf"><h4>Shure WL185 lavalier <span class="pill p-rf">&times;6</span></h4><p>Tiny lav. Failure is nearly always at the connector or the cable near the pack &mdash; swap it before you condemn the pack.</p></div>
+    <div class="card L audio"><h4>Shure SM58 wired <span class="pill p-audio">&times;4</span></h4><p>Dynamic mic. No phantom needed.</p></div>
+  </div>
+  <div class="key"><b>Frequencies:</b> the audio lead coordinates them. If a unit is on the wrong frequency, tell the lead &mdash; don't pick one yourself.</div>
+
+  <h3>Stands and the rest</h3>
+  <ul class="chk">
+    <li><b>Pyle tabletop stands</b> &times;4 &middot; <b>tall boom stand</b> &times;1</li>
+    <li><b>XLR cable trunk</b> &times;1 and <b>expendables</b> (batteries, tape, misc.) &times;1 &mdash; know where they live</li>
+  </ul>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>One wireless mic silent</td><td>Transmitter mute (red light), battery, connector</td><td>Receiver: no blue light = no link; blue but no audio = console.</td></tr>
+    <tr><td>Wireless drops out</td><td>Distance, antenna, body blocking</td><td>Receiver RF light red = interference. Tell the A1; they scan.</td></tr>
+    <tr><td>Receiver says Tx Muted / Rx MUTED</td><td>Unmute the transmitter or ask the A1 to unmute the channel</td><td>&mdash;</td></tr>
+    <tr><td>Hum or buzz</td><td>Ground lift on the DI or laptop interface</td><td>Swap the cable. Never lift a safety ground on a power cord.</td></tr>
+    <tr><td>One speaker box silent</td><td>Speaker cable at the box</td><td>NXAMP channel LEDs, then the next box in the link.</td></tr>
+    <tr><td>NXAMP Amp Protect lit</td><td>Tell the A1</td><td>Check that channel's speaker cable for a short.</td></tr>
+    <tr><td>Stage box dead</td><td>Power and the Cat5e link into DX A</td><td>Swap the link cable; look for the +48 V light on inputs.</td></tr>
+    <tr><td>Feedback</td><td>Open mics near speakers</td><td>Tell the A1 which one &mdash; they fix it at the console.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-com">
+  <h2>Comms</h2>
+  <p class="lede">Analogy: wired comms is a conference call where everyone shares one phone line. FreeSpeak is the same call, cordless.</p>
+
+  <div class="grid">
+    <div class="card L data"><h4>Clear-Com FreeSpeak II <span class="pill p-data">&times;2 systems</span> <span class="verified">verified</span></h4>
+      <p>Digital wireless comms (DECT). The sheet says &ldquo;5 Channel System&rdquo; &mdash; that may mean five beltpacks per antenna; <span class="pill p-rf">check</span>.</p>
+      <p class="specs"><b>Capacity:</b> a base station takes up to <b>20 beltpacks</b>; each antenna handles up to <b>5</b> (4 is safer in a noisy room)<br>
+      <b>Antenna cable:</b> shielded Cat5/5e/6, up to 1,000 m (24 AWG); it powers the antenna up to about 300 m<br>
+      <b>Antenna lights:</b> green + amber on = powered &middot; amber flashing = data link &middot; <b>amber solid = synced and ready</b><br>
+      <b>Coverage check:</b> signal (RSSI) of about 30 or higher; below that a beltpack may lose audio</p>
+      <p><b>Register a beltpack:</b><br>
+      1. On the base: <i>Main Menu &rarr; System &rarr; Reg &rarr; Start</i> (it times out after 2 minutes).<br>
+      2. On the beltpack: hold the menu key 2 seconds, scroll to <b>System Connect</b>, press D.<br>
+      3. Find the system showing <b>V</b> and <b>P</b>. If it doesn't show, restart registration on the base.<br>
+      4. Enter the 4-digit code (default <b>0000</b>; the base shows it at <i>Menu &rarr; System &rarr; Reg &rarr; PIN</i>).<br>
+      5. Pick an open role. Done.</p>
+      <p>Some FreeSpeak II beltpacks are 1.9 GHz and some 2.4 GHz &mdash; check the label and don't mix them.</p>
+      <a class="mfr" href="https://clearcom.com/DownloadCenter/manuals/FreeSpeakII_v1.0/FreeSpeak_II_BaseStation_User-Guide-399G087C.pdf" target="_blank" rel="noopener">FreeSpeak II base station guide &#8599;</a></div>
+    <div class="card L data"><h4>Wired intercom <span class="pill p-data">2 ch, 5 stations</span> <span class="verified">verified</span></h4>
+      <p>One <b>CS-702</b> 2-channel main station runs the line, and <b>RS-601</b> beltpacks plug into it. Headsets are <b>CC-95</b> single-ear.</p>
+      <p class="specs"><b>RS-601:</b> a <b>single-channel</b> wired beltpack with a <b>4-pin male headset connector</b> and 3-pin XLR line connectors (one in, one out to loop through the next pack)</p>
+      <a class="mfr" href="https://clear-com.atlassian.net/wiki/spaces/SF/pages/158849106/Partyline+Single+channel+Beltpack" target="_blank" rel="noopener">RS-601 beltpack info &#8599;</a></div>
+  </div>
+
+  <div class="key">
+    <b>Don't cross the lines:</b> a party-line carries DC power on pin 2. <b>Never plug a comms line into a mic input</b>, and never plug a mic into a comms line.
+  </div>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>Wired belt is silent</td><td>Cable at both ends</td><td>Try another belt on the same cable.</td></tr>
+    <tr><td>Whole wired line is dead</td><td>Main station power and the first cable</td><td>Only one terminator &mdash; two make it thin, none makes it noisy.</td></tr>
+    <tr><td>Headset no mic</td><td>Headset plug seated and talk button/mute</td><td>Swap the headset.</td></tr>
+    <tr><td>FreeSpeak pack won't connect</td><td>Battery</td><td>Registered to <i>this</i> base? Re-register with the steps above.</td></tr>
+    <tr><td>FreeSpeak pack drops audio in one spot</td><td>How many packs on that antenna</td><td>Move the antenna or add one; the base can show antenna status.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-rig">
+  <h2>Rig / Power</h2>
+
+  <h3>Power</h3>
+  <div class="grid">
+    <div class="card L power"><h4>Motion Labs 3-phase, 200A, 9-hole <span class="pill p-power">&times;1</span></h4><p>The main distro: feeder in, circuits out. What's on the nine outlets isn't on the sheet &mdash; <span class="pill p-rf">check</span> before you plug in. Power trunk &times;1 holds the rest of the power gear.</p></div>
+    <div class="card L power"><h4>Edison runs <span class="pill p-power">see Cables</span></h4><p>Edison and tri-taps feed the breakout rooms. Quick math: <b>watts &divide; volts = amps</b>. A 20A circuit at 120V holds about 2400W, but stay at 80% for anything that runs all day.</p></div>
+  </div>
+
+  <div class="key">
+    <b>Cam-lok &mdash; the only two rules.</b><br>
+    <b>Hook-up:</b> <b>GROUND (green) first</b>, <b>NEUTRAL (white) second</b>, then the hot legs in the order they sit on <i>that</i> distro, working away from ground.<br>
+    <b>Strike:</b> hot legs first, then neutral, <b>GROUND LAST</b>.<br>
+    Never teach a fixed phase order (black/red/blue). The panel layout sets it. Ground is usually on the left, but some panels have it on the right.
+  </div>
+  <div class="key" style="border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.06)">
+    <b style="color:var(--power)">Ask first:</b> confirm with the lead that the feeder is de-energized before you connect or disconnect cam-lok. Know the sequence, but only do it when it's your call.
+  </div>
+
+  <h3>Rigging</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>GEO M12 light bumper <span class="pill p-sdi">&times;2</span></h4><p>The top frame each array hangs from. Rated for a 12-box array. This show has 14 boxes across the two bumpers. Extension bars &times;2 move the pick point.</p></div>
+    <div class="card L sdi"><h4>Steel spanset, 6' <span class="pill p-sdi">&times;2</span></h4><p>Steel sling used to connect the load to the point. Inspect every time: no kinks, broken wires or damage.</p></div>
+    <div class="card L sdi"><h4>Screw-pin anchor shackle <span class="pill p-sdi">&times;4</span></h4><p>The sheet says <b>5/8&Prime;, 4&frac12; ton</b>. That looks off: standard 5/8&Prime; screw-pin shackles are usually about 3&frac14; ton, and 4&frac34; is 3/4&Prime;. <b>Read the rating stamped on the shackle body and use that, never the sheet.</b></p></div>
+  </div>
+  <div class="key"><b>Your role:</b> you hand the gear up and keep it organized. The rigging lead decides what carries what. Never load-test, climb or adjust a hang.</div>
+
+  <h3>Staging &amp; soft goods</h3>
+  <ul class="chk">
+    <li><b>Velour drape, 16' tall, black</b> &mdash; 100 ft. <b>Pipe &amp; drape, 16'</b> &mdash; 150 ft. Fold velour, don't drag it.</li>
+    <li><b>2 powered exit signs</b> &mdash; nothing blocks them. Drape never goes over an exit sign.</li>
+    <li><b>4' riser</b> &mdash; confidence monitors go on road cases on top of it.</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-brk">
+  <h2>Breakout Rooms</h2>
+  <p class="lede">Most rooms are a variation of one kit. Learn the standard room once, then use the finder to see what's different.</p>
+
+  <h3>The standard room</h3>
+  <div class="chain">
+    <span class="node">Laptop</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">HDMI DA 1&times;4</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">Projectors + confidence monitor</span>
+  </div>
+  <div class="chain">
+    <span class="node">Mics + laptop DI</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">6-ch mixer</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">Powered speakers</span>
+  </div>
+  <div class="key"><b>Phantom power:</b> the MX412 podium and table mics are condensers and need phantom. If they're all dead and the wireless mics work, phantom is off on the mixer.</div>
+
+    <h3>Roland V-160HD <span class="verified">verified</span></h3>
+  <p class="lede">The sheet lists a &ldquo;Roland V160&rdquo; in Concourse 150-151 and Petree Hall C &mdash; most likely the V-160HD video switcher. <span class="pill p-rf">check</span> the label.</p>
+  <div class="card L video">
+    <p class="specs"><b>Inputs:</b> 8 HDMI and 8 SDI (format detected automatically)<br>
+    <b>Outputs:</b> 3 HDMI and 3 SDI &mdash; by default <b>OUT 1 = Program, OUT 2 = Preview, OUT 3 = Multi-view</b><br>
+    <b>Buses:</b> the PGM/A bus is the live output (lit <b>red</b>); the PST/B bus is what goes next (lit <b>green</b>). <b>CUT</b> switches instantly; <b>AUTO</b> uses the transition<br>
+    <b>Phantom:</b> only on Audio In 1 and 2, turned on in the menu &mdash; keep it off for anything that isn't a condenser<br>
+    <b>Power order:</b> sources on first, then outputs, then the V-160HD's power button last. Power off in reverse. Use only the supplied adaptor</p>
+    <a class="mfr" href="https://shop.ccisolutions.com/StoreFront/jsp/pdf/RND-V-160HD_quickStart.pdf" target="_blank" rel="noopener">V-160HD quick start &#8599;</a>
+  </div>
+
+  <h3>The MX412 mics <span class="verified">verified</span></h3>
+  <div class="card L audio"><p>Shure MX412 is a 12&Prime; cardioid gooseneck. It's <b>phantom-only (11&ndash;52 V)</b> on a 3-pin XLR, with <b>no on/off switch and no light</b> on the standard model. If a gooseneck is dead, check phantom and the cable &mdash; there's no switch to blame.</p>
+  <a class="mfr" href="https://www.bhphotovideo.com/c/product/127149-REG/Shure_MX412_C_MX412C_12_Cardioid.html" target="_blank" rel="noopener">MX412 specs &#8599;</a></div>
+
+  <h3>Room finder</h3>
+  <div class="sim">
+    <select id="rfSel" class="btn" style="width:100%;margin-bottom:12px"></select>
+    <div id="rfOut"></div>
+  </div>
+
+  <h3>Common room problems</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>No picture</td><td>Projector input and lens cap</td><td>HDMI at both ends, then the DA 1&times;4 power.</td></tr>
+    <tr><td>Picture on one projector only</td><td>DA output cable to the dead one</td><td>Swap the cable, then the DA output.</td></tr>
+    <tr><td>Laptop displays but projector doesn't</td><td>Laptop display mode (extend vs mirror) and resolution</td><td>Try a shorter HDMI.</td></tr>
+    <tr><td>Mic dead</td><td>Mixer channel is up, unmuted and the mic cable seated</td><td>Phantom on? Different channel.</td></tr>
+    <tr><td>No sound from a laptop</td><td>Laptop volume and the DI connection</td><td>Mixer channel, then the speaker power.</td></tr>
+    <tr><td>Speaker silent</td><td>It's plugged in <i>and</i> powered on</td><td>XLR into the right input, then swap.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-cab">
+  <h2>Cable &amp; Misc. Totals</h2>
+  <p class="lede">Straight from the sheet's cable count. Counts per length.</p>
+  <table class="tbl">
+    <tr><th>Type</th><th>10'</th><th>15'</th><th>25'</th><th>50'</th><th>100'</th><th>150'</th></tr>
+    <tr><td>XLR</td><td>30</td><td>&mdash;</td><td>50</td><td>260</td><td>60</td><td>&mdash;</td></tr>
+    <tr><td>HDMI</td><td>30</td><td>60</td><td>60</td><td>80</td><td>&mdash;</td><td>&mdash;</td></tr>
+    <tr><td>Edison</td><td>&mdash;</td><td>&mdash;</td><td>150</td><td>200</td><td>20</td><td>&mdash;</td></tr>
+    <tr><td>6-ch XLR snake</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>4</td><td>4</td></tr>
+    <tr><td>SDI</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>20</td><td>40</td><td>&mdash;</td></tr>
+  </table>
+  <ul class="chk">
+    <li><b>SDI barrels:</b> 20</li>
+    <li><b>Tri-taps:</b> 50</li>
+    <li><b>SDI/HDMI bidirectional converters:</b> 35</li>
+    <li><b>NL4 &times; 100' speaker cables:</b> 6 &middot; <b>NL4 barrels:</b> 10</li>
+    <li><b>26&deg; lens tubes:</b> the sheet says 8 here; the gear list says 12</li>
+  </ul>
+
+  <h3>Cable habits</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Over-under coil</h4><p>Alternating loops lie flat and throw out straight. Coiling one way twists the conductors.</p></div>
+    <div class="card L power"><h4>Ramp or tape across walkways</h4><p>Anything crossing a public path gets covered. No loose loops in the middle of an aisle.</p></div>
+    <div class="card L sdi"><h4>Label both ends</h4><p>A labeled cable gets found in seconds. An unlabeled one costs everyone.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly &mdash; "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer &mdash; including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Signal Chain Builder</h2>
+  <p class="lede">Tap the pieces in the correct order. Wrong piece and it tells you immediately.</p>
+  <div id="chainHost"></div>
+
+  <h2>Before doors &mdash; GS West Hall</h2>
+  <div class="row">
+    <span class="counter" id="ckCount"></span>
+    <button class="btn" id="ckReset" style="margin-left:auto">Reset</button>
+  </div>
+  <div id="ckHost"></div>
+</section>
+
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>
+<footer>
+  AAO / CPG · LACC Field Guide · Job reference built from the client gear list. Quantities and room kits come from the list and can change — the production lead has the final word<br>
+  Gear illustrations are simplified diagrams for identification, not manufacturer specifications.
+</footer>
+</div>
+
+<script>
+/* ═══════════ call sheet — shared brief + clock for every sim ═══════════ */
+window.CallSheet=(function(){
+  var reg={};
+  function fmt(s){
+    var m=Math.floor(s/60), r=s%60;
+    return m+":"+(r<10?"0":"")+r;
+  }
+  function render(hostId,b){
+    var el=document.getElementById(hostId); if(!el) return;
+    var st=reg[hostId];
+    if(st&&st.iv) clearInterval(st.iv);
+    st=reg[hostId]={brief:b,elapsed:0,iv:null,stopped:false};
+
+    el.className="callsheet";
+    el.innerHTML=
+      '<div class="cshead">'+
+        '<span class="csshow">'+b.show+'</span>'+
+        '<span class="csven">'+b.venue+'</span>'+
+        '<span class="csclock"><span class="csdoors">'+b.clock+'</span>'+
+        '<span class="cstime" id="'+hostId+'_t">0:00</span></span>'+
+      '</div>'+
+      '<div class="csbody">'+
+        '<p class="csrole">YOU ARE <b>'+b.role+'</b> &nbsp;&middot;&nbsp; TARGET <b>'+b.target+' min</b></p>'+
+        '<div class="cswho"><span class="nm">'+b.boss+'</span><span class="mn">'+b.manner+'</span></div>'+
+        '<p class="cssay">&ldquo;'+b.say+'&rdquo;</p>'+
+        '<ul class="csreqs">'+b.reqs.map(function(r){return "<li>"+r+"</li>"}).join("")+'</ul>'+
+      '</div>';
+
+    st.iv=setInterval(function(){
+      if(st.stopped) return;
+      st.elapsed++;
+      var t=document.getElementById(hostId+"_t");
+      if(!t){ clearInterval(st.iv); return }
+      t.textContent=fmt(st.elapsed);
+      if(st.elapsed>b.target*60) t.className="cstime over";
+    },1000);
+  }
+  function stop(hostId){
+    var st=reg[hostId]; if(!st) return 0;
+    st.stopped=true; return st.elapsed;
+  }
+  /* returns a grade block to append to feedback, plus a verdict string */
+  function grade(hostId){
+    var st=reg[hostId]; if(!st) return {html:"",late:false,mins:0};
+    var mins=st.elapsed/60, t=st.brief.target;
+    var late = mins>t;
+    var cls = mins<=t*0.75 ? "good" : (late ? "bad" : "warn");
+    var note = mins<=t*0.75
+        ? "Ahead of the call."
+        : (!late ? "Inside the window." : "Over the window by "+Math.ceil(mins-t)+" min.");
+    return {
+      late:late, mins:mins,
+      html:'<div class="csgrade">'+
+        '<div class="csg '+cls+'"><span>YOUR TIME</span><b>'+fmt(st.elapsed)+'</b></div>'+
+        '<div class="csg"><span>THE CALL ALLOWED</span><b>'+t+':00</b></div>'+
+        '<div class="csg '+cls+'"><span>PACE</span><b>'+note+'</b></div>'+
+      '</div>'
+    };
+  }
+  return {render:render, stop:stop, grade:grade, fmt:fmt};
+})();
+
+
+(function(){
+"use strict";
+var STORE="projects/aao-cpg-lacc";
+var TABS=[["p-start","Start"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
+
+var CARDS=[
+["Cam-lok hook-up order?","<b>Ground (green) first, neutral (white) second</b>, then the hot legs in the order they sit on that distro, working away from ground."],
+["Cam-lok strike order?","<b>Hot legs first, then neutral, ground last.</b> It's the hook-up in reverse."],
+["Why can't you teach a fixed cam-lok phase order?","The <b>panel layout sets it.</b> Ground is usually on the left but some panels have it on the right. Follow the distro, not a rhyme."],
+["What does the PixelHue P20-DS do?","The <b>presentation switcher and screen manager.</b> 12 inputs (4× 12G-SDI, 8× DP/HDMI), 12 layers, a dedicated <b>multiviewer output</b>. The DS adds four 12G-SDI outputs and Dante."],
+["What does a Novastar MX40 PRO do?","It's the <b>LED processor.</b> It splits the picture into data for the tiles over <b>20 gigabit Ethernet ports</b> (plus backup optical). It handles up to 9 million pixels."],
+["How many Absen tiles per screen, and how many pixels?","<b>56 tiles</b> (7 wide × 8 tall, 1000×500 mm each) = <b>2688×1536 px</b> per screen. The sheet's 112 tiles make two 13'×23' screens."],
+["Half an LED screen is dead. Where do you look?","<b>The data link into the first dead tile.</b> Everything downstream of a break goes dark; everything upstream stays lit."],
+["Why can't a Blackmagic 3G converter carry a 12G feed?","3G tops out around <b>1080p60.</b> 4K/12G needs a 12G path. Keep the two separate."],
+["A Blackmagic converter has no lights. First check?","<b>Power.</b> The Micro BiDirectional runs on <b>5 V over micro-USB</b>; Mini converters use a <b>12 V DC</b> supply."],
+["What's the Radial USB-PRO for?","Turns a Mac's <b>USB audio into balanced XLR</b> for the console, so videos play with sound."],
+["Who changes the processor and switcher settings?","<b>The video lead.</b> You report what you see."],
+["What lamp do the Maverick MK1 Hybrids use?","A <b>440 W discharge lamp (Osram Sirius)</b>, not LEDs. About <b>5.45 A at 120 V</b> and 66.7 lb each."],
+["How many Ovation E-910FCs per circuit at 120 V?","<b>6.</b> Chauvet's limit is 12 A per circuit and each draws about 1.8 A, so 12 fixtures need at least 2 circuits."],
+["What do the Ovation E-910FC LEDs mix?","<b>RGBAL</b>: red, green, blue, amber and lime."],
+["Ovation shows -40°C or 125°C on its display?","A <b>temperature-sensor fault.</b> Stop using it and report it."],
+["How do you register a FreeSpeak II beltpack?","Base: <b>Menu → System → Reg → Start</b>. Beltpack: hold menu 2 s → <b>System Connect</b>. Enter the 4-digit code (default <b>0000</b>) and pick a role."],
+["How many FreeSpeak II beltpacks per antenna?","<b>Up to 5</b> in good conditions; 4 is safer where there's interference. A base takes up to 20 beltpacks."],
+["What does a solid amber FreeSpeak antenna light mean?","<b>Synced and ready.</b> Flashing amber is a data link; green is power."],
+["What does a red RF light on a ULXD4 mean?","<b>Interference.</b> Blue is a normal link; off means no transmitter. No blue light means no audio."],
+["How do you IR-sync a ULXD transmitter to its receiver?","Transmitter on, press the receiver's <b>sync</b> button, line up the IR windows until the receiver's IR port lights <b>red</b>, then wait for the success message."],
+["ULXD G50 band, and battery life?","<b>470–534 MHz.</b> About 11+ hours on an SB900 rechargeable, about 9 hours on AA alkaline."],
+["What phantom voltage does an MX412 need?","<b>11–52 V, phantom only.</b> The standard model has no switch and no light."],
+["How does a DX168 connect to the console?","One <b>shielded Cat5e or better</b> cable, up to <b>100 m</b>, into the <b>DX A</b> port. It carries audio, preamp control and status."],
+["NXAMP4x4 outputs and the M12 rule?","<b>4× Speakon NL4.</b> One NXAMP channel drives <b>3 GEO M12 boxes</b>."],
+["What does a lit Amp Protect LED on an NXAMP mean?","The amp has <b>shut a channel down to protect itself.</b> Tell the A1, then check that channel's speaker cable."],
+["Roland V-160HD default outputs?","<b>OUT 1 = Program, OUT 2 = Preview, OUT 3 = Multi-view.</b> PGM bus lights red, PST lights green."],
+["V-160HD power order?","Sources on, then outputs, then the V-160HD's power button <b>last</b>. Off in reverse."],
+["DMX fixture is alive but ignores the console. First check?","<b>Mode, start address and universe</b> against the patch."],
+["Everything after one DMX fixture is dead. Where?","<b>The cable leaving the last working fixture.</b> Swap it, then check that fixture's DMX out."],
+["Where do movers and LED fixtures get power?","<b>Constant power, not a dimmer</b>, unless the LD says otherwise."],
+["WELL Panel won't respond. Two most likely causes?","<b>Dead battery</b> or <b>lost W-DMX link.</b> Charge it (about 4 hours, panel off), then check the signal bars. A \"?\" means it's waiting for a connection."],
+["How are the GEO M12 boxes arranged in an array?","<b>Narrow (M1210, 10°) on top, wide (M1220, 20°) at the bottom.</b> Check the plan for this show's count."],
+["Hum from a laptop feed. First move?","<b>Ground lift</b> on the DI or laptop interface. Never lift a power-cord safety ground."],
+["Wireless handheld is silent. Three checks?","<b>Battery, mute, capsule seated.</b> Then the receiver: no RF = frequency or range, RF but no audio = console."],
+["Who picks wireless frequencies?","<b>The audio lead.</b> You report a problem, you don't re-tune."],
+["What are MX412 mics, and what do they need?","Shure gooseneck/tabletop mics that need <b>phantom power.</b> Dead MX412s with working wireless = phantom is off."],
+["What can never touch a comms line?","<b>A mic input.</b> Party-line carries DC power on pin 2."],
+["Two terminators on a wired comms line?","Audio goes <b>thin.</b> Only one terminator should be in the loop."],
+["Whose rating counts on a shackle?","<b>The one stamped on the body.</b> Not the sheet, not memory."],
+["What's your job on the flown Nexo arrays?","<b>Hand up the gear and keep it organized.</b> The rigging lead decides, hangs and checks."],
+["Watts to amps?","<b>Watts ÷ volts = amps.</b> At 120V a 20A circuit holds 2400W; stay at 80% for continuous loads."],
+["Dead channel in a breakout room. Cheapest first?","<b>Seat both ends → swap the cable → phantom on? → different mixer channel → swap the mic.</b>"]
+];
+
+var QS=[
+{q:"You're hooking up a cam-lok feeder on a distro with ground on the right. Which end do you start at?",
+  o:["The left end, always","The ground end, and work away from it","Hot legs first, ground last","Neutral first, then ground"],a:1,
+  e:"<b>Ground first, neutral second, then the hots in the order they sit on that distro.</b> Ground is usually on the left, but if it's on the right you start on the right. The panel layout sets the order, not a fixed rhyme."},
+{q:"You're striking the same feeder. What comes off last?",
+  o:["Neutral","Ground","The last hot leg","It doesn't matter"],a:1,
+  e:"<b>Ground last.</b> Hot legs come off first, then neutral, then ground, so the gear stays bonded to ground until nothing live is left."},
+{q:"The left half of an LED screen is dark and the right half is fine. What's the most likely cause?",
+  o:["The Playback Pro Mac crashed","A break in the data chain at the first dark tile","The P20 has failed","The Novastar needs a new firmware"],a:1,
+  e:"<b>A break at the first dark tile.</b> Everything downstream goes dark; everything upstream stays lit. If the Mac, P20 or processor had failed, the whole wall would be affected."},
+{q:"A Blackmagic Micro BiDirectional converter has no lights. What do you check first?",
+  o:["The firmware","Its USB power (5 V)","The SDI cable length","The HDMI source"],a:1,
+  e:"<b>Power.</b> The Micro BiDirectional runs on 5 V over micro-USB. Mini converters use a 12 V DC supply instead. No light almost always means no power."},
+{q:"A video feed is being sent through a 3G converter and the picture is missing. The source is 12G. What's wrong?",
+  o:["The converter is dead","It can't carry 12G","HDMI is plugged in backwards","Phantom is off"],a:1,
+  e:"<b>3G is about 1080p60.</b> A 12G/4K signal needs a 12G-capable path. Keep 4K/12G on its own path."},
+{q:"One Ovation is powered up but ignores the console. The others work. First check?",
+  o:["Replace the lamp","Mode, address and universe","The Hog's fader","The lens tube"],a:1,
+  e:"<b>An alive fixture that ignores the console is almost always address, mode or universe.</b> Match them to the patch before you suspect hardware."},
+{q:"Where should the Maverick movers get their power?",
+  o:["A dimmer channel","A constant (non-dim) circuit","Any Edison","The WELL Panel battery"],a:1,
+  e:"<b>Constant power.</b> Movers and LEDs need steady power for their electronics; a dimmer can damage them or make them act unpredictably."},
+{q:"The award-winner spot special is wrong. Who do you tell?",
+  o:["Nobody, fix it on the fixture","The lighting programmer","The audio lead","The venue"],a:1,
+  e:"<b>The programmer.</b> The show lives in the console's cues and palettes; touching the fixture can break every other cue."},
+{q:"A ULXD handheld works on the receiver's RF meter but there's no audio. Where's the problem?",
+  o:["The frequency","Mute on the transmitter or the console channel","The antenna","The SM58 capsule is too short"],a:1,
+  e:"<b>RF is fine, so the link works.</b> Check the transmitter's mute and the console channel. Frequency and antenna problems show up as low or missing RF."},
+{q:"All the MX412 mics in a room are dead but the wireless works. Cause?",
+  o:["All the cables failed","Phantom is off on the mixer","The speakers are muted","The laptop DI"],a:1,
+  e:"<b>MX412s are condensers and need phantom.</b> A shared cause across exactly the mics that need 48V points at phantom."},
+{q:"You find a comms XLR plugged into a mic input. What do you do?",
+  o:["Leave it, it's fine","Unplug it and tell the lead","Turn the gain down","Add a DI"],a:1,
+  e:"<b>Unplug it.</b> A party-line carries DC power on pin 2 and can harm gear or the mic input. Tell the lead what you found."},
+{q:"A wired comms line sounds thin and weak. Likely cause?",
+  o:["Two terminators in the line","No power","A bad headset","Phantom is on"],a:0,
+  e:"<b>Two terminators load the line twice.</b> Only one should be in the loop, normally at the main station."},
+{q:"The sheet says a 5/8″ shackle is 4½ ton. What do you trust?",
+  o:["The sheet","The rating stamped on the body","What the guy next to you says","The pin colour"],a:1,
+  e:"<b>The stamp.</b> A standard 5/8″ screw-pin shackle is usually around 3¼ ton, so that figure looks off. Never rely on a sheet."},
+{q:"Who decides what carries the Nexo array?",
+  o:["Whoever's closest","The rigging lead","The A1","The client"],a:1,
+  e:"<b>The rigging lead.</b> You hand up gear and keep it organized. You don't load-test, climb or adjust a hang."},
+{q:"In a Learning Zone, the picture works on one projector and not the other. First check?",
+  o:["Replace the laptop","The cable from the HDMI DA to the dead one","The mixer","Phantom power"],a:1,
+  e:"<b>The DA output cable to that projector.</b> One working output means the DA and the laptop are fine. Swap the cable, then try another DA output."},
+{q:"Twelve Ovation E-910FCs need to be circuited. What's the minimum number of 120 V circuits?",
+  o:["1","2","6","12"],a:1,
+  e:"<b>Two.</b> Chauvet's limit is 6 fixtures per circuit at 120 V (12 A max, about 1.8 A each), so 12 fixtures need at least two circuits."},
+{q:"A Maverick MK1 Hybrid goes dark mid-show and someone wants to unplug and re-plug it. What's the problem with that?",
+  o:["Nothing, it's an LED","It uses a discharge lamp that doesn't like being power-cycled while hot","The DMX will reset","The WELL Panels will lose link"],a:1,
+  e:"<b>The Maverick uses a 440 W discharge lamp, not LEDs.</b> Cycling power on a hot discharge lamp is hard on it. Tell the programmer or lighting lead instead."},
+{q:"A FreeSpeak II beltpack says it can't find the system when you try to register it. What did you probably skip?",
+  o:["Charging it","Starting registration on the base station","Changing its channel","Replacing the antenna"],a:1,
+  e:"<b>Registration has to be started on the base first</b> (Menu → System → Reg → Start). It times out after 2 minutes, so restart it if you were slow."},
+{q:"On a ULXD4 the RF light is off. What does that mean?",
+  o:["Interference","No transmitter is connected","The battery is low","Phantom power is on"],a:1,
+  e:"<b>Off means no transmitter link.</b> Blue is a normal link and red is interference. The receiver puts out no audio unless a blue light is lit."},
+{q:"You're told 14 Nexo GEO M12 boxes are going up. What does the amp rule say about NXAMP4x4 channels?",
+  o:["One channel total","At least 5 channels (3 boxes per channel)","14 channels","Two channels bridged"],a:1,
+  e:"<b>An NXAMP4x4 drives 3 M12 boxes per channel.</b> 14 boxes need at least 5 channels. Three NXAMPs give 12, which covers the tops with room for the subs."},
+{q:"A DX168 stage box shows no audio. The link cable is a long Cat5 run of 130 m. What's wrong?",
+  o:["Nothing, Cat5 has no limit","It's over the 100 m limit","The box needs phantom","The Avantis needs a reboot"],a:1,
+  e:"<b>The manual caps the link at 100 m</b> of shielded Cat5e or better. Shorten the run or ask the A1 how it was designed."}
+];
+
+var CHAINS=[
+{t:"LED wall signal path",
+  s:["Playback Pro Mac","PixelHue P20-DS","Novastar MX40 PRO","Cat data","Absen tiles"],
+  w:"Source, switcher, processor, data, tiles. Black wall means walk this chain from the left. Half a wall means look at the break in the data chain."},
+{t:"Wireless mic to PA",
+  s:["ULXD mic","ULXD4 receiver","DX168 stage box","Avantis","NXAMP 4x4","GEO M12 / MSUB18"],
+  w:"Every link is a place a fault can live. RF meter good but no audio means the problem is after the receiver."},
+{t:"Breakout room video",
+  s:["Laptop","HDMI cable","HDMI DA 1x4","Projectors + confidence monitor"],
+  w:"One DA feeds everything. If everything's black, check the DA's power and its input. If just one display, check its cable."},
+{t:"Cam-lok hook-up",
+  s:["Confirm feeder is off","Ground","Neutral","Hot legs, in distro order"],
+  w:"Ground first, neutral second, hots in the order the distro shows. Never recite a fixed phase order."}
+];
+
+var CK=[
+"Know which Playback Pro Mac is main and which is backup",
+"LED wall: every tile on, no dark blocks, no flicker",
+"Novastar and P20 on and showing inputs; don't touch settings",
+"Confidence monitors on road cases on the 4' riser, powered, showing slide and timer",
+"27″ multiview at FOH shows all sources",
+"Mover spot special for the award winner has been seen by the programmer",
+"WELL Panels charged (about 4 h, panel off) and showing signal bars",
+"Mavericks: safety cables on, powered and left on, not on one shared 20 A circuit",
+"FreeSpeak: every beltpack registered, antenna lights amber-solid",
+"Ovation lens tubes counted (sheet says 12; note says 8), seated and locked; Ovations on at least 2 circuits",
+"ULXD packs and handhelds: fresh batteries, unmuted, right frequency",
+"Comms: every belt and headset checked, only one terminator on the wired line",
+"Power: Motion Labs feeder hooked up in the right order, ground first",
+"Shackle ratings read from the stamped body, not the sheet",
+"Exit signs lit and not blocked by drape",
+"Cable runs across walkways covered and labeled"
+];
+
+var SCN=[
+{w:"Rehearsal · 40 minutes to client",
+  q:"The right side of the LED wall has gone dark. The left looks perfect. The video lead isn't at the desk.",
+  a:"<b>The fault is a break in the data chain, not the source.</b><br><br><b>1.</b> Find the first dark tile. It's the one right after the last lit one.<br><b>2.</b> Look at the data cable going into it. Reseat both ends, then check its power.<br><b>3.</b> If that doesn't fix it, swap the cable with a spare.<br><b>4.</b> Tell the video lead what you found and what you touched.<br><br><b>The lesson:</b> upstream lit, downstream dark. Don't touch the processor or the switcher."},
+{w:"Opening ceremony · 10 minutes to doors",
+  q:"A presenter's wireless handheld shows solid RF on the receiver but nothing comes out of the PA.",
+  a:"<b>RF is fine, so the link is fine.</b><br><br><b>1.</b> Check mute on the handheld. It's easy to bump.<br><b>2.</b> Check the battery and that the capsule is seated.<br><b>3.</b> If the unit's fine, tell the A1: &ldquo;Receiver 3 has RF but no audio, can you check the channel?&rdquo;<br><br><b>The lesson:</b> RF problems show up on the RF meter. No audio with RF means look past the receiver."},
+{w:"Load-in · cam-lok",
+  q:"You're hooking up the feeder to the Motion Labs distro. The ground cam is on the right side of the panel. What order?",
+  a:"<b>Start at the ground end, which is the right here.</b><br><br><b>1.</b> Confirm with the lead that the feeder is de-energized.<br><b>2.</b> Ground (green) first.<br><b>3.</b> Neutral (white) second.<br><b>4.</b> Hot legs next, in the order they sit on this panel, moving away from ground.<br><br>Striking is the reverse: hots, neutral, then ground last."},
+{w:"Breakout room · 15 minutes before session",
+  q:"Learning Zone 4: the laptop shows on the projector, but the speakers are silent. The podium mic is also dead.",
+  a:"<b>Two audio problems at once point to the mixer.</b><br><br><b>1.</b> Is the mixer on and its master up?<br><b>2.</b> Are the powered speakers on and plugged into the mixer outputs?<br><b>3.</b> The MX412 podium mic needs phantom. Is it on?<br><b>4.</b> Check the laptop DI and its channel.<br><br><b>The lesson:</b> video works so the laptop is fine; the fault is shared audio equipment."},
+{w:"Rig · flown array",
+  q:"The rigging lead isn't back from lunch and a crew member wants to start hanging the bumper with the spansets. The sheet says the shackles are 4½ ton.",
+  a:"<b>Wait for the rigging lead.</b><br><br><b>1.</b> You don't decide what carries the array.<br><b>2.</b> Read the rating stamped on each shackle and tell the lead what it says. The sheet looks wrong for a 5/8″ shackle.<br><b>3.</b> Inspect the spansets for kinks or damage and hold them for the lead.<br><br><b>The lesson:</b> your job is gear ready and ratings known. The rigging lead hangs."}
+];
+
+
+/* ═══════════ safe storage ═══════════ */
+var mem={};
+var store={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return mem[k]||null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+};
+
+/* ═══════════ tabs ═══════════ */
+var nav=document.getElementById("nav");
+TABS.forEach(function(t,i){
+  var b=document.createElement("button");
+  b.textContent=t[1]; b.setAttribute("role","tab");
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.onclick=function(){go(t[0])};
+  b.dataset.target=t[0];
+  nav.appendChild(b);
+});
+function go(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  nav.querySelectorAll("button").forEach(function(b){
+    b.setAttribute("aria-selected", b.dataset.target===id?"true":"false");
+    if(b.dataset.target===id && b.scrollIntoView){
+      try{b.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"})}catch(e){}
+    }
+  });
+  try{window.scrollTo({top:0,behavior:"smooth"})}catch(e){window.scrollTo(0,0)}
+  store.set(STORE+"_tab",id);
+}
+var saved=store.get(STORE+"_tab");
+if(saved && document.getElementById(saved)) go(saved);
+
+/* ═══════════ flashcards ═══════════ */
+var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
+function fcInit(sh){
+  fcQueue=CARDS.map(function(c,i){return i});
+  if(sh) fcQueue.sort(function(){return Math.random()-.5});
+  fcIdx=0;fcRender();
+}
+function fcRender(){
+  fcCard.classList.remove("flip");
+  var n=document.getElementById("fcCount");
+  if(!fcQueue.length){
+    document.getElementById("fcQ").innerHTML="All clear.";
+    document.getElementById("fcA").innerHTML="You've worked through the whole deck. Shuffle to run it again cold.";
+    n.textContent="0 left";return;
+  }
+  if(fcIdx>=fcQueue.length) fcIdx=0;
+  var c=CARDS[fcQueue[fcIdx]];
+  var qEl=document.getElementById("fcQ"), aEl=document.getElementById("fcA");
+  qEl.innerHTML=c[0]; aEl.innerHTML=c[1];
+  var ph=c[2]?document.querySelector('img[data-ph="'+c[2]+'"]'):null;
+  function fcFit(){
+    var need=Math.max(qEl.offsetHeight,aEl.offsetHeight)+90;
+    fcCard.style.minHeight=Math.max(190,need)+"px";
+  }
+  if(ph){
+    var im=document.createElement("img"); im.className="fcimg"; im.alt=ph.alt||""; im.src=ph.src;
+    (c[3]==="q"?qEl:aEl).appendChild(im);
+    im.onload=fcFit;
+    if(c[3]==="q"){ var im2=im.cloneNode(); aEl.appendChild(im2); im2.onload=fcFit; }
+  }
+  fcFit();
+  n.textContent=fcQueue.length+" card"+(fcQueue.length===1?"":"s")+" left";
+}
+fcCard.onclick=function(){fcCard.classList.toggle("flip")};
+document.getElementById("fcGot").onclick=function(){
+  if(!fcQueue.length)return;
+  fcQueue.splice(fcIdx,1);fcRender();
+};
+document.getElementById("fcAgain").onclick=function(){
+  if(!fcQueue.length)return;
+  fcIdx=(fcIdx+1)%fcQueue.length;fcRender();
+};
+document.getElementById("fcShuffle").onclick=function(){fcInit(true)};
+document.getElementById("fcReset").onclick=function(){fcInit(false)};
+fcInit(true);
+
+/* ═══════════ quiz ═══════════ */
+var qi=0,qScore=0,qHost=document.getElementById("quizHost");
+function qRender(){
+  if(qi>=QS.length){
+    var pct=Math.round(qScore/QS.length*100);
+    var msg = pct>=90?"Dialed in. You could run this material for someone else.":
+              pct>=75?"Solid. Clean up the misses and you're gig-ready.":
+              pct>=50?"Foundation's there. Run the flashcards, then come back.":
+                      "Go back through the reference tabs — then run this cold.";
+    qHost.innerHTML='<div class="qbox" style="text-align:center">'+
+      '<div class="score" style="color:'+(pct>=75?"var(--audio)":pct>=50?"var(--warn)":"var(--power)")+'">'+pct+'%</div>'+
+      '<p style="margin:0 0 4px;font-size:15px">'+qScore+' of '+QS.length+' correct</p>'+
+      '<p style="color:var(--dim);font-size:14px;margin:0 0 18px">'+msg+'</p>'+
+      '<button class="btn pri" id="qAgain">Run it again</button></div>';
+    document.getElementById("qAgain").onclick=function(){qi=0;qScore=0;QS.sort(function(){return Math.random()-.5});qRender()};
+    return;
+  }
+  var q=QS[qi];
+  var h='<div class="qbox"><div class="bar"><i style="width:'+(qi/QS.length*100)+'%"></i></div>'+
+        '<p style="color:var(--dim);font-size:12px;margin:10px 0 0;letter-spacing:.5px">QUESTION '+(qi+1)+' OF '+QS.length+'</p>'+
+        '<p class="qtext">'+q.q+'</p>';
+  q.o.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='<div id="qFoot"></div></div>';
+  qHost.innerHTML=h;
+  qHost.querySelectorAll(".opt").forEach(function(b){
+    b.onclick=function(){
+      var pick=+b.dataset.i;
+      qHost.querySelectorAll(".opt").forEach(function(x,i){
+        x.disabled=true;
+        if(i===q.a)x.classList.add("right");
+        else if(i===pick)x.classList.add("wrong");
+      });
+      if(pick===q.a)qScore++;
+      document.getElementById("qFoot").innerHTML=
+        '<p class="expl">'+q.e+'</p>'+
+        '<div class="row"><button class="btn pri" id="qNext" style="margin-left:auto">'+
+        (qi===QS.length-1?"See results":"Next")+'</button></div>';
+      document.getElementById("qNext").onclick=function(){qi++;qRender()};
+    };
+  });
+}
+qRender();
+
+/* ═══════════ chain builder ═══════════ */
+var ci=0,cHost=document.getElementById("chainHost");
+function cRender(){
+  var c=CHAINS[ci];
+  var shuffled=c.s.map(function(s,i){return {s:s,i:i}}).sort(function(){return Math.random()-.5});
+  var h='<div class="qbox"><p style="color:var(--dim);font-size:12px;margin:0;letter-spacing:.5px">CHAIN '+(ci+1)+' OF '+CHAINS.length+'</p>'+
+        '<p class="qtext" style="margin:8px 0 0">'+c.t+'</p>'+
+        '<div class="slots" id="cSlots"></div><div id="cToks">';
+  shuffled.forEach(function(o){h+='<button class="tok" data-i="'+o.i+'">'+o.s+'</button>'});
+  h+='</div><div class="row" id="cFoot"><button class="btn" id="cClear">Clear</button>'+
+     '<button class="btn" id="cSkip" style="margin-left:auto">Next chain</button></div></div>';
+  cHost.innerHTML=h;
+  var next=0;
+  cHost.querySelectorAll(".tok").forEach(function(b){
+    b.onclick=function(){
+      var want=+b.dataset.i;
+      if(want===next){
+        b.classList.add("used");
+        var n=document.createElement("span");
+        n.className="tok ok";n.textContent=b.textContent;
+        var sl=document.getElementById("cSlots");
+        if(next>0){var ar=document.createElement("span");ar.className="arrow";ar.textContent="→";sl.appendChild(ar)}
+        sl.appendChild(n);
+        next++;
+        if(next===c.s.length){
+          document.getElementById("cFoot").insertAdjacentHTML("afterbegin",
+            '<span style="color:var(--audio);font-weight:600;font-size:14px">Chain complete.</span>');
+          if(c.w) document.getElementById("cFoot").insertAdjacentHTML("afterend",'<p class="expl">'+c.w+'</p>');
+        }
+      } else {
+        b.classList.add("no");
+        setTimeout(function(){b.classList.remove("no")},450);
+      }
+    };
+  });
+  document.getElementById("cClear").onclick=cRender;
+  document.getElementById("cSkip").onclick=function(){ci=(ci+1)%CHAINS.length;cRender()};
+}
+cRender();
+
+/* ═══════════ pre-doors checklist ═══════════ */
+var ckHost=document.getElementById("ckHost");
+if(ckHost){
+  var ckState={};
+  try{ckState=JSON.parse(store.get(STORE+"_ck")||"{}")}catch(e){ckState={}}
+  var ckCount=document.getElementById("ckCount");
+  function ckSave(){store.set(STORE+"_ck",JSON.stringify(ckState))}
+  function ckTally(){
+    var n=CK.filter(function(_,i){return ckState[i]}).length;
+    ckCount.textContent=n+" of "+CK.length+" complete";
+    ckCount.style.color = n===CK.length ? "var(--audio)" : "var(--dim)";
+  }
+  CK.forEach(function(t,i){
+    var d=document.createElement("div");
+    d.className="ckitem";
+    d.style.cssText="text-align:left;display:flex;gap:11px;align-items:flex-start;padding:11px 13px;margin-bottom:7px";
+    var vc = /VIDEO CALL|NO BLUE MIX/.test(t);
+    d.innerHTML='<span class="ckbox" style="flex:0 0 auto;width:19px;height:19px;border-radius:5px;'+
+      'border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:1px"></span>'+
+      '<span class="cktxt" style="font-size:13.5px;line-height:1.5'+(vc?';color:var(--warn);font-weight:600':'')+'">'+t+'</span>';
+    function paint(){
+      var on=!!ckState[i];
+      var box=d.querySelector(".ckbox"), tx=d.querySelector(".cktxt");
+      box.textContent = on?"✓":"";
+      box.style.background = on?"var(--audio)":"transparent";
+      box.style.borderColor = on?"var(--audio)":"var(--line)";
+      box.style.color = on?"#08130b":"transparent";
+      tx.style.opacity = on?".45":"1";
+      tx.style.textDecoration = on?"line-through":"none";
+      d.style.borderColor = on?"var(--line)":(vc?"rgba(227,179,65,.35)":"var(--line)");
+    }
+    d.onclick=function(){ckState[i]=!ckState[i];paint();ckSave();ckTally()};
+    paint();
+    ckHost.appendChild(d);
+  });
+  ckTally();
+  document.getElementById("ckReset").onclick=function(){
+    ckState={};ckSave();
+    ckHost.querySelectorAll(".ckitem").forEach(function(d){
+      var b=d.querySelector(".ckbox"),t=d.querySelector(".cktxt");
+      b.textContent="";b.style.background="transparent";b.style.borderColor="var(--line)";
+      t.style.opacity="1";t.style.textDecoration="none";
+    });
+    ckTally();
+  };
+}
+
+/* ═══════════ connector ID drill ═══════════ */
+document.querySelectorAll(".idgrid .idcard").forEach(function(c){
+  var nm=c.querySelector(".nm");
+  if(!nm) return;
+  c.onclick=function(){
+    var on=c.classList.toggle("open");
+    nm.textContent = on ? "" : "?";
+    nm.style.display = on ? "none" : "block";
+  };
+});
+
+/* ═══════════ scenarios ═══════════ */
+var sh=document.getElementById("scnHost");
+SCN.forEach(function(s,i){
+  var d=document.createElement("div");
+  d.className="scn";
+  d.innerHTML='<div class="setting">'+s.w+'</div><p class="q">'+s.q+'</p>'+
+    '<button class="btn" data-i="'+i+'">How would you work it?</button>'+
+    '<div class="reveal">'+s.a+'</div>';
+  sh.appendChild(d);
+  var btn=d.querySelector("button"),rev=d.querySelector(".reveal");
+  btn.onclick=function(){
+    var on=rev.classList.toggle("on");
+    btn.textContent=on?"Hide":"How would you work it?";
+  };
+});
+
+
+})();
+
+/* ═══════════ room finder — kits transcribed from the AAO–CPG gear list ═══════════ */
+(function(){
+"use strict";
+var sel=document.getElementById("rfSel"), out=document.getElementById("rfOut");
+if(!sel||!out) return;
+
+function k(a){ return a.join(" | "); }
+
+var LZ=k(["2 - 7' Tripod Screen w/Skirt","2 - 3k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","2 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","5 - 50' XLR","1 - 25' XLR","4 - 50' Edison","3 - 25' Edison"]);
+var LZ9=k(["1 - 7' Tripod Screen w/Skirt","1 - 3k Short Throw Projector","2 - AV Cart/Projector Stand","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","2 - Wireless Combo RF Mic","2 - 10' XLR","2 - 50' XLR","2 - 25' Edison","2 - 50' Edison"]);
+var SMALL=k(["1 - 7' Tripod Screen w/Skirt","1 - 3k Short Throw Projector","2 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","2 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","1 - 50' HDMI","5 - 50' XLR","1 - 25' XLR","4 - 50' Edison","3 - 25' Edison","1 - Tritap"]);
+var SMALL404B=k(["2 - 7' Tripod Screen w/Skirt","2 - 3k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","2 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","7 - 50' XLR","1 - 25' XLR","4 - 50' Edison","3 - 25' Edison","1 - Tritap"]);
+var LARGEA=k(["2 - 7'x12' FF Screen FP w/Skirt","2 - 6k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","2 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","4 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","7 - 50' XLR","1 - 25' XLR","6 - 50' Edison","3 - 25' Edison","1 - Tritap"]);
+var LARGEB1=k(["2 - 8' Tripod Screen w/Skirt","2 - 3k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","2 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","7 - 50' XLR","1 - 25' XLR","4 - 50' Edison","3 - 25' Edison","1 - Tritap"]);
+var LARGEB2=k(["2 - 8' Tripod Screen w/Skirt","2 - 3k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","2 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","4 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","9 - 50' XLR","1 - 25' XLR","6 - 50' Edison","3 - 25' Edison","1 - Tritap"]);
+var THEATER=k(["1 - 10k Projector","2 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","4 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","4 - 12″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","9 - 50' XLR","1 - 25' XLR","6 - 50' Edison","3 - 25' Edison","1 - Tritap"]);
+var COMM306=k(["1 - 7' Tripod Screen w/Skirt","1 - 3k Short Throw Projector","2 - AV Cart/Projector Stand w/Skirt","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","3 - Wireless Combo RF Mic","1 - 25' HDMI","2 - 50' XLR","1 - 25' XLR","3 - 10' XLR","1 - 50' Edison","3 - 25' Edison"]);
+function comm(x10){ return k(["1 - 7' Tripod Screen w/Skirt","1 - 3k Short Throw Projector","2 - AV Cart/Projector Stand w/Skirt","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","2 - Wireless Combo RF Mic","1 - 25' HDMI","2 - 50' XLR","1 - 25' XLR"].concat(x10?["2 - 10' XLR"]:[]).concat(["1 - 50' Edison","3 - 25' Edison","1 - Tritap"])); }
+
+var ROOMS=[
+ ["GS West Hall","Opening Ceremony — see the Video, Lighting, Audio, Comms and Rig/Power tabs",""],
+ ["Learning Zones 1–8","Same kit in each room",LZ],
+ ["Learning Zone 9 (Black OTO)","",LZ9],
+ ["306AB","Committee Meeting Setup",COMM306],
+ ["308AB","Speaker Ready Room",k(["24 - Windows Laptop w/PPT","4 - Macbook","2 - Laser Printer","1 - WiFi Access Point"])+"|NOTE:Sheet says: Need to order access point"],
+ ["309","CPG Production Office","1 - Laser Printer"],
+ ["402A / 404A / 406A / 406B / 518","EDU Room Small",SMALL],
+ ["404B","EDU Room Small — bigger kit than the other small rooms",SMALL404B],
+ ["403A (ENT Pulse) / 403B / 408A / 408B / 409AB","EDU Room Large",LARGEA],
+ ["411","Theater",THEATER+"|NOTE:No screen listed on the sheet — ask the production lead if there's a house screen"],
+ ["501ABC","EDU Room Large",LARGEB1],
+ ["502A / 502B / 511ABC / 515A / 515B","EDU Room Large",LARGEB2],
+ ["507 / 512","Committee with Screen",comm(true)],
+ ["510","Committee with Screen (no 10' XLR on the sheet)",comm(false)],
+ ["Concourse Hall 150-151","Academic Bowl",k(["2 - 7'x12' FF Screen FP w/Skirt","2 - 6k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","4 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","4 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","2 - Wireless Combo RF Mic","2 - Straight Round Base Mic Stand","6 - 8″ Powered Speaker w/Speaker Stand","1 - 12 Channel Audio Mixer","1 - HDMI DA 1x8","1 - Roland V160","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","1 - 100' 6 Channel XLR Snake","2 - 10' XLR","12 - 50' XLR","1 - 25' XLR","2 - 100' XLR","8 - 50' Edison","3 - 25' Edison","1 - Tritap"])+"|NOTE:Sheet note: Video Switcher"],
+ ["Concourse Hall 152","Crucial Conversations, Great Debates, IAB General Assembly",k(["2 - 7'x12' FF Screen FP w/Skirt","2 - 6k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","4 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","1 - Wireless Combo RF Mic","1 - Straight Round Base Mic Stand","4 - 8″ Powered Speaker w/Speaker Stand","1 - 12 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","1 - 100' 6 Channel XLR Snake","1 - 10' XLR","10 - 50' XLR","1 - 25' XLR","2 - 100' XLR","6 - 50' Edison","3 - 25' Edison","1 - Tritap"])],
+ ["Concourse Hall 153AB","Global Connections Lounge",k(["1 - 7'x12' FF Screen FP w/Skirt","1 - 6k Short Throw Projector","2 - AV Cart/Projector Stand w/Skirt","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","2 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - 6 Channel Audio Mixer","1 - 50' HDMI","5 - 50' XLR","1 - 25' XLR","4 - 50' Edison","3 - 25' Edison","1 - Tritap"])],
+ ["Petree Hall C","Education Sessions, Myers Lecture, Neel Lecture",k(["2 - 9'x16' FF Screen FP w/Skirt","2 - 8k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","4 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","4 - 8″ Powered Speaker w/Speaker Stand","1 - 12 Channel Audio Mixer","1 - HDMI DA 1x4","1 - Roland V160","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","1 - 150' 6 Channel XLR Snake","1 - 10' XLR","10 - 50' XLR","1 - 25' XLR","2 - 100' XLR","6 - 50' Edison","3 - 25' Edison","1 - Tritap"])],
+ ["Petree Hall D","CME Enthusiast (no Roland V160 on the sheet)",k(["2 - 9'x16' FF Screen FP w/Skirt","2 - 8k Short Throw Projector","3 - AV Cart/Projector Stand w/Skirt","1 - 40″ Confidence Monitor w/Stand","1 - Windows Laptop w/PPT","1 - MX412 Podium Mic","4 - MX412 Table Mic/Wired TT Mic","1 - Laptop Audio DI","4 - 8″ Powered Speaker w/Speaker Stand","1 - 12 Channel Audio Mixer","1 - HDMI DA 1x4","1 - 15' HDMI","1 - 25' HDMI","2 - 50' HDMI","1 - 150' 6 Channel XLR Snake","1 - 10' XLR","10 - 50' XLR","1 - 25' XLR","2 - 100' XLR","6 - 50' Edison","3 - 25' Edison","1 - Tritap"])],
+ ["South Lobby","Talking Point · Academy Central · Main Registration · Info Desk · Donor Lounge",k(["Talking Point: 32″ w/ Bracket","Academy Central: 3 x 32″ w/ Bracket","Main Registration: 1 Laser Printer with copying (due 10:00 AM Thu Oct 15)","South Information Desk: Power for IT equipment","Millennium Society Donor Lounge: 1 - 65″ on pole stand"])],
+ ["Simulation Room 1 (651)","",k(["1 - 8' Tripod Screen w/Skirt","1 - 3k Short Throw Projector","2 - AV Cart/Projector Stand w/Skirt","1 - Windows Laptop w/PPT","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","2 - Wireless Combo RF Mic","1 - 6 Channel Audio Mixer","1 - 25' HDMI","1 - 50' HDMI","3 - 50' XLR","1 - 100' XLR","2 - 10' XLR","3 - 50' Edison","2 - 25' Edison","1 - Tritap"])],
+ ["Simulation Room 2 (651)","",k(["1 - 8' Tripod Screen w/Skirt","1 - 3k Short Throw Projector","2 - AV Cart/Projector Stand w/Skirt","1 - Windows Laptop w/PPT","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - MX412 Podium Mic","1 - 6 Channel Audio Mixer","1 - 25' HDMI","1 - 50' HDMI","3 - 50' XLR","3 - 100' XLR","3 - 50' Edison","2 - 25' Edison","1 - Tritap"])],
+ ["OTO Pavilion 1258","",k(["1 - 8' Tripod Screen w/Skirt","1 - 3k Short Throw Projector","2 - AV Cart/Projector Stand w/Skirt","1 - Windows Laptop w/PPT","1 - Laptop Audio DI","2 - 8″ Powered Speaker w/Speaker Stand","1 - MX412 Podium Mic","1 - MX412 Table Mic","1 - 6 Channel Audio Mixer","1 - 25' HDMI","1 - 50' HDMI","3 - 50' XLR","4 - 100' XLR","3 - 50' Edison","2 - 25' Edison","1 - Tritap"])],
+ ["Innovation Park","",k(["12 - 32″ Monitor w/Wall Mount/Bracket","12 - 10' HDMI"])],
+ ["Booth 541","",k(["2 - Windows Laptop w/Mouse","1 - Laser Printer"])],
+ ["Booth 2233","",k(["1 - 65″ TV w/Pole Stand","3 - 24″ Monitor w/TT Stand","1 - 25' HDMI","3 - 10' HDMI"])],
+ ["Booth 641","",k(["2 - 8″ Powered Speaker w/Tripod Stand","1 - 6 Channel Mixer","1 - Wireless Combo RF Mic","2 - 25' HDMI","2 - 25' XLR","1 - 10' XLR","4 - 25' Edison","1 - Tritap"])]
+];
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+ROOMS.forEach(function(r,i){
+  var o=document.createElement("option"); o.value=i; o.textContent=r[0]; sel.appendChild(o);
+});
+
+function show(i){
+  var r=ROOMS[i], parts=(r[2]||"").split("|NOTE:"), items=parts[0]?parts[0].split(" | "):[], note=parts[1]||"";
+  var h='<div class="card L sdi"><h4>'+esc(r[0])+'</h4>'+(r[1]?'<p>'+esc(r[1])+'</p>':'')+'</div>';
+  if(items.length){
+    h+='<div class="card">';
+    items.forEach(function(t){
+      var m=t.match(/^(\d+)\s*(?:x|-)\s+(.*)$/);
+      if(m) h+='<div class="rfitem"><span class="rfqty">'+m[1]+'</span><span>'+esc(m[2])+'</span></div>';
+      else h+='<div class="rfitem"><span class="rfqty"></span><span>'+esc(t)+'</span></div>';
+    });
+    h+='</div>';
+  }
+  if(note) h+='<p class="rfnote">⚠ '+esc(note)+'</p>';
+  out.innerHTML=h;
+}
+sel.addEventListener("change",function(){show(+sel.value)});
+show(0);
+})();
+</script>
+</body>
+</html>

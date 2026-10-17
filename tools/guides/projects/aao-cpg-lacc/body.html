@@ -1,0 +1,461 @@
+<section class="panel on" id="p-start">
+  <h2>AAO / CPG &middot; LA Convention Center</h2>
+  <p class="lede">Your job reference. Find the gear, learn what it does, and know what to check first when it misbehaves.</p>
+
+  <div class="key">
+    <b>Where this comes from:</b> the client's gear list (<i>AAO &ndash; CPG Gear List.xlsx</i>, emailed Oct 10). Gear names and quantities are straight from his sheet. Specs marked <span class="verified">verified</span> were read from the maker's manual or spec sheet (the link is on the card). Anything marked <span class="pill p-rf">check</span> is not on the sheet or in a manual I could find &mdash; read the label on the unit or ask.
+  </div>
+
+  <h3>Pick your department</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Video <span class="pill p-video">GS West Hall</span></h4><p>Absen LED wall, Novastar, PixelHue P20, Playback Pro, converters, confidence monitors.</p></div>
+    <div class="card L rf"><h4>Lighting <span class="pill p-rf">GS West Hall</span></h4><p>Road Hog, Ovation ellipsoidals, Maverick movers, WELL Panels, the award-winner spot.</p></div>
+    <div class="card L audio"><h4>Audio <span class="pill p-audio">GS West Hall</span></h4><p>Nexo GEO M12 system, Avantis, DX168 stage boxes, ULXD wireless, DIs.</p></div>
+    <div class="card L data"><h4>Comms</h4><p>FreeSpeak II wireless, wired 2-channel intercom, CS-702, RS-601 belts, CC-95 headsets.</p></div>
+    <div class="card L power"><h4>Rig / Power</h4><p>Motion Labs 200A distro, cam-lok rules, shackles and spansets, drape, risers.</p></div>
+    <div class="card L sdi"><h4>Breakouts</h4><p>Every room's kit: Learning Zones, 300s&ndash;500s, Concourse, Petree, South Hall, booths. Room finder inside.</p></div>
+  </div>
+
+  <h3>The schedule on the sheet</h3>
+  <p class="lede" style="margin-bottom:6px">These are listed under <b>Opening Ceremony</b> in the production notes (GS West Hall).</p>
+  <table class="tbl w">
+    <tr><th>Day</th><th>What</th></tr>
+    <tr><td>Wed Oct 14</td><td>8:00a load-in</td></tr>
+    <tr><td>Thu Oct 15</td><td>8:00a call &middot; lunch 12&ndash;1 &middot; tech rehearsal 1&ndash;2 &middot; client 2&ndash;3:30 with 2 presenters (Brown and Shaw)</td></tr>
+    <tr><td>Fri Oct 16</td><td>8:00a call &middot; 9&ndash;10 client rehearsal</td></tr>
+    <tr><td>Sat Oct 17</td><td>6:00a</td></tr>
+  </table>
+
+  <h3>Production notes from the sheet</h3>
+  <ul class="chk">
+    <li>The <b>4' riser</b>: put the confidence monitors (DSMs) on road cases to lift them as high as possible.</li>
+    <li>Need a <b>spot special for the award winner</b> from the flown movers.</li>
+    <li><b>27&Prime; multiview at FOH.</b> All of video village is backstage.</li>
+    <li>Speaker Ready Room (308AB): the sheet says <b>&ldquo;Need to order access point.&rdquo;</b></li>
+  </ul>
+
+  <h3>How to ask Claude from the floor</h3>
+  <div class="key" style="border-color:rgba(57,208,216,.3);background:rgba(57,208,216,.06)">
+    <b style="color:var(--data)">Send three things:</b> the gear name, what it's doing, and what you've already tried. Example: &ldquo;ULXD2 handheld on receiver 3, audio drops every few seconds, batteries are new.&rdquo; Cheapest fix first, every time.
+  </div>
+
+  <h3>Questions to ask the production lead</h3>
+  <ul class="chk">
+    <li>The sheet says <b>12</b> Source Four 26&deg; lens tubes, but a side note says <b>8</b>. Which is right?</li>
+    <li>Side notes sit beside gear with no label: <i>Rentex:</i>, <i>Camera w/42x lens</i>, <i>Freespeak</i>, <i>12G SDI</i>, <i>Fiber</i>. Rentex looks like a vendor. Which items does each belong to?</li>
+    <li>Room 411 (Theater) lists a 10k projector but <b>no screen</b>. Is there a house screen?</li>
+  </ul>
+
+  <h3>Changelog</h3>
+  <ul class="chk">
+    <li><b>v1.1 &middot; Oct 17 2026</b> &mdash; Manual-verified specs and setup steps added for the LED wall, P20, MX40, lights, Nexo, ULXD, DX168, FreeSpeak and V-160HD, with links. <b>Corrections:</b> Maverick movers use a discharge lamp (not LED); WELL Panels use W-DMX; the Blackmagic bidirectional converter is a USB-powered Micro unit.</li>
+    <li><b>v1.0 &middot; Oct 17 2026</b> &mdash; First build from the AAO&ndash;CPG gear list. Six departments, room finder, drills, scenarios.</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-vid">
+  <h2>Video &middot; GS West Hall</h2>
+  <p class="lede">Analogy: the P20 is the airport control tower, the Novastar boxes are the gate agents, and the tiles are the planes. Nothing lands on the wall unless all three agree.</p>
+  <p class="lede" style="margin-top:-8px"><span class="verified">verified</span> = read from the maker's manual or spec sheet. Tap the link on a card to open it (needs signal).</p>
+
+  <h3>Signal path</h3>
+  <div class="chain">
+    <span class="node">Playback Pro Mac / laptop</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">PixelHue P20-DS</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">Novastar MX40 PRO</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Cat data</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Absen tiles</span>
+  </div>
+  <p class="lede">Camera and SDI feeds come in through the SDI inputs. The exact output map belongs to the video lead &mdash; ask before re-patching anything.</p>
+
+  <div class="key">
+    <b>Look, don't touch:</b> processors and the switcher hold the show's mapping and presets. Report what you see (&ldquo;wall is black, Novastar 2 shows no input&rdquo;). Don't change settings.
+  </div>
+
+  <h3>The wall</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Absen Saturn SA2.6 tiles <span class="pill p-video">&times;112</span> <span class="verified">verified</span></h4>
+      <p>The sheet calls for <b>two</b> 13'&times;23' hanging screens. 112 &divide; 2 = 56 tiles per screen = <b>7 wide &times; 8 tall</b> = 23' &times; 13'. The math checks.</p>
+      <p class="specs"><b>Tile:</b> 1000&times;500&times;70 mm, <b>9.5 kg</b> (21 lb) &middot; <b>pixel pitch</b> 2.6 mm &middot; <b>384&times;192 px</b> per tile &middot; <b>1500 nits</b><br>
+      <b>Per screen:</b> 2688&times;1536 px &middot; about 532 kg (1,170 lb) of tiles alone<br>
+      <b>Power:</b> 510 W/m&sup2; max, 270 W/m&sup2; average = about <b>255 W max / 135 W avg per tile</b>, so roughly 14 kW max and 7.6 kW avg per screen (28.6 kW max for both)<br>
+      <b>Locking:</b> magnets snap tiles together top and bottom; angle adjustable &plusmn;2.5&deg;</p>
+      <p>Handle by the frame, never touch the LED face, carry flat. Lock every latch before it flies.</p>
+      <a class="mfr" href="https://cdn01.4wall.com/cms/rentals/files/f69654d29be40a.pdf" target="_blank" rel="noopener">Absen SA 2.6 spec sheet &#8599;</a></div>
+    <div class="card L sdi"><h4>Novastar MX40 PRO <span class="pill p-sdi">&times;2</span> <span class="verified">verified</span></h4>
+      <p>The LED processor. It slices the picture into data for the tiles. One per screen fits easily: each screen is about 4.1 million pixels and the MX40 handles up to 9 million.</p>
+      <p class="specs"><b>Outputs:</b> 20 gigabit Ethernet ports to the wall (with hot backup between ports), plus 4 optical (OPT 1&ndash;2 primary, 3&ndash;4 backup)<br>
+      <b>Inputs:</b> 3&times; HDMI 2.0, 1&times; DisplayPort 1.2, 1&times; 12G-SDI (HDMI and SDI also loop through)<br>
+      <b>Other:</b> genlock in/loop &middot; 95 W max &middot; controlled over Ethernet (VMP software)</p>
+      <p>Which input and which ports feed which screen is the video lead's patch &mdash; <span class="pill p-rf">check</span>.</p>
+      <a class="mfr" href="https://www.rentex.com/wp-content/uploads/2023/01/MX40-Pro-LED-Display-Controller-Specification.pdf" target="_blank" rel="noopener">MX40 Pro spec &#8599;</a><a class="mfr" href="https://www.rentex.com/wp-content/uploads/2023/01/MX40-Pro-LED-Display-Controller-User-Manual-V.pdf" target="_blank" rel="noopener">MX40 Pro manual &#8599;</a></div>
+    <div class="card L video"><h4>PixelHue P20-DS <span class="pill p-video">&times;1</span> <span class="verified">verified</span></h4>
+      <p>Presentation switcher and screen manager. The <b>DS</b> version adds <b>four 12G-SDI outputs</b> and <b>Dante audio</b> on top of the standard P20.</p>
+      <p class="specs"><b>Inputs:</b> 12 &mdash; 4&times; 12G-SDI and 8&times; DP 1.2/HDMI 2.0 (each DP/HDMI pair shares one input slot, so only one of the pair is live)<br>
+      <b>Outputs:</b> 8&times; HDMI 2.0, 4 AUX, <b>1 dedicated multiviewer (MVR) output</b>, 8 fiber (copy of the HDMI), 4&times; 12G-SDI<br>
+      <b>Layers:</b> 12 &middot; <b>Control:</b> front panel and 5&Prime; screen, PixelFlow software, U5 event controller, Stream Deck &middot; genlock in/loop &middot; 160 W</p>
+      <p>The MVR output is probably what feeds the <b>27&Prime; multiview at FOH</b> &mdash; <span class="pill p-rf">check</span>.</p>
+      <a class="mfr" href="https://www.rentex.com/wp-content/uploads/2026/04/P20-P20-DS-Seamless-Switchers-Specifications-V1.7.1.pdf" target="_blank" rel="noopener">P20 / P20-DS spec &#8599;</a></div>
+  </div>
+
+  <h3>Playback, laptops and converters</h3>
+  <div class="grid">
+    <div class="card L video"><h4>Playback Pro package <span class="pill p-video">&times;2</span></h4><p>MacBook Pro 14&Prime; running Playback Pro video software. Two usually means main plus backup &mdash; <span class="pill p-rf">check</span> which is live before you touch either.</p></div>
+    <div class="card L audio"><h4>Radial USB-PRO DI <span class="pill p-audio">&times;2</span> <span class="verified">verified</span></h4><p>Turns the Mac's USB audio into balanced XLR for the console.</p><p class="specs"><b>In:</b> USB (USB-B cable included) &middot; <b>Out:</b> stereo balanced XLR, level knob, <b>ground lift</b>, mono-sum switch, 3.5 mm headphone jack &middot; shows up as a sound card (44.1/48/96 kHz)</p><p>Hum? Ground lift first. No sound? Check the Mac's output device is the USB-PRO.</p></div>
+    <div class="card L video"><h4>HP EliteBook 14&Prime; <span class="pill p-video">&times;3</span></h4><p>Presenter and slide laptops. Know where they plug into the switcher.</p></div>
+    <div class="card L sdi"><h4>Blackmagic BiDirectional SDI/HDMI 3G <span class="pill p-sdi">&times;8</span> <span class="verified">verified</span></h4>
+      <p>This is the small <b>Micro</b> converter. It converts both directions at the same time and is powered over <b>micro-USB (5 V)</b> &mdash; no light usually means no USB power. It handles SD, HD and <b>3G-SDI only</b> (about 1080p60), so it can't carry a 12G/4K feed.</p>
+      <a class="mfr" href="https://www.adorama.com/col/productManuals/BMMCSG.pdf" target="_blank" rel="noopener">Blackmagic converters manual &#8599;</a></div>
+    <div class="card L sdi"><h4>Blackmagic SDI distribution 1&times;8 <span class="pill p-sdi">&times;1</span></h4><p>One SDI in, eight copies out. The sheet doesn't give the model; Blackmagic's Mini-size units run on a 12 V DC supply &mdash; <span class="pill p-rf">check</span> the label. A dead output means that output's cable first, then the unit's power.</p></div>
+    <div class="card L video"><h4>Confidence monitors <span class="pill p-video">&times;4 + &times;2 pkg</span></h4><p>50&Prime; Sharp TVs on Medium DSM stands, in two dual packages. They face the presenters so they can see the slide and timer. On the 4' riser the sheet wants them on road cases, as high as possible.</p></div>
+    <div class="card L video"><h4>Speaker timer <span class="pill p-video">&times;1</span></h4><p>The sheet lists a &ldquo;DSan AV1000.&rdquo; I couldn't find a manual under that name &mdash; D'San's common timer is the Limitimer Pro-2000. <span class="pill p-rf">check</span> the model on the unit. Make sure the speaker can see it and it shows the right clock before client rehearsal.</p></div>
+  </div>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>Whole wall black</td><td>Is the Novastar powered and showing input?</td><td>P20 output status, then the cable between them. Tell the video lead.</td></tr>
+    <tr><td>Half a screen or everything past one tile is dead</td><td>The data cable into the first dead tile</td><td>That tile's power, then its port. Everything <i>downstream</i> of a break goes dark.</td></tr>
+    <tr><td>One tile flickers or has the wrong colour</td><td>Reseat its data and power connectors</td><td>Swap with a spare tile (ask first).</td></tr>
+    <tr><td>Converter has no picture</td><td>Its power: USB 5 V on the Micro, 12 V on a Mini</td><td>Right direction, right connector, signal within 3G.</td></tr>
+    <tr><td>Confidence monitor shows no signal</td><td>TV input is on the right HDMI</td><td>Cable at both ends, then its feed from the switcher.</td></tr>
+    <tr><td>Video plays, no sound</td><td>USB-PRO has USB in and XLR out; Mac output set to it</td><td>Console channel unmuted &mdash; tell audio.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-lx">
+  <h2>Lighting &middot; GS West Hall</h2>
+  <p class="lede">Two kinds of fixtures here: <b>ellipsoidals</b> (the Ovations, which light a spot and stay put) and <b>movers</b> (the Mavericks, which the console points).</p>
+  <p class="lede" style="margin-top:-8px"><span class="verified">verified</span> = read from the maker's manual. Tap the link on a card to open it.</p>
+
+  <div class="key">
+    <b>Before you address anything:</b> the fixture needs three things to match the console &mdash; <b>universe</b>, <b>start address</b>, and <b>mode</b>. If a light is alive but ignores the console, it's almost always one of those three, not the fixture.
+  </div>
+
+  <h3>The gear</h3>
+  <div class="grid">
+    <div class="card L rf"><h4>Road Hog console <span class="pill p-rf">&times;1</span></h4>
+      <p>The sheet says &ldquo;Road Hog,&rdquo; so this is most likely the High End <b>Road Hog 4</b> &mdash; <span class="pill p-rf">check</span> the label. The show file belongs to the programmer &mdash; never reload or reset it.</p>
+      <p class="specs"><b>Road Hog 4 (verified):</b> 4 local DMX outputs on 5-pin XLR &middot; Art-Net and sACN over Ethernet &middot; 22&Prime; touchscreen &middot; 38.6 lb (17.5 kg) &middot; 100&ndash;250 V, 80 W max</p>
+      <a class="mfr" href="https://cdn01.4wall.com/cms/rentals/files/f5bc608f4e0699.pdf" target="_blank" rel="noopener">Road Hog 4 spec &#8599;</a></div>
+    <div class="card L rf"><h4>Chauvet Ovation E-910FC <span class="pill p-rf">&times;12</span> <span class="verified">verified</span></h4>
+      <p>Full-colour LED ellipsoidal. Works like a leko: four framing shutters and a lens tube shape the beam.</p>
+      <p class="specs"><b>Light engine:</b> RGBAL (red, green, blue, amber, lime) LEDs &middot; <b>10</b> colour-temperature presets, 2800&ndash;6500 K<br>
+      <b>Power:</b> about 220 W, <b>1.79 A at 120 V</b> &middot; <b>max 6 per circuit at 120 V</b> (never over 12 A), so 12 fixtures need <b>at least 2 circuits</b><br>
+      <b>Weight:</b> 15.4 lb body; <b>19.8 lb with a 26&deg; tube</b><br>
+      <b>DMX modes:</b> 1, 3, 5, 7, 10, 12, 13 and 16 channels, plus HSV (3). Address 001&ndash;512, highest start address depends on the mode<br>
+      <b>Overhead:</b> mount with a clamp <b>and a safety cable</b>; keep 20&Prime; (50 cm) clear of surfaces</p>
+      <p><b>Fan modes:</b> Auto, On, Off, Silent. Off and Silent reduce output and run the body hotter. <b>Soft-focus filter:</b> don't use it with gobos or big shutter cuts &mdash; it can heat-damage. A display reading <b>&minus;40&deg;C or 125&deg;C</b> is a temperature-sensor fault: stop using it and report it.</p>
+      <a class="mfr" href="https://www.chauvetprofessional.com/wp-content/uploads/2015/09/Ovation_E-910FC_UM_Rev19.pdf" target="_blank" rel="noopener">Ovation E-910FC manual &#8599;</a></div>
+    <div class="card L rf"><h4>Source Four lens tube, 26&deg; <span class="pill p-rf">&times;12</span></h4><p>The sheet pairs these with the Ovations. The Ovation manual says the fixture works with industry-standard lens tubes and lists 5&deg;, 10&deg;, 14&deg;, 19&deg;, 26&deg;, 36&deg; and 50&deg; options, but it doesn't name ETC Source Four tubes. <span class="pill p-rf">check</span> that a tube seats and locks on the first fixture before the rest are built. A narrower tube throws a tighter, brighter circle. The sheet's side note says <b>8</b> tubes, not 12.</p></div>
+    <div class="card L rf"><h4>Chauvet Maverick MK1 Hybrid <span class="pill p-rf">&times;4</span> <span class="verified">verified</span></h4>
+      <p>A moving head with CMY colour mixing, two prisms, gobos and zoom. It runs on a <b>discharge lamp, not LEDs</b>. These are the <b>flown movers</b> the award-winner spot special comes from.</p>
+      <p class="specs"><b>Lamp:</b> 440 W Osram Sirius<br>
+      <b>Power:</b> 670 W, <b>5.45 A at 120 V</b> each &mdash; four is about <b>22 A</b>, so they can't all share one 20 A circuit<br>
+      <b>Weight:</b> <b>66.7 lb</b> (30.3 kg) &mdash; this is a two-person lift<br>
+      <b>DMX:</b> 27 or 30 channels &middot; <b>Pan/tilt:</b> 540&deg;/270&deg;<br>
+      <b>Mount:</b> Omega bracket included; clamps and a safety cable are sold separately &mdash; <b>every flown unit needs a safety cable</b></p>
+      <p>Discharge lamps don't like being power-cycled while hot, so leave power on and don't unplug a mover mid-show. Flown means your cable work happens before it goes up.</p>
+      <a class="mfr" href="https://chauvetprofessional.com/wp-content/uploads/pdf/en/MAVERICKMK1HYBRID.pdf" target="_blank" rel="noopener">Maverick MK1 Hybrid spec &#8599;</a><a class="mfr" href="https://chauvetprofessional.com/product/maverick-mk1-hybrid/" target="_blank" rel="noopener">Photos &amp; product page &#8599;</a></div>
+    <div class="card L rf"><h4>Chauvet WELL Panel <span class="pill p-rf">&times;6</span> <span class="verified">verified</span></h4>
+      <p>Battery-powered, wireless LED wash panel. It receives control over <b>W-DMX</b> (not D-Fi).</p>
+      <p class="specs"><b>Runtime:</b> selectable modes of 3, 5, 8 or 12 hours (the shorter modes trade brightness for runtime)<br>
+      <b>Charging:</b> about <b>4 hours</b> with the supplied charger, with the panel <b>powered off</b>; it can run while plugged in<br>
+      <b>Rating:</b> IP65 &middot; <b>22.6 lb</b> (10.3 kg) &middot; Omega bracket, clamps separate, safety cable overhead<br>
+      <b>Range:</b> up to about 300 m from the W-DMX transmitter &mdash; people and water can block it<br>
+      <b>Address:</b> 001&ndash;509 depending on mode (4, 8, 12, 13 or 21 channel)</p>
+      <p><b>Pairing:</b> set the DMX start address, then <i>Wireless Setting &rarr; Operating Mode &rarr; Receive</i>, W-DMX On, and press the transmitter's reset. To re-pair: <i>Wireless Setting &rarr; Receive Reset &rarr; Yes</i>, then hold RESET on the transmitter until its signal light is solid. A &ldquo;?&rdquo; before the signal bars means it's waiting for a connection.</p>
+      <a class="mfr" href="https://www.chauvetprofessional.com/wp-content/uploads/2020/10/WELL_Panel_UM_Rev4.pdf" target="_blank" rel="noopener">WELL Panel manual &#8599;</a></div>
+  </div>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>Fixture has power, ignores console</td><td>Mode, address and universe vs the patch</td><td>DMX cable in, then the one before it.</td></tr>
+    <tr><td>Several fixtures flicker or act wild</td><td>DMX cable and the first connector in the chain</td><td>Termination at the end of the run.</td></tr>
+    <tr><td>Everything past one fixture is dead</td><td>The cable going out of the last working one</td><td>Swap it, then that fixture's DMX out.</td></tr>
+    <tr><td>Fixture totally dead</td><td>Power cable and the circuit</td><td>Too many on one circuit? Chauvet's limit is 6 Ovations per circuit at 120 V; each Maverick draws 5.45 A.</td></tr>
+    <tr><td>Ovation shows &minus;40&deg;C or 125&deg;C</td><td>Stop using it</td><td>Report it &mdash; it's a sensor or board fault.</td></tr>
+    <tr><td>WELL Panel won't respond</td><td>Battery level and runtime mode</td><td>Transmitter on, signal bars showing, re-pair if there's a &ldquo;?&rdquo;.</td></tr>
+    <tr><td>Mover moves but won't hit the spot</td><td>Tell the programmer</td><td>Don't touch the fixture. It might need a palette update.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-aud">
+  <h2>Audio &middot; GS West Hall</h2>
+  <p class="lede">The console is the kitchen, the stage boxes are the ingredients coming in the back door, and the Nexo system is the dining room. Your job is making sure everything arrives.</p>
+  <p class="lede" style="margin-top:-8px"><span class="verified">verified</span> = read from the maker's manual or spec sheet.</p>
+
+  <div class="chain">
+    <span class="node">Mic / DI</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">DX168 stage box</span><span class="arrow a-data">&rarr;</span>
+    <span class="node">Avantis</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">NXAMP 4&times;4</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">GEO M12 / MSUB18</span>
+  </div>
+
+  <h3>PA system</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Nexo GEO M12 line array <span class="pill p-audio">14 boxes</span> <span class="verified">verified</span></h4>
+      <p><b>12&times; M1210</b> (10&deg; vertical) and <b>2&times; M1220</b> (20&deg; vertical). With two bumpers, it looks like two hangs of seven &mdash; <span class="pill p-rf">check</span> the split with the audio lead. In an array the narrow boxes go on top and the wide ones at the bottom.</p>
+      <p class="specs"><b>Weight:</b> <b>34 kg (75 lb) per box</b> &mdash; 14 boxes is 476 kg of speakers. If split 7/7, each hang is about 238 kg (525 lb) of boxes <i>before</i> the bumper, bars and hardware<br>
+      <b>Coverage:</b> 80&deg; horizontal on both &middot; <b>Array limit:</b> up to 12 boxes per array<br>
+      <b>Connectors:</b> two NL4 4-pole Speakons on the touring version<br>
+      <b>Amp rule:</b> an NXAMP4x4 drives <b>3 boxes per channel</b>, so 14 boxes need at least 5 amp channels</p>
+      <a class="mfr" href="https://www.nexo-sa.com/wp-content/uploads/GeoM12_datasheet_v1.2.pdf" target="_blank" rel="noopener">GEO M12 datasheet &#8599;</a><a class="mfr" href="https://www.nexo-sa.com/products/geo-m1210/" target="_blank" rel="noopener">M1210 page &#8599;</a><a class="mfr" href="https://www.nexo-sa.com/products/geo-m1220" target="_blank" rel="noopener">M1220 page &#8599;</a></div>
+    <div class="card L audio"><h4>Nexo MSUB18 subs <span class="pill p-audio">&times;6</span></h4><p>Arrayable subwoofers. Low end rides the floor. Keep them where nobody can bump or trip over them. Weight and wiring aren't on the sheet &mdash; <span class="pill p-rf">check</span> the label before lifting.</p></div>
+    <div class="card L audio"><h4>Nexo NXAMP 4&times;4 <span class="pill p-audio">&times;3</span> <span class="verified">verified</span></h4>
+      <p>Amp plus processor. 12 channels total across the three.</p>
+      <p class="specs"><b>Outputs:</b> 4&times; Speakon NL4 &middot; <b>Inputs:</b> 4&times; balanced XLR, with link jacks, plus an expansion slot for digital (Dante) cards<br>
+      <b>Power:</b> 1900 W per channel at 8 &Omega; &middot; <b>Size:</b> 4U rack<br>
+      <b>Front LEDs:</b> Global Power, Standby and Amp Protect, plus per-channel status</p>
+      <p>Which channel drives which cabinet is in the audio lead's plan. <b>Amp Protect lit</b> means the amp has shut a channel down to protect itself &mdash; tell the A1, then check that channel's speaker cable.</p>
+      <a class="mfr" href="https://nexo-sa.com/wp-content/uploads/nxamp4x4_datasheet_v1.0.pdf" target="_blank" rel="noopener">NXAMP4x4 datasheet &#8599;</a></div>
+    <div class="card L power"><h4>Bumpers, extension bars, shackles, spansets</h4><p>This is the rigging side of the array. Details in <b>Rig / Power</b>. <b>You hand it up; the rigging lead hangs it.</b></p></div>
+  </div>
+
+  <h3>Console and stage</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Allen &amp; Heath Avantis <span class="pill p-audio">&times;1</span></h4><p>The 64-channel digital mixer. Don't touch faders or settings unless the A1 asks.</p></div>
+    <div class="card L data"><h4>Allen &amp; Heath DX168 <span class="pill p-data">&times;2</span> <span class="verified">verified</span></h4>
+      <p>Stage boxes with remote-controlled preamps. The console controls their gain, pad and phantom.</p>
+      <p class="specs"><b>I/O:</b> 16 mic/line XLR inputs and 8 XLR line outputs<br>
+      <b>Link:</b> one <b>Cat5e (or better) shielded</b> cable, up to <b>100 m</b>, into the <b>DX A</b> EtherCon. The cable carries audio, preamp control and status<br>
+      <b>DX B</b> daisy-chains a second box or gives a redundant link<br>
+      <b>+48 V light:</b> each input has an indicator showing voltage at that socket<br>
+      <b>Power:</b> built-in 100&ndash;240 V supply on an IEC inlet &middot; keep the vents clear<br>
+      The console and box should be on the same firmware; the manual says to update the mixing system first</p>
+      <a class="mfr" href="https://support.allen-heath.com/hc/en-gb/articles/40432468352145-DX168-Getting-Started-Guide" target="_blank" rel="noopener">DX168 getting started &#8599;</a></div>
+    <div class="card L audio"><h4>Rapco laptop interface <span class="pill p-audio">&times;4</span></h4><p>Laptop audio into the system, with a <b>ground lift</b>. Hum from a laptop? Try the ground lift first.</p></div>
+  </div>
+
+  <h3>Wireless &mdash; Shure ULXD (G50)</h3>
+  <div class="grid">
+    <div class="card L rf"><h4>ULXD system <span class="pill p-rf">&times;6</span> <span class="verified">verified</span></h4>
+      <p>Six receivers (ULXD4), six bodypacks (ULXD1), six handhelds (ULXD2, SM58 capsule) and six WL185 lavs.</p>
+      <p class="specs"><b>Band G50:</b> 470&ndash;534 MHz &middot; <b>Batteries:</b> Shure SB900 rechargeable or 2 AA &middot; about <b>11+ hours</b> on an SB900, about <b>9 hours</b> on alkaline AA at 10 mW<br>
+      <b>Receiver RF lights:</b> <b>blue</b> = good link, <b>red</b> = interference, <b>off</b> = no transmitter. No blue light means no audio<br>
+      <b>RF strength lights:</b> amber = normal, red = overload<br>
+      <b>Audio lights:</b> green = signal present, yellow = normal peaks, <b>red = overload/limiter</b></p>
+      <p><b>Mute:</b> a muted transmitter's light turns <b>red</b> and the receiver says &ldquo;Tx Muted&rdquo;. A muted receiver channel says &ldquo;Rx MUTED&rdquo;.<br>
+      <b>Locked buttons:</b> the transmitter or receiver menu can be locked; unlock it from the utility menu.<br>
+      <b>IR sync</b> (matches a transmitter to its receiver): turn on the transmitter, press the receiver's sync button, line up the IR windows until the receiver's IR port lights red, and wait for the success message.<br>
+      <b>Battery type:</b> if you use AA, set the transmitter's battery type to AA so the time readout is right.</p>
+      <a class="mfr" href="https://pubs.shure.com/view/guide/ULXD/es-ES.pdf" target="_blank" rel="noopener">Shure ULX-D guide (Spanish PDF) &#8599;</a></div>
+    <div class="card L rf"><h4>Shure WL185 lavalier <span class="pill p-rf">&times;6</span></h4><p>Tiny lav. Failure is nearly always at the connector or the cable near the pack &mdash; swap it before you condemn the pack.</p></div>
+    <div class="card L audio"><h4>Shure SM58 wired <span class="pill p-audio">&times;4</span></h4><p>Dynamic mic. No phantom needed.</p></div>
+  </div>
+  <div class="key"><b>Frequencies:</b> the audio lead coordinates them. If a unit is on the wrong frequency, tell the lead &mdash; don't pick one yourself.</div>
+
+  <h3>Stands and the rest</h3>
+  <ul class="chk">
+    <li><b>Pyle tabletop stands</b> &times;4 &middot; <b>tall boom stand</b> &times;1</li>
+    <li><b>XLR cable trunk</b> &times;1 and <b>expendables</b> (batteries, tape, misc.) &times;1 &mdash; know where they live</li>
+  </ul>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>One wireless mic silent</td><td>Transmitter mute (red light), battery, connector</td><td>Receiver: no blue light = no link; blue but no audio = console.</td></tr>
+    <tr><td>Wireless drops out</td><td>Distance, antenna, body blocking</td><td>Receiver RF light red = interference. Tell the A1; they scan.</td></tr>
+    <tr><td>Receiver says Tx Muted / Rx MUTED</td><td>Unmute the transmitter or ask the A1 to unmute the channel</td><td>&mdash;</td></tr>
+    <tr><td>Hum or buzz</td><td>Ground lift on the DI or laptop interface</td><td>Swap the cable. Never lift a safety ground on a power cord.</td></tr>
+    <tr><td>One speaker box silent</td><td>Speaker cable at the box</td><td>NXAMP channel LEDs, then the next box in the link.</td></tr>
+    <tr><td>NXAMP Amp Protect lit</td><td>Tell the A1</td><td>Check that channel's speaker cable for a short.</td></tr>
+    <tr><td>Stage box dead</td><td>Power and the Cat5e link into DX A</td><td>Swap the link cable; look for the +48 V light on inputs.</td></tr>
+    <tr><td>Feedback</td><td>Open mics near speakers</td><td>Tell the A1 which one &mdash; they fix it at the console.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-com">
+  <h2>Comms</h2>
+  <p class="lede">Analogy: wired comms is a conference call where everyone shares one phone line. FreeSpeak is the same call, cordless.</p>
+
+  <div class="grid">
+    <div class="card L data"><h4>Clear-Com FreeSpeak II <span class="pill p-data">&times;2 systems</span> <span class="verified">verified</span></h4>
+      <p>Digital wireless comms (DECT). The sheet says &ldquo;5 Channel System&rdquo; &mdash; that may mean five beltpacks per antenna; <span class="pill p-rf">check</span>.</p>
+      <p class="specs"><b>Capacity:</b> a base station takes up to <b>20 beltpacks</b>; each antenna handles up to <b>5</b> (4 is safer in a noisy room)<br>
+      <b>Antenna cable:</b> shielded Cat5/5e/6, up to 1,000 m (24 AWG); it powers the antenna up to about 300 m<br>
+      <b>Antenna lights:</b> green + amber on = powered &middot; amber flashing = data link &middot; <b>amber solid = synced and ready</b><br>
+      <b>Coverage check:</b> signal (RSSI) of about 30 or higher; below that a beltpack may lose audio</p>
+      <p><b>Register a beltpack:</b><br>
+      1. On the base: <i>Main Menu &rarr; System &rarr; Reg &rarr; Start</i> (it times out after 2 minutes).<br>
+      2. On the beltpack: hold the menu key 2 seconds, scroll to <b>System Connect</b>, press D.<br>
+      3. Find the system showing <b>V</b> and <b>P</b>. If it doesn't show, restart registration on the base.<br>
+      4. Enter the 4-digit code (default <b>0000</b>; the base shows it at <i>Menu &rarr; System &rarr; Reg &rarr; PIN</i>).<br>
+      5. Pick an open role. Done.</p>
+      <p>Some FreeSpeak II beltpacks are 1.9 GHz and some 2.4 GHz &mdash; check the label and don't mix them.</p>
+      <a class="mfr" href="https://clearcom.com/DownloadCenter/manuals/FreeSpeakII_v1.0/FreeSpeak_II_BaseStation_User-Guide-399G087C.pdf" target="_blank" rel="noopener">FreeSpeak II base station guide &#8599;</a></div>
+    <div class="card L data"><h4>Wired intercom <span class="pill p-data">2 ch, 5 stations</span> <span class="verified">verified</span></h4>
+      <p>One <b>CS-702</b> 2-channel main station runs the line, and <b>RS-601</b> beltpacks plug into it. Headsets are <b>CC-95</b> single-ear.</p>
+      <p class="specs"><b>RS-601:</b> a <b>single-channel</b> wired beltpack with a <b>4-pin male headset connector</b> and 3-pin XLR line connectors (one in, one out to loop through the next pack)</p>
+      <a class="mfr" href="https://clear-com.atlassian.net/wiki/spaces/SF/pages/158849106/Partyline+Single+channel+Beltpack" target="_blank" rel="noopener">RS-601 beltpack info &#8599;</a></div>
+  </div>
+
+  <div class="key">
+    <b>Don't cross the lines:</b> a party-line carries DC power on pin 2. <b>Never plug a comms line into a mic input</b>, and never plug a mic into a comms line.
+  </div>
+
+  <h3>If it breaks &mdash; cheapest check first</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>Wired belt is silent</td><td>Cable at both ends</td><td>Try another belt on the same cable.</td></tr>
+    <tr><td>Whole wired line is dead</td><td>Main station power and the first cable</td><td>Only one terminator &mdash; two make it thin, none makes it noisy.</td></tr>
+    <tr><td>Headset no mic</td><td>Headset plug seated and talk button/mute</td><td>Swap the headset.</td></tr>
+    <tr><td>FreeSpeak pack won't connect</td><td>Battery</td><td>Registered to <i>this</i> base? Re-register with the steps above.</td></tr>
+    <tr><td>FreeSpeak pack drops audio in one spot</td><td>How many packs on that antenna</td><td>Move the antenna or add one; the base can show antenna status.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-rig">
+  <h2>Rig / Power</h2>
+
+  <h3>Power</h3>
+  <div class="grid">
+    <div class="card L power"><h4>Motion Labs 3-phase, 200A, 9-hole <span class="pill p-power">&times;1</span></h4><p>The main distro: feeder in, circuits out. What's on the nine outlets isn't on the sheet &mdash; <span class="pill p-rf">check</span> before you plug in. Power trunk &times;1 holds the rest of the power gear.</p></div>
+    <div class="card L power"><h4>Edison runs <span class="pill p-power">see Cables</span></h4><p>Edison and tri-taps feed the breakout rooms. Quick math: <b>watts &divide; volts = amps</b>. A 20A circuit at 120V holds about 2400W, but stay at 80% for anything that runs all day.</p></div>
+  </div>
+
+  <div class="key">
+    <b>Cam-lok &mdash; the only two rules.</b><br>
+    <b>Hook-up:</b> <b>GROUND (green) first</b>, <b>NEUTRAL (white) second</b>, then the hot legs in the order they sit on <i>that</i> distro, working away from ground.<br>
+    <b>Strike:</b> hot legs first, then neutral, <b>GROUND LAST</b>.<br>
+    Never teach a fixed phase order (black/red/blue). The panel layout sets it. Ground is usually on the left, but some panels have it on the right.
+  </div>
+  <div class="key" style="border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.06)">
+    <b style="color:var(--power)">Ask first:</b> confirm with the lead that the feeder is de-energized before you connect or disconnect cam-lok. Know the sequence, but only do it when it's your call.
+  </div>
+
+  <h3>Rigging</h3>
+  <div class="grid">
+    <div class="card L sdi"><h4>GEO M12 light bumper <span class="pill p-sdi">&times;2</span></h4><p>The top frame each array hangs from. Rated for a 12-box array. This show has 14 boxes across the two bumpers. Extension bars &times;2 move the pick point.</p></div>
+    <div class="card L sdi"><h4>Steel spanset, 6' <span class="pill p-sdi">&times;2</span></h4><p>Steel sling used to connect the load to the point. Inspect every time: no kinks, broken wires or damage.</p></div>
+    <div class="card L sdi"><h4>Screw-pin anchor shackle <span class="pill p-sdi">&times;4</span></h4><p>The sheet says <b>5/8&Prime;, 4&frac12; ton</b>. That looks off: standard 5/8&Prime; screw-pin shackles are usually about 3&frac14; ton, and 4&frac34; is 3/4&Prime;. <b>Read the rating stamped on the shackle body and use that, never the sheet.</b></p></div>
+  </div>
+  <div class="key"><b>Your role:</b> you hand the gear up and keep it organized. The rigging lead decides what carries what. Never load-test, climb or adjust a hang.</div>
+
+  <h3>Staging &amp; soft goods</h3>
+  <ul class="chk">
+    <li><b>Velour drape, 16' tall, black</b> &mdash; 100 ft. <b>Pipe &amp; drape, 16'</b> &mdash; 150 ft. Fold velour, don't drag it.</li>
+    <li><b>2 powered exit signs</b> &mdash; nothing blocks them. Drape never goes over an exit sign.</li>
+    <li><b>4' riser</b> &mdash; confidence monitors go on road cases on top of it.</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-brk">
+  <h2>Breakout Rooms</h2>
+  <p class="lede">Most rooms are a variation of one kit. Learn the standard room once, then use the finder to see what's different.</p>
+
+  <h3>The standard room</h3>
+  <div class="chain">
+    <span class="node">Laptop</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">HDMI DA 1&times;4</span><span class="arrow a-video">&rarr;</span>
+    <span class="node">Projectors + confidence monitor</span>
+  </div>
+  <div class="chain">
+    <span class="node">Mics + laptop DI</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">6-ch mixer</span><span class="arrow a-audio">&rarr;</span>
+    <span class="node">Powered speakers</span>
+  </div>
+  <div class="key"><b>Phantom power:</b> the MX412 podium and table mics are condensers and need phantom. If they're all dead and the wireless mics work, phantom is off on the mixer.</div>
+
+    <h3>Roland V-160HD <span class="verified">verified</span></h3>
+  <p class="lede">The sheet lists a &ldquo;Roland V160&rdquo; in Concourse 150-151 and Petree Hall C &mdash; most likely the V-160HD video switcher. <span class="pill p-rf">check</span> the label.</p>
+  <div class="card L video">
+    <p class="specs"><b>Inputs:</b> 8 HDMI and 8 SDI (format detected automatically)<br>
+    <b>Outputs:</b> 3 HDMI and 3 SDI &mdash; by default <b>OUT 1 = Program, OUT 2 = Preview, OUT 3 = Multi-view</b><br>
+    <b>Buses:</b> the PGM/A bus is the live output (lit <b>red</b>); the PST/B bus is what goes next (lit <b>green</b>). <b>CUT</b> switches instantly; <b>AUTO</b> uses the transition<br>
+    <b>Phantom:</b> only on Audio In 1 and 2, turned on in the menu &mdash; keep it off for anything that isn't a condenser<br>
+    <b>Power order:</b> sources on first, then outputs, then the V-160HD's power button last. Power off in reverse. Use only the supplied adaptor</p>
+    <a class="mfr" href="https://shop.ccisolutions.com/StoreFront/jsp/pdf/RND-V-160HD_quickStart.pdf" target="_blank" rel="noopener">V-160HD quick start &#8599;</a>
+  </div>
+
+  <h3>The MX412 mics <span class="verified">verified</span></h3>
+  <div class="card L audio"><p>Shure MX412 is a 12&Prime; cardioid gooseneck. It's <b>phantom-only (11&ndash;52 V)</b> on a 3-pin XLR, with <b>no on/off switch and no light</b> on the standard model. If a gooseneck is dead, check phantom and the cable &mdash; there's no switch to blame.</p>
+  <a class="mfr" href="https://www.bhphotovideo.com/c/product/127149-REG/Shure_MX412_C_MX412C_12_Cardioid.html" target="_blank" rel="noopener">MX412 specs &#8599;</a></div>
+
+  <h3>Room finder</h3>
+  <div class="sim">
+    <select id="rfSel" class="btn" style="width:100%;margin-bottom:12px"></select>
+    <div id="rfOut"></div>
+  </div>
+
+  <h3>Common room problems</h3>
+  <table class="tbl w">
+    <tr><th>Symptom</th><th>Check first</th><th>Then</th></tr>
+    <tr><td>No picture</td><td>Projector input and lens cap</td><td>HDMI at both ends, then the DA 1&times;4 power.</td></tr>
+    <tr><td>Picture on one projector only</td><td>DA output cable to the dead one</td><td>Swap the cable, then the DA output.</td></tr>
+    <tr><td>Laptop displays but projector doesn't</td><td>Laptop display mode (extend vs mirror) and resolution</td><td>Try a shorter HDMI.</td></tr>
+    <tr><td>Mic dead</td><td>Mixer channel is up, unmuted and the mic cable seated</td><td>Phantom on? Different channel.</td></tr>
+    <tr><td>No sound from a laptop</td><td>Laptop volume and the DI connection</td><td>Mixer channel, then the speaker power.</td></tr>
+    <tr><td>Speaker silent</td><td>It's plugged in <i>and</i> powered on</td><td>XLR into the right input, then swap.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-cab">
+  <h2>Cable &amp; Misc. Totals</h2>
+  <p class="lede">Straight from the sheet's cable count. Counts per length.</p>
+  <table class="tbl">
+    <tr><th>Type</th><th>10'</th><th>15'</th><th>25'</th><th>50'</th><th>100'</th><th>150'</th></tr>
+    <tr><td>XLR</td><td>30</td><td>&mdash;</td><td>50</td><td>260</td><td>60</td><td>&mdash;</td></tr>
+    <tr><td>HDMI</td><td>30</td><td>60</td><td>60</td><td>80</td><td>&mdash;</td><td>&mdash;</td></tr>
+    <tr><td>Edison</td><td>&mdash;</td><td>&mdash;</td><td>150</td><td>200</td><td>20</td><td>&mdash;</td></tr>
+    <tr><td>6-ch XLR snake</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>4</td><td>4</td></tr>
+    <tr><td>SDI</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>20</td><td>40</td><td>&mdash;</td></tr>
+  </table>
+  <ul class="chk">
+    <li><b>SDI barrels:</b> 20</li>
+    <li><b>Tri-taps:</b> 50</li>
+    <li><b>SDI/HDMI bidirectional converters:</b> 35</li>
+    <li><b>NL4 &times; 100' speaker cables:</b> 6 &middot; <b>NL4 barrels:</b> 10</li>
+    <li><b>26&deg; lens tubes:</b> the sheet says 8 here; the gear list says 12</li>
+  </ul>
+
+  <h3>Cable habits</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Over-under coil</h4><p>Alternating loops lie flat and throw out straight. Coiling one way twists the conductors.</p></div>
+    <div class="card L power"><h4>Ramp or tape across walkways</h4><p>Anything crossing a public path gets covered. No loose loops in the middle of an aisle.</p></div>
+    <div class="card L sdi"><h4>Label both ends</h4><p>A labeled cable gets found in seconds. An unlabeled one costs everyone.</p></div>
+  </div>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly &mdash; "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer &mdash; including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Signal Chain Builder</h2>
+  <p class="lede">Tap the pieces in the correct order. Wrong piece and it tells you immediately.</p>
+  <div id="chainHost"></div>
+
+  <h2>Before doors &mdash; GS West Hall</h2>
+  <div class="row">
+    <span class="counter" id="ckCount"></span>
+    <button class="btn" id="ckReset" style="margin-left:auto">Reset</button>
+  </div>
+  <div id="ckHost"></div>
+</section>
+
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>

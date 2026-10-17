@@ -72,7 +72,7 @@ def build(slug):
 
 <header>
   <div class="inner">
-    <a class="homelink" href="../">← All guides</a>
+    <a class="homelink" href="{meta.get('home', '../')}">← All guides</a>
     <div class="badge" style="color:var({meta['color']});border-color:var({meta['color']})">Live Events · {meta['badge']}</div>
     <h1>{meta['title']}</h1>
     <p class="sub">{meta['sub']}</p>
@@ -105,8 +105,10 @@ var STORE={json.dumps(slug)};
 </body>
 </html>
 """
-    assert "http://" not in out.replace("http://www.w3.org/2000/svg", "")
-    assert "https://" not in out, "external reference in " + slug
+    # outbound links are allowed only as plain user-tapped anchors (class="mfr"); nothing is fetched by the page
+    chk = re.sub(r'<a class="mfr" href="https://[^"]+"', '<a class="mfr"', out)
+    assert "http://" not in chk.replace("http://www.w3.org/2000/svg", "")
+    assert "https://" not in chk, "external reference in " + slug
     os.makedirs(os.path.join(ROOT, slug), exist_ok=True)
     open(os.path.join(ROOT, slug, "index.html"), "w").write(out)
     print(slug, len(out), "bytes")

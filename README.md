@@ -17,6 +17,12 @@ Interactive study guides for live event production. Built to drill, not to read.
 | Backline | `/backline/` | Drum mics, drum sub, DI boxes, XLR runs, input lists |
 | Rigging | `/rigging/` | Hardware, arena points and motors, bridle math, fly systems, truss, inspection |
 
+### Projects
+
+| Project | Path | Covers |
+|---|---|---|
+| AAO / CPG · LACC (Oct 2026) | `/projects/aao-cpg-lacc/` | Job guide from the client gear list: GS West Hall video, lighting, audio, comms, rig/power, breakout room finder |
+
 Planned: Carpentry, Special FX.
 
 ## How they work
