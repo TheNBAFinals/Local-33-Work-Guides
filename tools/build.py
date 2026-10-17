@@ -85,7 +85,7 @@ def build(slug):
 {body}
 <footer>
   {meta['title']} · {meta.get('footer', 'Reference and drill tool for live event technicians')}<br>
-  Gear illustrations are simplified diagrams for identification, not manufacturer specifications.
+  {meta.get('footer2', 'Gear illustrations are simplified diagrams for identification, not manufacturer specifications.')}
 </footer>
 </div>
 

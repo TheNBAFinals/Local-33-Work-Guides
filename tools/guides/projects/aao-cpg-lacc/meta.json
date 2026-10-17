@@ -1,7 +1,10 @@
-{"title":"AAO / CPG · LACC Field Guide",
- "badge":"Project · LACC Oct 2026",
- "color":"--data",
- "home":"../../",
- "sub":"v1.2 · Oct 17 2026 · Gear from the AAO–CPG client list, sorted by department. Quick answers on the floor. Works offline.",
- "description":"Project guide for the AAO / CPG convention at LA Convention Center, October 2026: GS West Hall video, lighting, audio, comms, rigging and power, plus the breakout-room kits.",
- "footer":"Job reference built from the client gear list. Quantities and room kits come from the list and can change — the production lead has the final word"}
+{
+ "title": "AAO / CPG · LACC Field Guide",
+ "badge": "Project · LACC Oct 2026",
+ "color": "--data",
+ "home": "../../",
+ "sub": "v1.3 · Oct 17 2026 · Gear from the AAO–CPG client list, sorted by department. Quick answers on the floor. Works offline.",
+ "description": "Project guide for the AAO / CPG convention at LA Convention Center, October 2026: GS West Hall video, lighting, audio, comms, rigging and power, plus the breakout-room kits.",
+ "footer": "Job reference built from the client gear list. Quantities and room kits come from the list and can change — the production lead has the final word",
+ "footer2": "Product photos and names belong to their manufacturers. I do not own them. Shown for personal educational reference only. Specs are read from manufacturer manuals; check the label on the actual unit."
+}

@@ -17,3 +17,17 @@ a.mfr:hover{border-color:var(--video)}
 .gp figcaption{padding:6px 8px;font-size:11.5px;color:#333;background:#f4f4f4;line-height:1.35}
 .gp figcaption b{display:block;color:#111}
 .gp figcaption span{color:#666;font-size:10.5px}
+
+.libchips{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px;padding-bottom:4px}
+.libchip{flex:0 0 auto;padding:6px 12px;font-size:13px}
+.libchip.on{border-color:var(--video);color:var(--video)}
+.libcard{display:flex;gap:12px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);border-left:4px solid var(--dim);border-radius:10px;padding:12px;margin-bottom:10px}
+.libimg{flex:0 0 96px;width:96px;height:96px;object-fit:contain;background:#fff;border-radius:8px}
+.libtxt{flex:1;min-width:0}
+.libhead{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.libhead b{font-size:15px;line-height:1.3}
+.libqty{flex:0 0 auto;font-size:12px;color:var(--dim);white-space:nowrap}
+.libdept{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin:3px 0 6px}
+.libtxt p{margin:0;font-size:14px;line-height:1.5}
+.libcred{font-size:10.5px;color:var(--dimmer);margin-top:6px}
+@media(max-width:480px){.libcard{flex-direction:column}.libimg{width:100%;height:150px;flex:none}}

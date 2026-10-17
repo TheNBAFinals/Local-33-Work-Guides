@@ -1,4 +1,4 @@
-var TABS=[["p-start","Start"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
+var TABS=[["p-start","Start"],["p-lib","Gear"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
 
 var CARDS=[
 ["Which projectors are in the breakout rooms?","The sheet gives <b>brightness only</b>: 3k small rooms, 6k big EDU rooms and Concourse, 8k Petree, 10k Theater 411. <b>No brand or model is listed.</b> Read the label on the unit."],
