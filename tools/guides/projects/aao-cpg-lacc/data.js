@@ -1,6 +1,8 @@
 var TABS=[["p-start","Start"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
 
 var CARDS=[
+["Which projectors are in the breakout rooms?","The sheet gives <b>brightness only</b>: 3k small rooms, 6k big EDU rooms and Concourse, 8k Petree, 10k Theater 411. <b>No brand or model is listed.</b> Read the label on the unit."],
+["Projector is on but the screen is blank. Check what first?","<b>Lens cover, A/V mute, then input source</b> (Epson: Source Search), then HDMI at both ends and the DA's power."],
 ["Cam-lok hook-up order?","<b>Ground (green) first, neutral (white) second</b>, then the hot legs in the order they sit on that distro, working away from ground."],
 ["Cam-lok strike order?","<b>Hot legs first, then neutral, ground last.</b> It's the hook-up in reverse."],
 ["Why can't you teach a fixed cam-lok phase order?","The <b>panel layout sets it.</b> Ground is usually on the left but some panels have it on the right. Follow the distro, not a rhyme."],

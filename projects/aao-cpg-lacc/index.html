@@ -641,6 +641,7 @@ a.mfr:hover{border-color:var(--video)}
   <ul class="chk">
     <li>The sheet says <b>12</b> Source Four 26&deg; lens tubes, but a side note says <b>8</b>. Which is right?</li>
     <li>Side notes sit beside gear with no label: <i>Rentex:</i>, <i>Camera w/42x lens</i>, <i>Freespeak</i>, <i>12G SDI</i>, <i>Fiber</i>. Rentex looks like a vendor. Which items does each belong to?</li>
+    <li>What <b>brand and model</b> are the 3k, 6k, 8k and 10k short-throw projectors? The sheet only gives lumens.</li>
     <li>Room 411 (Theater) lists a 10k projector but <b>no screen</b>. Is there a house screen?</li>
   </ul>
 
@@ -986,6 +987,16 @@ a.mfr:hover{border-color:var(--video)}
   <div class="card L audio"><p>Shure MX412 is a 12&Prime; cardioid gooseneck. It's <b>phantom-only (11&ndash;52 V)</b> on a 3-pin XLR, with <b>no on/off switch and no light</b> on the standard model. If a gooseneck is dead, check phantom and the cable &mdash; there's no switch to blame.</p>
   <a class="mfr" href="https://www.bhphotovideo.com/c/product/127149-REG/Shure_MX412_C_MX412C_12_Cardioid.html" target="_blank" rel="noopener">MX412 specs &#8599;</a></div>
 
+  <h3>Projectors &mdash; short throw <span class="pill p-rf">check</span></h3>
+  <p class="lede">The sheet lists projectors only by brightness and never names a brand or model: <b>3k</b> (small rooms, Learning Zones, most 300s/500s), <b>6k</b> (large EDU rooms 403&ndash;409, Concourse), <b>8k</b> (Petree C and D), <b>10k</b> (Theater 411). If yours are Epson, read the model off the label on the projector body and tell me &mdash; I'll add the exact specs.</p>
+  <div class="card L video">
+    <p class="specs"><b>What &ldquo;short throw&rdquo; means:</b> the projector sits close to the screen, so a little distance changes picture size a lot. Move the cart, don't just zoom.<br>
+    <b>Set-up order:</b> cart square to the screen, power on, input to the right source, then size, then focus, then keystone/lens shift last<br>
+    <b>No picture, check in order:</b> lens cover or shutter &middot; A/V mute or blank on the remote &middot; input source (most Epson models have a <b>Source Search</b> button) &middot; HDMI at both ends &middot; the DA 1&times;4 has power<br>
+    <b>Warning lights:</b> a temperature or lamp/laser light means stop. Check for blocked vents, then tell the lead. Don't keep power-cycling it<br>
+    <b>Shutdown:</b> let the fan finish before you unplug it or kill the cart power</p>
+  </div>
+
   <h3>Room finder</h3>
   <div class="sim">
     <select id="rfSel" class="btn" style="width:100%;margin-bottom:12px"></select>
@@ -1147,6 +1158,8 @@ var STORE="projects/aao-cpg-lacc";
 var TABS=[["p-start","Start"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
 
 var CARDS=[
+["Which projectors are in the breakout rooms?","The sheet gives <b>brightness only</b>: 3k small rooms, 6k big EDU rooms and Concourse, 8k Petree, 10k Theater 411. <b>No brand or model is listed.</b> Read the label on the unit."],
+["Projector is on but the screen is blank. Check what first?","<b>Lens cover, A/V mute, then input source</b> (Epson: Source Search), then HDMI at both ends and the DA's power."],
 ["Cam-lok hook-up order?","<b>Ground (green) first, neutral (white) second</b>, then the hot legs in the order they sit on that distro, working away from ground."],
 ["Cam-lok strike order?","<b>Hot legs first, then neutral, ground last.</b> It's the hook-up in reverse."],
 ["Why can't you teach a fixed cam-lok phase order?","The <b>panel layout sets it.</b> Ground is usually on the left but some panels have it on the right. Follow the distro, not a rhyme."],
