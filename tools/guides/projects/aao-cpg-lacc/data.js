@@ -1,4 +1,4 @@
-var TABS=[["p-start","Start"],["p-lib","Gear"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
+var TABS=[["p-start","Start"],["p-lib","Gear"],["p-ctl","Controls"],["p-vid","Video"],["p-lx","Lighting"],["p-aud","Audio"],["p-com","Comms"],["p-rig","Rig/Power"],["p-brk","Breakouts"],["p-cab","Cables"],["p-drills","Drills"],["p-scen","Scenarios"]];
 
 var CARDS=[
 ["What projector is in the breakout rooms?","Seen on site: <b>Epson EB-L265F</b> (4,600 lm, laser, 1080p). The sheet only gives brightness classes: 3k, 6k, 8k, 10k. Check the label in each room."],
